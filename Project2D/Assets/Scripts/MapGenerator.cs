@@ -9,8 +9,9 @@ public class MapGenerator : MonoBehaviour
     private GameObject _chunkStorage;
 
     [SerializeField]
-    private GameObject[] _chunks;
+    private Chunk[] _chunks;
 
+    private int _nextChunk = -1;
     private int _currentChunk = -1;
     private int _oldChunk = -1;
 
@@ -26,15 +27,14 @@ public class MapGenerator : MonoBehaviour
 
     private void changeChunk()
     {
-        int v_rngChunk = -1;
         do
         {
-            v_rngChunk = Random.Range(0, _chunks.Length);
-        } while (v_rngChunk == _currentChunk || v_rngChunk == _oldChunk);
+            _nextChunk = Random.Range(0, _chunks.Length);
+        } while (_nextChunk == _currentChunk || _nextChunk == _oldChunk);
         _oldChunk = _currentChunk;
-        _lasPos += 18;
-        Instantiate(_chunks[v_rngChunk], new Vector3(_lasPos, 0, 0), Quaternion.identity, _chunkStorage.transform);
-        _currentChunk = v_rngChunk;
+        _lasPos += _chunks[_nextChunk].lenght;
+        Instantiate(_chunks[_nextChunk].prefab, new Vector3(_lasPos, 0, 0), Quaternion.identity, _chunkStorage.transform);
+        _currentChunk = _nextChunk;
     }
 
     private void checkChunkOutOfBounds()

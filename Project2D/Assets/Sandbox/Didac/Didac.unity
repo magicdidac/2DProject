@@ -254,10 +254,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _chunkStorage: {fileID: 686202578}
   _chunks:
-  - {fileID: 6517515836827358396, guid: eeeae31890487bd4599d02e138d1ec0f, type: 3}
-  - {fileID: 3965165353245852406, guid: 278fc6d4709ee1a419be06416eeb998b, type: 3}
-  - {fileID: 8587872528580026598, guid: ba6c883200234924581ac9966f799d25, type: 3}
-  - {fileID: 7030584329608045214, guid: 6212363ce135ebc4694b4af1e4c213a7, type: 3}
+  - {fileID: 11400000, guid: 02f1ecc0be67672418bc155beac50786, type: 2}
+  - {fileID: 11400000, guid: 2e588cdd390d1854099738ab129ee92e, type: 2}
+  - {fileID: 11400000, guid: 0029b9bb8085f8b4ea061fa047180474, type: 2}
+  - {fileID: 11400000, guid: 7b3e9a6bf0206be40a9eac91c332ee8e, type: 2}
+  - {fileID: 11400000, guid: 06d612b036f3f614e8da09f2b5604f5b, type: 2}
 --- !u!1 &686202578
 GameObject:
   m_ObjectHideFlags: 0
