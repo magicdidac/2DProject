@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   speed: 5
-  movingSpeed: 0
   jumpForce: 12.5
   precisionDown: 6
   offset: -0.75
-  slideSpeed: 0
+  slideSpeed: 7
+  stunSpeed: 2
   groundRangeX: 0
   groundRangeY: 0
-  slideTime: 0
+  stunTime: 1
