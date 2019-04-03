@@ -10,26 +10,18 @@ public class PlayerController : MonoBehaviour
     public PlayerModel _playerModel;
 
     [SerializeField]
-    private int precisionDown;
-    [SerializeField]
-    private float offset;
-    [SerializeField]
-    private LayerMask groundMask;
+    public LayerMask groundMask;
 
     [HideInInspector] bool _isSliding;
 
-    private SpriteRenderer spr;
+    [HideInInspector] public SpriteRenderer spr;
     [HideInInspector] public Animator anim;
 
     [HideInInspector] public PlayerState currentState;
 
     //NEW
-    [SerializeField]
-    private float _speed;
-    [SerializeField]
-    private float jumpForce;
-    private Rigidbody2D rb;
-    private bool isGrounded = false;
+    [HideInInspector] public Rigidbody2D rb;
+    [HideInInspector] public bool isGrounded = false;
 
 
     void Start()
@@ -37,6 +29,7 @@ public class PlayerController : MonoBehaviour
         spr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        _playerModel = Instantiate(_playerModel);
 
         ChangeState(new PSGrounded(this));
     }
@@ -44,7 +37,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(_speed, rb.velocity.y);
+        rb.velocity = new Vector2(_playerModel.speed, rb.velocity.y);
 
         currentState.FixedUpdate(this);
     }
@@ -53,7 +46,7 @@ public class PlayerController : MonoBehaviour
     {
         currentState.Update(this);
         groundCollision();
-        Jump();
+        //Jump();
     }
 
     private void LateUpdate()
@@ -71,26 +64,26 @@ public class PlayerController : MonoBehaviour
     {
         spr = GetComponent<SpriteRenderer>();
 
-        float distanceBetweenRays = (spr.bounds.size.x-offset) / precisionDown;
+        float distanceBetweenRays = (spr.bounds.size.x- _playerModel.offset) / _playerModel.precisionDown;
 
 
-        for (int i = 0; i <= precisionDown; i++)
+        for (int i = 0; i <= _playerModel.precisionDown; i++)
         {
-            Vector3 startPoint = new Vector3((spr.bounds.min.x+(offset/2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
+            Vector3 startPoint = new Vector3((spr.bounds.min.x+(_playerModel.offset /2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
             Debug.DrawLine(startPoint, startPoint + (Vector3.down * .1f), Color.red);
         }
     }
 
-    private void groundCollision()
+    public void groundCollision()
     {
         List<RaycastHit2D> hits = new List<RaycastHit2D>();
 
-        float distanceBetweenRays = spr.bounds.size.x / precisionDown;
+        float distanceBetweenRays = spr.bounds.size.x / _playerModel.precisionDown;
 
 
-        for (int i = 0; i <= precisionDown; i++)
+        for (int i = 0; i <= _playerModel.precisionDown; i++)
         {
-            Vector3 startPoint = new Vector3((spr.bounds.min.x + (offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
+            Vector3 startPoint = new Vector3((spr.bounds.min.x + (_playerModel.offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
             hits.Add(Physics2D.Raycast(startPoint, Vector2.down, .1f, groundMask));
         }
 
@@ -105,12 +98,12 @@ public class PlayerController : MonoBehaviour
         isGrounded = true;
     }
 
-    private void Jump()
+    /*private void Jump()
     {
         if (isGrounded && Input.GetButtonDown("Jump"))
         {
             rb.velocity = Vector2.up * jumpForce;
         }
-    }
+    }*/
 
 }

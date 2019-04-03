@@ -11,7 +11,7 @@ public class PSOnAir : PlayerState
 
     public override void CheckTransition(PlayerController pc)
     {
-
+        if (pc.isGrounded) pc.ChangeState(new PSGrounded(pc));
     }
 
     public override void FixedUpdate(PlayerController pc)
@@ -21,6 +21,6 @@ public class PSOnAir : PlayerState
 
     public override void Update(PlayerController pc)
     {
-
+        //pc.groundCollision();
     }
 }

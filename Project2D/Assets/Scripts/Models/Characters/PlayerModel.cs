@@ -6,10 +6,10 @@ using UnityEngine;
 public class PlayerModel : CharacterModel
 {
     public float movingSpeed;
+    public float jumpForce;
+    public int precisionDown;
+    public float offset;
     public float slideSpeed;
-    public float jumpImpulse;
-    public float jumpSpeedFactor;
-    public float jumpCoolDown;
     public float groundRangeX;
     public float groundRangeY;
     public float slideTime;

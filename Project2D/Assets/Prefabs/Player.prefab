@@ -141,10 +141,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a21dc14f18208414eacb865043410074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerModel: {fileID: 11400000, guid: 0fb2a9f31113d884eb0497a7232676b2, type: 2}
   precisionDown: 6
   offset: -0.75
   groundMask:
     serializedVersion: 2
     m_Bits: 256
+  spr: {fileID: 5943450587918967434}
+  anim: {fileID: 0}
   _speed: 5
   jumpForce: 12.5
+  rb: {fileID: 0}
+  isGrounded: 0
