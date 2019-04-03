@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class PSSliding : PlayerState
 {
-    float time = 0;
 
     public PSSliding(PlayerController pc)
     {
-        pc.anim.SetBool("isSliding", true);
-        
+        pc.rb.gravityScale = 4;
+        pc._playerModel.jumpForce = 0;
+        pc.anim.SetBool("isSliding", true);        
     }
 
     public override void CheckTransition(PlayerController pc)
     {
-        if(time >= pc._playerModel.slideTime)
+        if (Input.GetKeyUp(KeyCode.S))
         {
             pc.anim.SetBool("isSliding", false);
             pc.ChangeState(new PSGrounded(pc));
@@ -23,11 +23,20 @@ public class PSSliding : PlayerState
 
     public override void FixedUpdate(PlayerController pc)
     {
-
+        pc.rb.velocity = new Vector2(pc._playerModel.slideSpeed, pc.rb.velocity.y);
     }
 
     public override void Update(PlayerController pc)
     {
-        time += Time.deltaTime;
+        Jump(pc);
+    }
+
+    private void Jump(PlayerController pc)
+    {
+        pc._playerModel.jumpForce = 12.5f;
+        if (pc.isGrounded && Input.GetButtonDown("Jump"))
+        {
+            pc.rb.velocity = Vector2.up * pc._playerModel.jumpForce;
+        }
     }
 }

@@ -12,5 +12,4 @@ public class PlayerModel : CharacterModel
     public float slideSpeed;
     public float groundRangeX;
     public float groundRangeY;
-    public float slideTime;
 }

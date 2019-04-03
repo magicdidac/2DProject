@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
                 return;
             }
         }
-        isGrounded = true;
+        isGrounded = false;
     }
 
     /*private void Jump()

@@ -6,12 +6,13 @@ public class PSOnAir : PlayerState
 {
     public PSOnAir(PlayerController pc)
     {
-
+        pc.rb.gravityScale = 2.7f;
     }
 
     public override void CheckTransition(PlayerController pc)
     {
         if (pc.isGrounded) pc.ChangeState(new PSGrounded(pc));
+        if (Input.GetKeyDown(KeyCode.S)) pc.ChangeState(new PSSliding(pc));
     }
 
     public override void FixedUpdate(PlayerController pc)
