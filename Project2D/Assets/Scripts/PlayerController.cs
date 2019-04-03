@@ -7,17 +7,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
-    private Player _player;
-    [SerializeField]
-    private float _speed;
-    [SerializeField]
-    private float _fallMultiplier;
-    [SerializeField]
-    private float _lowMultiplier; //not implemented yet
-
-    [SerializeField]
-    private float _maxVerticalSpeed = 0.1f;
-
     [SerializeField]
     private int precisionDown;
     [SerializeField]
@@ -28,23 +17,32 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spr;
 
 
+    //NEW
+    [SerializeField]
+    private float _speed;
+    [SerializeField]
+    private float jumpForce;
+    private Rigidbody2D rb;
+    private bool isGrounded = false;
+
+
     void Start()
     {
-        _player = new Player(_speed, _fallMultiplier, GetComponent<Rigidbody2D>(),_maxVerticalSpeed);
         spr = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        _player.Move();
+        rb.velocity = new Vector2(_speed, rb.velocity.y);
     }
 
     private void Update()
     {
 
         groundCollision();
-        _player.Jump();
+        Jump();
     }
 
 
@@ -79,13 +77,19 @@ public class PlayerController : MonoBehaviour
         {
             if (hit)
             {
-                _player.CanJump = true;
+                isGrounded = true;
                 return;
             }
         }
+        isGrounded = true;
+    }
 
-        _player.CanJump = false;
-
+    private void Jump()
+    {
+        if (isGrounded && Input.GetButtonDown("Jump"))
+        {
+            rb.velocity = Vector2.up * jumpForce;
+        }
     }
 
 }

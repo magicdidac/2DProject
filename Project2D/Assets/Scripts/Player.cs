@@ -26,12 +26,7 @@ public class Player
     }
 
     public void Move()
-    {/*
-        // Move the character by finding the target velocity
-        Vector3 v_targetVelocity = new Vector2(Speed * 10f, RigidBody.velocity.y);
-        // And then smoothing it out and applying it to the character
-        RigidBody.velocity = Vector3.SmoothDamp(RigidBody.velocity, v_targetVelocity, ref _refVelocity, _movementSmooth);*/
-
+    {
         RigidBody.velocity = new Vector2(Speed, RigidBody.velocity.y);
 
         if (RigidBody.velocity.y < -maxVSpeed)
@@ -46,20 +41,30 @@ public class Player
     {
         if (Input.GetButtonDown("Jump"))
         {
-            Debug.Log("YAS");
             if (CanJump)
             {
-                Debug.Log("YEEES");
-                //RigidBody.velocity = Vector2.up * FallMultiplier;
-                RigidBody.velocity = new Vector2(RigidBody.velocity.x, 0);
-                RigidBody.AddForce(Vector2.up * FallMultiplier, ForceMode2D.Impulse);
-                CanJump = false;
-
-                /*else if (_rb.velocity.y > 0 && !Input.GetButtonDown("Jump"))
+                if (RigidBody.velocity.y <= 0f)
                 {
-                    _rb.velocity += Vector2.up * _lowMultiplier;
-                }*/
-            } 
+                    Debug.Log("ENTRAAA");
+                    //RigidBody.velocity = Vector2.up * FallMultiplier * Time.deltaTime;
+
+                    //RigidBody.velocity = new Vector2(RigidBody.velocity.x, 0);
+                    //RigidBody.AddForce(Vector2.up * FallMultiplier * Time.deltaTime, ForceMode2D.Impulse);
+
+                    //RigidBody.velocity = (Vector2.up * Physics2D.gravity.y * FallMultiplier * Time.deltaTime) * -1;
+
+                    RigidBody.velocity = Vector2.up * FallMultiplier;
+                    CanJump = false; 
+                }
+                else
+                    //RigidBody.velocity = (Vector2.up * Physics2D.gravity.y * LowMultiplier * Time.deltaTime) * -1;
+                    RigidBody.velocity = Vector2.up * LowMultiplier;
+            }
         }
+
+        /*if (RigidBody.velocity.y > 0 && !CanJump)
+        {
+            RigidBody.velocity = (Vector2.up * Physics2D.gravity.y * LowMultiplier * Time.deltaTime) * -1;
+        }*/
     }
 }
