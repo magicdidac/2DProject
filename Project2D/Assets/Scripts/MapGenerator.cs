@@ -17,6 +17,8 @@ public class MapGenerator : MonoBehaviour
 
     private float _lasPos = 3.5f;
 
+    private
+
     private void Update()
     {
         if (transform.position.x > _lasPos)
