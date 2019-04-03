@@ -6,9 +6,12 @@ public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
     private Player _player;
-    public float _speed;
-    public float _fallMultiplier;
-    public float _lowMultiplier; //not implemented yet
+    [SerializeField]
+    private float _speed;
+    [SerializeField]
+    private float _fallMultiplier;
+    [SerializeField]
+    private float _lowMultiplier; //not implemented yet
 
     void Start()
     {
@@ -18,7 +21,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        _player.RigidBody.velocity = Vector2.right * _speed;
+        _player.Move();
         _player.Jump();
     }
 
