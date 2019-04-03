@@ -7,6 +7,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
+    public PlayerModel _playerModel;
+
     [SerializeField]
     private int precisionDown;
     [SerializeField]
@@ -14,8 +16,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private LayerMask groundMask;
 
-    private SpriteRenderer spr;
+    [HideInInspector] bool _isSliding;
 
+    private SpriteRenderer spr;
+    [HideInInspector] public Animator anim;
+
+    [HideInInspector] public PlayerState currentState;
 
     //NEW
     [SerializeField]
@@ -30,21 +36,36 @@ public class PlayerController : MonoBehaviour
     {
         spr = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+
+        ChangeState(new PSGrounded(this));
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         rb.velocity = new Vector2(_speed, rb.velocity.y);
+
+        currentState.FixedUpdate(this);
     }
 
     private void Update()
     {
-
+        currentState.Update(this);
         groundCollision();
         Jump();
     }
 
+    private void LateUpdate()
+    {
+        currentState.CheckTransition(this);
+    }
+
+    public void ChangeState(PlayerState ps)
+    {
+        currentState = ps;
+        //Debug.Log("CurrentState = " + currentState);
+    }
 
     private void OnDrawGizmos()
     {
