@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     //NEW
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public bool isGrounded = false;
+    [HideInInspector] public bool isStuned = false;
 
 
     void Start()
@@ -96,6 +97,19 @@ public class PlayerController : MonoBehaviour
             }
         }
         isGrounded = false;
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.CompareTag("Box"))
+        {
+            if (isGrounded && !anim.GetBool("isSliding"))
+            {
+                isStuned = true;
+                col.gameObject.SetActive(false);
+            }
+            else col.gameObject.SetActive(false);
+        }
     }
 
     /*private void Jump()

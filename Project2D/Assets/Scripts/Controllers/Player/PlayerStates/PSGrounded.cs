@@ -12,6 +12,7 @@ public class PSGrounded : PlayerState
     public override void CheckTransition(PlayerController pc)
     {
         if (!pc.isGrounded) pc.ChangeState(new PSOnAir(pc));
+        if (pc.isStuned) pc.ChangeState(new PSStun(pc));
         if (Input.GetKeyDown(KeyCode.S)) pc.ChangeState(new PSSliding(pc));
     }
 
