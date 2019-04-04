@@ -19,10 +19,13 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector] public PlayerState currentState;
 
+    [HideInInspector] public int floor = 0;
+
     //NEW
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public bool isGrounded = false;
     [HideInInspector] public bool isStuned = false;
+    [HideInInspector] public bool isRope = false;
 
 
     void Start()
@@ -38,7 +41,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.velocity = new Vector2(_playerModel.speed, rb.velocity.y);
+        //rb.velocity = new Vector2(_playerModel.speed, rb.velocity.y);
 
         currentState.FixedUpdate(this);
     }
@@ -110,14 +113,21 @@ public class PlayerController : MonoBehaviour
             }
             else col.gameObject.SetActive(false);
         }
-    }
-
-    /*private void Jump()
-    {
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        else if (col.CompareTag("Rope"))
         {
-            rb.velocity = Vector2.up * jumpForce;
+            //Add rope animation start
+            transform.SetParent(col.gameObject.transform);
+            transform.position = new Vector3(transform.parent.transform.position.x, transform.position.y, transform.position.z);
+            rb.velocity = Vector2.zero;
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            floor++;
+            isRope = true;
+            col.GetComponent<Rope> ().startMovement();
         }
-    }*/
+        else if (col.CompareTag("Down"))
+        {
+            floor--;
+        }
+    }
 
 }

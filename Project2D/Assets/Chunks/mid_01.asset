@@ -9,17 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1cc4b830e697a442b5535843a1f3df9, type: 3}
-  m_Name: PlayerModel
+  m_Script: {fileID: 11500000, guid: d9a62e60c482a1d498522a452f3eed1f, type: 3}
+  m_Name: mid_01
   m_EditorClassIdentifier: 
-  health: 0
-  speed: 5
-  jumpForce: 12.5
-  precisionDown: 6
-  offset: -0.75
-  slideSpeed: 7
-  stunSpeed: 2
-  groundRangeX: 0
-  groundRangeY: 0
-  stunTime: 0.5
-  exitRopeForce: 7
+  lenght: 32
+  prefab: {fileID: 1422411347217393345, guid: b4d0304cde9f68349812c6c38dace5e5, type: 3}
