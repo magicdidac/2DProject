@@ -22,15 +22,18 @@ public class MapGenerator : MonoBehaviour
     [SerializeField]
     private Chunk[] _botTransitions;
 
+    [SerializeField]
+    private int _perIncrease;
+
     private int _nextChunk = -1;
     private Chunk _lastChunk;
     private int _currentChunk = -1;
     private int _oldChunk = -1;
     
     private float _lastPos = 2f;
-
+    
     [SerializeField]
-    private int transitionCounter = 3;
+    private int transitionCounter = 0;
 
     private void Start()
     {
@@ -48,7 +51,7 @@ public class MapGenerator : MonoBehaviour
     private void changeChunk()
     {
 
-        if(transitionCounter <= 0)
+        if(Random.Range(0,100) < transitionCounter)
         {
             Debug.Log("change!");
 
@@ -94,7 +97,7 @@ public class MapGenerator : MonoBehaviour
                     Instantiate(_botTransitions[_nextChunk].prefab, new Vector3(_lastPos, -8, 0), Quaternion.identity, _chunkStorage.transform);
                     break;
             }
-            transitionCounter = 2;// Random.Range(10,25);
+            transitionCounter = 0;
             return;
         }
 
@@ -124,7 +127,7 @@ public class MapGenerator : MonoBehaviour
                 break;
         }
 
-        transitionCounter--;
+        transitionCounter += _perIncrease;
         _currentChunk = _nextChunk;
     }
 

@@ -192,7 +192,6 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
-  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -264,25 +263,6 @@ Transform:
   m_Father: {fileID: 659440097}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &519420033
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6ccfddfe8b2f4984197e34bf7a291af4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &633573741
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,7 +318,8 @@ MonoBehaviour:
   _midTransitions:
   - {fileID: 11400000, guid: 6c009f74363241542a135f2c475df063, type: 2}
   _botTransitions: []
-  transitionCounter: 1
+  _perIncrease: 5
+  transitionCounter: 0
 --- !u!1 &659440095
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,6 +350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _offset: 2
+  _yOffset: -0.5
 --- !u!4 &659440097
 Transform:
   m_ObjectHideFlags: 0
@@ -543,3 +525,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  _scene: 0
