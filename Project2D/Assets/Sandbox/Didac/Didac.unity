@@ -317,7 +317,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0c56e8795fed26f42b20f64e01f6153b, type: 2}
   _midTransitions:
   - {fileID: 11400000, guid: 6c009f74363241542a135f2c475df063, type: 2}
-  _botTransitions: []
+  _botTransitions:
+  - {fileID: 11400000, guid: 8250163112069464182a59363e8291c3, type: 2}
   _perIncrease: 5
   transitionCounter: 0
 --- !u!1 &659440095
@@ -350,7 +351,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _offset: 2
-  _yOffset: -0.5
 --- !u!4 &659440097
 Transform:
   m_ObjectHideFlags: 0

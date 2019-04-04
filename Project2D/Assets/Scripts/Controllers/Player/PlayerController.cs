@@ -41,8 +41,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //rb.velocity = new Vector2(_playerModel.speed, rb.velocity.y);
-
         currentState.FixedUpdate(this);
     }
 
@@ -113,7 +111,7 @@ public class PlayerController : MonoBehaviour
             }
             else col.gameObject.SetActive(false);
         }
-        else if (col.CompareTag("Rope"))
+        else if (col.CompareTag("Rope") && !isRope)
         {
             //Add rope animation start
             transform.SetParent(col.gameObject.transform);
