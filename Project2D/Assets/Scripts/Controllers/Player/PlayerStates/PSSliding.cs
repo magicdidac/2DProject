@@ -9,7 +9,7 @@ public class PSSliding : PlayerState
     {
         pc.rb.gravityScale = 4;
         pc._playerModel.jumpForce = 0;
-        pc.anim.SetBool("isSliding", true);        
+        pc.anim.SetBool("isSliding", true);
     }
 
     public override void CheckTransition(PlayerController pc)
@@ -18,6 +18,11 @@ public class PSSliding : PlayerState
         {
             pc.anim.SetBool("isSliding", false);
             pc.ChangeState(new PSGrounded(pc));
+        }
+        if (pc.isRope)
+        {
+            pc.anim.SetBool("isSliding", false);
+            pc.ChangeState(new PSRope());
         }
     }
 

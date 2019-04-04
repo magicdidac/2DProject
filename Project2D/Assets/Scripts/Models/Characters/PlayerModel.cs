@@ -13,4 +13,5 @@ public class PlayerModel : CharacterModel
     public float groundRangeX;
     public float groundRangeY;
     public float stunTime;
+    public float exitRopeForce;
 }

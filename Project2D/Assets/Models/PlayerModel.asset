@@ -21,4 +21,5 @@ MonoBehaviour:
   stunSpeed: 2
   groundRangeX: 0
   groundRangeY: 0
-  stunTime: 1
+  stunTime: 0.5
+  exitRopeForce: 7
