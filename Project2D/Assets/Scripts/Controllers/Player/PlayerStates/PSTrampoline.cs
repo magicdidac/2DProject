@@ -11,7 +11,11 @@ public class PSTrampoline : AState
 
     public override void CheckTransition(PlayerController pc)
     {
-        if (!pc.isGrounded) pc.ChangeState(new PSOnAir(pc));
+        if (pc.transform.position.y > 8 * pc.floor)
+        {
+            pc.isTrampoline = false;
+            pc.ChangeState(new PSOnAir(pc));
+        }
     }
 
     public override void FixedUpdate(PlayerController pc)

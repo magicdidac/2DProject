@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour, IMoveController
     {
         currentState.Update(this);
         isGrounded = detectCollision(groundMask);
-        isTrampoline = detectCollision(trampolineMask);
+        //isTrampoline = detectCollision(trampolineMask);
     }
 
     private void LateUpdate()
@@ -115,6 +115,15 @@ public class PlayerController : MonoBehaviour, IMoveController
         else if (col.CompareTag("Down"))
         {
             floor--;
+        }
+
+        else if (col.CompareTag("Trampoline"))
+        {
+            isTrampoline = detectCollision(trampolineMask);
+            if (isTrampoline)
+            {
+                floor++;
+            }
         }
     }
 
