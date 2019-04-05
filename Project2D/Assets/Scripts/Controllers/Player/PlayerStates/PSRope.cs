@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PSRope : PlayerState
+public class PSRope : AState
 {
 
     public override void CheckTransition(PlayerController pc)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PSGrounded : PlayerState
+public class PSGrounded : AState
 {
     public PSGrounded(PlayerController pc)
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PSOnAir : PlayerState
+public class PSOnAir : AState
 {
     public PSOnAir(PlayerController pc)
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PSSliding : PlayerState
+public class PSSliding : AState
 {
 
     public PSSliding(PlayerController pc)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PSStun : PlayerState
+public class PSStun : AState
 {
     float duration = 0f;
 
