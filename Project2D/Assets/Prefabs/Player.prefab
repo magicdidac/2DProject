@@ -146,11 +146,15 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 256
+  stateInfoPosition: {x: -6, y: 3, z: 0}
+  fontSize: 35
   spr: {fileID: 5943450587918967434}
   anim: {fileID: 0}
+  floor: 0
   rb: {fileID: 0}
   isGrounded: 0
   isStuned: 0
+  isRope: 0
 --- !u!95 &813501706
 Animator:
   serializedVersion: 3
