@@ -19,11 +19,12 @@ public class PSRope : PlayerState
 
     public override void FixedUpdate(PlayerController pc)
     {
+        pc.transform.position = Vector3.Lerp(pc.transform.position, new Vector3(pc.transform.parent.position.x, pc.transform.position.y, 0), .5f);
         pc.rb.velocity = new Vector2(0, pc.rb.velocity.y);
     }
 
     public override void Update(PlayerController pc)
     {
-        //throw new System.NotImplementedException();
+
     }
 }

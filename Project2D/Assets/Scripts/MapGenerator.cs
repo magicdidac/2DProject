@@ -4,130 +4,99 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-
-    [SerializeField]
-    private GameObject _chunkStorage;
-
     private GameController gc;
 
-    [SerializeField]
-    private Chunk[] _chunks;
-
-    [SerializeField]
-    private Chunk[] _topTransitions;
-
-    [SerializeField]
-    private Chunk[] _midTransitions;
-
-    [SerializeField]
-    private Chunk[] _botTransitions;
-
-    [SerializeField]
-    private int _perIncrease;
-
-    private int _nextChunk = -1;
     private Chunk _lastChunk;
-    private int _currentChunk = -1;
     private int _oldChunk = -1;
-    
-    private float _lastPos = 2f;
-    
-    [SerializeField]
-    private int transitionCounter = 0;
+    private int _currentChunk = -1;
+    private int _nextChunk = -1;
+    private float _lastPos = 0;
+    private float transitionProbability = .0f;
+    private Queue<GameObject> chunksQueue = new Queue<GameObject>();
+
+    [SerializeField] private float _perIncrease = .05f;
+
+    #region Chunks'Arrays
+
+    [Header("Normal chunks...")]
+    [Tooltip("Array of chunks that will generated but they aren't transitional chunks.")]
+    [SerializeField] private Chunk[] _normalChunks = new Chunk[0];
+
+    [Header("Top transition chunks...")]
+    [Tooltip("Array of chunks that will generated to pass from top floor [1] to mid floor [0].")]
+    [SerializeField] private Chunk[] _topTransitions = new Chunk[0];
+
+    [Header("Mid transition chunks...")]
+    [Tooltip("Array of chunks that will generated to pass from mid floor [0] to top floor [1] or/and bot floor [-1].")]
+    [SerializeField] private Chunk[] _midTransitions = new Chunk[0];
+
+    [Header("Bot transition chunks...")]
+    [Tooltip("Array of chunks that will generated to pass from bot floor [-1] to mid floor [0].")]
+    [SerializeField] private Chunk[] _botTransitions = new Chunk[0];
+
+    #endregion
 
     private void Start()
     {
-        gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-        //transitionCounter = Random.Range(10, 25);
+        gc = GameController.instance;
     }
 
     private void Update()
     {
-        if (transform.position.x > _lastPos)
+        if (gc.player.transform.position.x > _lastPos)
             changeChunk();
         
     }
 
     private void changeChunk()
     {
-
-        if(Random.Range(0,100) < transitionCounter)
+        if(Random.value < transitionProbability)
         {
-            Debug.Log("change!");
-
             switch (gc.player.floor)
             {
                 case 1: //Top Transitions
                     _nextChunk = Random.Range(0, _topTransitions.Length);
-                    _oldChunk = _currentChunk;
-
-                    if (_currentChunk != -1)
-                        _lastPos += _lastChunk.lenght / 2;
-                    else
-                        _lastPos += _topTransitions[_nextChunk].lenght / 2;
-
-                    _lastPos += _topTransitions[_nextChunk].lenght / 2;
-                    _lastChunk = _topTransitions[_nextChunk];
-                    Instantiate(_topTransitions[_nextChunk].prefab, new Vector3(_lastPos, 8, 0), Quaternion.identity, _chunkStorage.transform);
+                    instantiateChunk(_topTransitions[_nextChunk]);
                     break;
                 case 0: //Mid Transitions
                     _nextChunk = Random.Range(0, _midTransitions.Length);
-                    _oldChunk = _currentChunk;
-
-                    if (_currentChunk != -1)
-                        _lastPos += _lastChunk.lenght / 2;
-                    else
-                        _lastPos += _midTransitions[_nextChunk].lenght / 2;
-
-                    _lastPos += _midTransitions[_nextChunk].lenght / 2;
-                    _lastChunk = _midTransitions[_nextChunk];
-                    Instantiate(_midTransitions[_nextChunk].prefab, new Vector3(_lastPos, 0, 0), Quaternion.identity, _chunkStorage.transform);
+                    instantiateChunk(_midTransitions[_nextChunk]);
                     break;
                 case -1: //Bot Transitions
                     _nextChunk = Random.Range(0, _botTransitions.Length);
-                    _oldChunk = _currentChunk;
-
-                    if (_currentChunk != -1)
-                        _lastPos += _lastChunk.lenght / 2;
-                    else
-                        _lastPos += _botTransitions[_nextChunk].lenght / 2;
-
-                    _lastPos += _botTransitions[_nextChunk].lenght / 2;
-                    _lastChunk = _botTransitions[_nextChunk];
-                    Instantiate(_botTransitions[_nextChunk].prefab, new Vector3(_lastPos, -8, 0), Quaternion.identity, _chunkStorage.transform);
+                    instantiateChunk(_botTransitions[_nextChunk]);
                     break;
             }
-            transitionCounter = 0;
+            transitionProbability = .0f;
             return;
         }
 
         do
         {
-            _nextChunk = Random.Range(0, _chunks.Length);
+            _nextChunk = Random.Range(0, _normalChunks.Length);
         } while (_nextChunk == _currentChunk || _nextChunk == _oldChunk);
+        
+        instantiateChunk(_normalChunks[_nextChunk]);
+
+        transitionProbability += _perIncrease;
+    }
+    
+    private void instantiateChunk(Chunk p_chunk)
+    {
         _oldChunk = _currentChunk;
+        if (_currentChunk != -1)
+            _lastPos += _lastChunk.lenght / 2;
+        else
+            _lastPos += 9;
 
-        if(_currentChunk != -1)
-        	_lastPos += _lastChunk.lenght/2;
-    	else
-        	_lastPos += _chunks[_nextChunk].lenght/2;
+        _lastPos += p_chunk.lenght / 2;
+        _lastChunk = p_chunk;
 
-        _lastPos += _chunks[_nextChunk].lenght/2;
-        _lastChunk = _chunks[_nextChunk];
-        switch (gc.player.floor)
-        {
-            case 1: //High Floor
-                Instantiate(_chunks[_nextChunk].prefab, new Vector3(_lastPos, 8, 0), Quaternion.identity, _chunkStorage.transform);
-                break;
-            case 0: //Middle Floor
-                Instantiate(_chunks[_nextChunk].prefab, new Vector3(_lastPos, 0, 0), Quaternion.identity, _chunkStorage.transform);
-                break;
-            case -1: //Low Floor
-                Instantiate(_chunks[_nextChunk].prefab, new Vector3(_lastPos, -8, 0), Quaternion.identity, _chunkStorage.transform);
-                break;
-        }
+        GameObject chunkCreated = Instantiate(p_chunk.prefab, new Vector3(_lastPos, 8*gc.player.floor), Quaternion.identity, transform);
+        chunksQueue.Enqueue(chunkCreated);
+        if(chunksQueue.Count >= 3)
+            GameObject.Destroy(chunksQueue.Dequeue());
 
-        transitionCounter += _perIncrease;
         _currentChunk = _nextChunk;
     }
 

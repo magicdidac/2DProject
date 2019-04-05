@@ -8,7 +8,7 @@ public class PlayerFollow: MonoBehaviour
     private PlayerController _player;
 
     [SerializeField]
-    private float _offset;
+    private float _offset = 0;
 
     private Animator anim;
 
@@ -26,8 +26,8 @@ public class PlayerFollow: MonoBehaviour
         if(_player.floor != myFloor && _player.isGrounded)
             myFloor = _player.floor;
         else if (_player.floor != myFloor)
-            transform.position = Vector3.Lerp(transform.position, new Vector3(_player.transform.position.x + _offset, _player.transform.position.y, transform.position.z), .5f);
+            transform.position = Vector3.Lerp(transform.position, new Vector3(_player.transform.position.x + _offset, (_player.transform.position.y)+2, transform.position.z), .5f);
         else
-            transform.position = Vector3.Lerp(transform.position, new Vector3(_player.transform.position.x + _offset, 8 * _player.floor, transform.position.z), .5f);
+            transform.position = Vector3.Lerp(transform.position, new Vector3(_player.transform.position.x + _offset, (8 * _player.floor)+2, transform.position.z), .5f);
     }
 }

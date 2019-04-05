@@ -6,11 +6,14 @@ public class ChunkGizmos : MonoBehaviour
 {
     
 	[SerializeField]
-	private Color _color;
+	private Color _color = Color.red;
+
+    [SerializeField]
+    private Vector3 endPoint = Vector3.up * 10;
 
 	private void OnDrawGizmos()
     {
-        Debug.DrawLine(transform.position, transform.position + Vector3.up * 10, _color);
+        Debug.DrawLine(transform.position, transform.position + endPoint, _color);
     }
 
 }
