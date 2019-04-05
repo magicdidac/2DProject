@@ -18,11 +18,11 @@ public class PSOnAir : PlayerState
 
     public override void FixedUpdate(PlayerController pc)
     {
-
+        pc.rb.velocity = new Vector2(pc._playerModel.speed, pc.rb.velocity.y);
     }
 
     public override void Update(PlayerController pc)
     {
-        //pc.groundCollision();
+        return;
     }
 }

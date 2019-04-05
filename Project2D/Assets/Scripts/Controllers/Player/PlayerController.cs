@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -7,10 +8,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public PlayerModel _playerModel;
-
-    [SerializeField]
-    public LayerMask groundMask;
+    [SerializeField] public PlayerModel _playerModel;
+    [SerializeField] public LayerMask groundMask;
+    [SerializeField] private Vector3 stateInfoPosition = Vector3.zero;
+    [SerializeField] private int fontSize = 20;
 
     [HideInInspector] bool _isSliding;
 
@@ -41,8 +42,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //rb.velocity = new Vector2(_playerModel.speed, rb.velocity.y);
-
         currentState.FixedUpdate(this);
     }
 
@@ -61,7 +60,6 @@ public class PlayerController : MonoBehaviour
     public void ChangeState(PlayerState ps)
     {
         currentState = ps;
-        //Debug.Log("CurrentState = " + currentState);
     }
 
     private void OnDrawGizmos()
@@ -75,6 +73,15 @@ public class PlayerController : MonoBehaviour
         {
             Vector3 startPoint = new Vector3((spr.bounds.min.x+(_playerModel.offset /2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
             Debug.DrawLine(startPoint, startPoint + (Vector3.down * .1f), Color.red);
+        }
+
+        if (currentState != null)
+        {
+            GUIStyle style = new GUIStyle();
+            style.normal.textColor = Color.red;
+            style.fontSize = fontSize;
+            style.alignment = TextAnchor.MiddleLeft;
+            Handles.Label(stateInfoPosition + Camera.main.transform.position, "Current state: " + currentState + "\nFloor: " + floor, style);
         }
     }
 
@@ -113,11 +120,10 @@ public class PlayerController : MonoBehaviour
             }
             else col.gameObject.SetActive(false);
         }
-        else if (col.CompareTag("Rope"))
+        else if (col.CompareTag("Rope") && !isRope)
         {
             //Add rope animation start
             transform.SetParent(col.gameObject.transform);
-            transform.position = new Vector3(transform.parent.transform.position.x, transform.position.y, transform.position.z);
             rb.velocity = Vector2.zero;
             rb.bodyType = RigidbodyType2D.Kinematic;
             floor++;
