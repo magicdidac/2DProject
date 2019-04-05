@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PSTrampoline : PlayerState
+public class PSTrampoline : AState
 {
     public PSTrampoline(PlayerController pc)
     {

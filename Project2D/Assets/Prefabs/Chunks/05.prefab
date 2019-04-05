@@ -30,9 +30,99 @@ Transform:
   - {fileID: 5650205266039658079}
   - {fileID: 5054245303020487486}
   - {fileID: 4157700408748975652}
+  - {fileID: 6016304432799445438}
+  - {fileID: 2288451461573065901}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &210410078204462267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2288451461573065901}
+  - component: {fileID: 1930557304122754973}
+  m_Layer: 0
+  m_Name: End
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2288451461573065901
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210410078204462267}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 12, y: -1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 200743520973573198}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1930557304122754973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210410078204462267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6ccb23f449ef94481546b23fa1204f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 1, g: 0, b: 0, a: 1}
+--- !u!1 &5496939953326261687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6016304432799445438}
+  - component: {fileID: 377549594623437302}
+  m_Layer: 0
+  m_Name: Start
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6016304432799445438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5496939953326261687}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -12, y: -1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 200743520973573198}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &377549594623437302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5496939953326261687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef6ccb23f449ef94481546b23fa1204f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 0, g: 1, b: 0.0184803, a: 1}
 --- !u!1001 &200743521664736802
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40,11 +130,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 200743520973573198}
     m_Modifications:
-    - target: {fileID: 2193205714565949887, guid: 8628c6ba2e2ac464194cd0d16a72f5d2,
-        type: 3}
-      propertyPath: m_Name
-      value: Platform
-      objectReference: {fileID: 0}
     - target: {fileID: 4966738630949248284, guid: 8628c6ba2e2ac464194cd0d16a72f5d2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -100,15 +185,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5305516121572611736, guid: 8628c6ba2e2ac464194cd0d16a72f5d2,
+    - target: {fileID: 2193205714565949887, guid: 8628c6ba2e2ac464194cd0d16a72f5d2,
         type: 3}
-      propertyPath: m_SpriteTilingProperty.newSize.x
-      value: 25
+      propertyPath: m_Name
+      value: Platform
       objectReference: {fileID: 0}
     - target: {fileID: 3267458683534151385, guid: 8628c6ba2e2ac464194cd0d16a72f5d2,
         type: 3}
       propertyPath: m_Size.x
-      value: 25
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 5305516121572611736, guid: 8628c6ba2e2ac464194cd0d16a72f5d2,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 24
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8628c6ba2e2ac464194cd0d16a72f5d2, type: 3}
@@ -125,11 +215,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 200743520973573198}
     m_Modifications:
-    - target: {fileID: 4470613651233996452, guid: e4c9487eb3ffe7346b6632bc8751a27c,
-        type: 3}
-      propertyPath: m_Name
-      value: Box
-      objectReference: {fileID: 0}
     - target: {fileID: 5521590077372196774, guid: e4c9487eb3ffe7346b6632bc8751a27c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -185,6 +270,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4470613651233996452, guid: e4c9487eb3ffe7346b6632bc8751a27c,
+        type: 3}
+      propertyPath: m_Name
+      value: Box
+      objectReference: {fileID: 0}
     - target: {fileID: 6705481401348245397, guid: e4c9487eb3ffe7346b6632bc8751a27c,
         type: 3}
       propertyPath: m_Size.x
@@ -220,11 +310,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 200743520973573198}
     m_Modifications:
-    - target: {fileID: 1359980483023106583, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
-        type: 3}
-      propertyPath: m_Name
-      value: InstaKill
-      objectReference: {fileID: 0}
     - target: {fileID: 4285792237192567278, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -279,6 +364,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1359980483023106583, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
+        type: 3}
+      propertyPath: m_Name
+      value: InstaKill
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ccf0e5e6099bcd4d9d54b1980b39003, type: 3}

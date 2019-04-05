@@ -1,29 +1,40 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
-public class PlayerController : MonoBehaviour
+[RequireComponent(typeof(Animator))]
+public class PlayerController : MonoBehaviour, IMoveController
 {
-    // Start is called before the first frame update
-    public PlayerModel _playerModel;
 
-    [SerializeField]
-    public LayerMask groundMask;
-    public LayerMask trampolineMask;
-
-    [HideInInspector] bool _isSliding;
-
+    //Components
+    [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public SpriteRenderer spr;
     [HideInInspector] public Animator anim;
 
-    [HideInInspector] public PlayerState currentState;
+    //State
+    [HideInInspector] public AState currentState;
+    
+
+    [SerializeField] public LayerMask groundMask;
+    [SerializeField] public LayerMask trampolineMask;
+
+    [SerializeField] public PlayerModel _playerModel;
+
+    [SerializeField] private Vector3 stateInfoPosition = Vector3.zero;
+    [SerializeField] private int fontSize = 20;
+
 
     //NEW
-    [HideInInspector] public Rigidbody2D rb;
+    
     [HideInInspector] public bool isGrounded = false;
     [HideInInspector] public bool isTrampoline = false;
+    [HideInInspector] public bool isStuned = false;
+    [HideInInspector] public bool isSliding = false;
+    [HideInInspector] public bool isRope = false;
+    [HideInInspector] public int floor = 0;
 
 
     void Start()
@@ -37,19 +48,16 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        rb.velocity = new Vector2(_playerModel.speed, rb.velocity.y);
-
         currentState.FixedUpdate(this);
     }
 
     private void Update()
     {
         currentState.Update(this);
-        groundCollision();
-        TrampolineCollision();
-        //Jump();
+        isGrounded = detectCollision(groundMask);
+        isTrampoline = detectCollision(trampolineMask);
     }
 
     private void LateUpdate()
@@ -57,80 +65,80 @@ public class PlayerController : MonoBehaviour
         currentState.CheckTransition(this);
     }
 
-    public void ChangeState(PlayerState ps)
+    public void ChangeState(AState ps) { currentState = ps; }
+
+    public bool detectCollision(LayerMask p_lm)
     {
-        currentState = ps;
-        //Debug.Log("CurrentState = " + currentState);
+        List<RaycastHit2D> hits = new List<RaycastHit2D>();
+
+        float distanceBetweenRays = spr.bounds.size.x / _playerModel.precisionDown;
+
+
+        for (int i = 0; i <= _playerModel.precisionDown; i++)
+        {
+            Vector3 startPoint = new Vector3((spr.bounds.min.x + (_playerModel.offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
+            hits.Add(Physics2D.Raycast(startPoint, Vector2.down, .1f, p_lm));
+        }
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.CompareTag("Box"))
+        {
+            if (isGrounded && !anim.GetBool("isSliding"))
+            {
+                isStuned = true;
+                col.gameObject.SetActive(false);
+            }
+            else col.gameObject.SetActive(false);
+        }
+        else if (col.CompareTag("Rope") && !isRope)
+        {
+            //Add rope animation start
+            transform.SetParent(col.gameObject.transform);
+            rb.velocity = Vector2.zero;
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            floor++;
+            isRope = true;
+            col.GetComponent<Rope> ().startMovement();
+        }
+        else if (col.CompareTag("Down"))
+        {
+            floor--;
+        }
     }
 
     private void OnDrawGizmos()
     {
         spr = GetComponent<SpriteRenderer>();
 
-        float distanceBetweenRays = (spr.bounds.size.x- _playerModel.offset) / _playerModel.precisionDown;
+        float distanceBetweenRays = (spr.bounds.size.x - _playerModel.offset) / _playerModel.precisionDown;
 
 
         for (int i = 0; i <= _playerModel.precisionDown; i++)
         {
-            Vector3 startPoint = new Vector3((spr.bounds.min.x+(_playerModel.offset /2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
+            Vector3 startPoint = new Vector3((spr.bounds.min.x + (_playerModel.offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
             Debug.DrawLine(startPoint, startPoint + (Vector3.down * .1f), Color.red);
         }
+
+        if (currentState != null)
+        {
+            GUIStyle style = new GUIStyle();
+            style.normal.textColor = Color.red;
+            style.fontSize = fontSize;
+            style.alignment = TextAnchor.MiddleLeft;
+            Handles.Label(stateInfoPosition + Camera.main.transform.position, "Current state: " + currentState + "\nFloor: " + floor, style);
+        }
     }
-
-    public void groundCollision()
-    {
-        List<RaycastHit2D> hits = new List<RaycastHit2D>();
-
-        float distanceBetweenRays = spr.bounds.size.x / _playerModel.precisionDown;
-
-
-        for (int i = 0; i <= _playerModel.precisionDown; i++)
-        {
-            Vector3 startPoint = new Vector3((spr.bounds.min.x + (_playerModel.offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
-            hits.Add(Physics2D.Raycast(startPoint, Vector2.down, .1f, groundMask));
-        }
-
-        foreach (RaycastHit2D hit in hits)
-        {
-            if (hit)
-            {
-                isGrounded = true;
-                return;
-            }
-        }
-        isGrounded = false;
-    }
-
-    public void TrampolineCollision()
-    {
-        List<RaycastHit2D> hits = new List<RaycastHit2D>();
-
-        float distanceBetweenRays = spr.bounds.size.x / _playerModel.precisionDown;
-
-
-        for (int i = 0; i <= _playerModel.precisionDown; i++)
-        {
-            Vector3 startPoint = new Vector3((spr.bounds.min.x + (_playerModel.offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
-            hits.Add(Physics2D.Raycast(startPoint, Vector2.down, .1f, trampolineMask));
-        }
-
-        foreach (RaycastHit2D hit in hits)
-        {
-            if (hit)
-            {
-                isTrampoline = true;
-                return;
-            }
-        }
-        isTrampoline = false;
-    }
-
-    /*private void Jump()
-    {
-        if (isGrounded && Input.GetButtonDown("Jump"))
-        {
-            rb.velocity = Vector2.up * jumpForce;
-        }
-    }*/
 
 }

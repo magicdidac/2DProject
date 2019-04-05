@@ -9,6 +9,8 @@ TagManager:
   - Kill
   - MapController
   - Dump
+  - Rope
+  - Down
   layers:
   - Default
   - TransparentFX

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5943450587918967437}
   - component: {fileID: 5943450587918967436}
   - component: {fileID: 5943450587918967439}
+  - component: {fileID: 813501706}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -141,15 +142,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a21dc14f18208414eacb865043410074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerModel: {fileID: 11400000, guid: 0fb2a9f31113d884eb0497a7232676b2, type: 2}
+  rb: {fileID: 0}
+  spr: {fileID: 5943450587918967434}
+  anim: {fileID: 0}
   groundMask:
     serializedVersion: 2
     m_Bits: 256
   trampolineMask:
     serializedVersion: 2
     m_Bits: 512
-  spr: {fileID: 5943450587918967434}
-  anim: {fileID: 0}
-  rb: {fileID: 0}
+  _playerModel: {fileID: 11400000, guid: 0fb2a9f31113d884eb0497a7232676b2, type: 2}
+  stateInfoPosition: {x: -6, y: 3, z: 0}
+  fontSize: 35
   isGrounded: 0
   isTrampoline: 0
+  isStuned: 0
+  isSliding: 0
+  isRope: 0
+  floor: 0
+--- !u!95 &813501706
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5943450587918967438}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6013a697265e05849b01e6df5d7fba77, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
