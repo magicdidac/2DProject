@@ -12,8 +12,13 @@ public class PSOnAir : AState
     public override void CheckTransition(PlayerController pc)
     {
         if (pc.isGrounded) pc.ChangeState(new PSGrounded(pc));
+
+        if (pc.isTrampoline) pc.ChangeState(new PSTrampoline(pc));
+
         if (pc.isRope) pc.ChangeState(new PSRope());
+
         if (Input.GetKeyDown(KeyCode.S)) pc.ChangeState(new PSSliding(pc));
+
     }
 
     public override void FixedUpdate(PlayerController pc)

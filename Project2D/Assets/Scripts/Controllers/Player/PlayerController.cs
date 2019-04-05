@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour, IMoveController
     
 
     [SerializeField] public LayerMask groundMask;
+    [SerializeField] public LayerMask trampolineMask;
 
     [SerializeField] public PlayerModel _playerModel;
 
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour, IMoveController
     //NEW
     
     [HideInInspector] public bool isGrounded = false;
+    [HideInInspector] public bool isTrampoline = false;
     [HideInInspector] public bool isStuned = false;
     [HideInInspector] public bool isSliding = false;
     [HideInInspector] public bool isRope = false;
@@ -55,6 +57,7 @@ public class PlayerController : MonoBehaviour, IMoveController
     {
         currentState.Update(this);
         isGrounded = detectCollision(groundMask);
+        //isTrampoline = detectCollision(trampolineMask);
     }
 
     private void LateUpdate()
@@ -84,6 +87,7 @@ public class PlayerController : MonoBehaviour, IMoveController
                 return true;
             }
         }
+
         return false;
     }
 
@@ -111,6 +115,15 @@ public class PlayerController : MonoBehaviour, IMoveController
         else if (col.CompareTag("Down"))
         {
             floor--;
+        }
+
+        else if (col.CompareTag("Trampoline"))
+        {
+            isTrampoline = detectCollision(trampolineMask);
+            if (isTrampoline)
+            {
+                floor++;
+            }
         }
     }
 
