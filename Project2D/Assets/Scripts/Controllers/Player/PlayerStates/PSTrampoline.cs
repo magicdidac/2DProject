@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PSOnAir : PlayerState
+public class PSTrampoline : PlayerState
 {
-    public PSOnAir(PlayerController pc)
+    public PSTrampoline(PlayerController pc)
     {
 
     }
 
     public override void CheckTransition(PlayerController pc)
     {
-        if (pc.isGrounded) pc.ChangeState(new PSGrounded(pc));
-        else if (pc.isTrampoline) pc.ChangeState(new PSTrampoline(pc));
+        if (!pc.isGrounded) pc.ChangeState(new PSOnAir(pc));
     }
 
     public override void FixedUpdate(PlayerController pc)
@@ -22,6 +21,6 @@ public class PSOnAir : PlayerState
 
     public override void Update(PlayerController pc)
     {
-        //pc.groundCollision();
+        pc.rb.velocity = Vector2.up * pc._playerModel.jumpForce;
     }
 }

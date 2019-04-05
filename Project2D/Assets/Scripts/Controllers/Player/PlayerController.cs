@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     public LayerMask groundMask;
+    public LayerMask trampolineMask;
 
     [HideInInspector] bool _isSliding;
 
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     //NEW
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public bool isGrounded = false;
+    [HideInInspector] public bool isTrampoline = false;
 
 
     void Start()
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour
     {
         currentState.Update(this);
         groundCollision();
+        TrampolineCollision();
         //Jump();
     }
 
@@ -95,7 +98,31 @@ public class PlayerController : MonoBehaviour
                 return;
             }
         }
-        isGrounded = true;
+        isGrounded = false;
+    }
+
+    public void TrampolineCollision()
+    {
+        List<RaycastHit2D> hits = new List<RaycastHit2D>();
+
+        float distanceBetweenRays = spr.bounds.size.x / _playerModel.precisionDown;
+
+
+        for (int i = 0; i <= _playerModel.precisionDown; i++)
+        {
+            Vector3 startPoint = new Vector3((spr.bounds.min.x + (_playerModel.offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
+            hits.Add(Physics2D.Raycast(startPoint, Vector2.down, .1f, trampolineMask));
+        }
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit)
+            {
+                isTrampoline = true;
+                return;
+            }
+        }
+        isTrampoline = false;
     }
 
     /*private void Jump()
