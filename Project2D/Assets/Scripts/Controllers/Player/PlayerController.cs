@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour, IMoveController
     [HideInInspector] public bool isStuned = false;
     [HideInInspector] public bool isSliding = false;
     [HideInInspector] public bool isRope = false;
+    [HideInInspector] public bool isTirolina = false;
     [HideInInspector] public int floor = 0;
 
 
@@ -112,6 +113,7 @@ public class PlayerController : MonoBehaviour, IMoveController
             isRope = true;
             col.GetComponent<Rope> ().startMovement();
         }
+
         else if (col.CompareTag("Down"))
         {
             floor--;
@@ -124,6 +126,18 @@ public class PlayerController : MonoBehaviour, IMoveController
             {
                 floor++;
             }
+        }
+
+        else if (col.CompareTag("Tirolina"))
+        {
+            isTirolina = true;
+            rb.velocity = Vector2.zero;
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            isTirolina = true;
+            //float endPoint = col.bounds.max.x;
+            //if (transform.position.x >= endPoint)
+            //    rb.bodyType = RigidbodyType2D.Dynamic;
+            /* Tendria que buscar donde calcular esto del limite de manera mas limpia */
         }
     }
 

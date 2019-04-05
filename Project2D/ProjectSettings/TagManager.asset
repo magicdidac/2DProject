@@ -12,6 +12,7 @@ TagManager:
   - Rope
   - Down
   - Trampoline
+  - Tirolina
   layers:
   - Default
   - TransparentFX

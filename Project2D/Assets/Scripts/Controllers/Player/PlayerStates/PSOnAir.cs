@@ -19,6 +19,8 @@ public class PSOnAir : AState
 
         if (Input.GetKeyDown(KeyCode.S)) pc.ChangeState(new PSSliding(pc));
 
+        if (pc.isTirolina) pc.ChangeState(new PSTirolina());
+
     }
 
     public override void FixedUpdate(PlayerController pc)
