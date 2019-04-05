@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     [HideInInspector] public static GameController instance = null; //Allows to acces to the game controller from any other script
 
-    [HideInInspector] public MapGenerator mapGenerator; //Map controller reference
+    [HideInInspector] public MapController mapGenerator; //Map controller reference
     [HideInInspector] public PlayerController player; //Player reference
 
     private void Awake()
@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         DontDestroyOnLoad(gameObject);
         
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController> ();
-        mapGenerator = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapGenerator>();
+        mapGenerator = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
     }
 
     private void Update()
