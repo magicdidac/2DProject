@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour //This class follows the Singleton Pattern
 {
@@ -10,6 +11,9 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     [HideInInspector] public MapController mapGenerator; //Map controller reference
     [HideInInspector] public PlayerController player; //Player reference
+
+    public Text scoreText;
+    private int score;
 
     private void Awake()
     {
@@ -29,6 +33,17 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     {
         if (Input.GetKeyDown(KeyCode.R))
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void AddScore(int newScoreValue)
+    {
+        score += newScoreValue;
+        UpdateScore();
+    }
+
+    private void UpdateScore()
+    {
+        scoreText.text = "Score: " + score;
     }
 
 }

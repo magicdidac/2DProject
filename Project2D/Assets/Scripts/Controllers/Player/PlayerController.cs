@@ -125,6 +125,11 @@ public class PlayerController : MonoBehaviour, IMoveController
                 floor++;
             }
         }
+
+        else if (col.CompareTag("Coin"))
+        {
+            GameController.instance.AddScore(1);
+        }
     }
 
     private void OnDrawGizmos()
