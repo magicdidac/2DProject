@@ -43,7 +43,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     private void UpdateScore()
     {
-        scoreText.text = "Score: " + score;
+        scoreText.text += score;
     }
 
 }

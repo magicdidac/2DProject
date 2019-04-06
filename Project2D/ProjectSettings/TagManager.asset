@@ -12,6 +12,8 @@ TagManager:
   - Rope
   - Down
   - Trampoline
+  - Coin
+  - CoinUI
   layers:
   - Default
   - TransparentFX
