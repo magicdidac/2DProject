@@ -6,8 +6,8 @@ public class PSTirolina : AState
 {
     public override void CheckTransition(PlayerController pc)
     {
-        float endpoint = pc.GetComponent<Bounds>().max.x;
-        if (pc.transform.position.x >= endpoint)
+        Transform endPoint = pc.transform.parent.Find("EndPoint");
+        if (pc.transform.position.x >= endPoint.position.x)
         {
             pc.isTirolina = false;
             pc.rb.bodyType = RigidbodyType2D.Dynamic;
@@ -18,8 +18,10 @@ public class PSTirolina : AState
 
     public override void FixedUpdate(PlayerController pc)
     {
-        //pc.rb.velocity = Vector2.zero;
-        //pc.rb.bodyType = RigidbodyType2D.Kinematic;
+        Transform endPoint = pc.transform.parent.Find("EndPoint");
+        //pc.transform.position = Vector3.Lerp(pc.transform.position, new Vector3(pc.transform.parent.position.x, pc.transform.position.y, 0), .5f);
+        pc.transform.position = Vector3.Lerp(pc.transform.position, new Vector3(endPoint.position.x, endPoint.transform.position.y, 0), .5f);
+        pc.rb.velocity = new Vector2(0, pc.rb.velocity.y);
     }
 
     public override void Update(PlayerController pc)

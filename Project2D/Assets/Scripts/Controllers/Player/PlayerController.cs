@@ -130,10 +130,10 @@ public class PlayerController : MonoBehaviour, IMoveController
 
         else if (col.CompareTag("Tirolina"))
         {
+            transform.SetParent(col.gameObject.transform);
             isTirolina = true;
-            rb.velocity = Vector2.zero;
             rb.bodyType = RigidbodyType2D.Kinematic;
-            isTirolina = true;
+            rb.velocity = Vector2.zero;
             //float endPoint = col.bounds.max.x;
             //if (transform.position.x >= endPoint)
             //    rb.bodyType = RigidbodyType2D.Dynamic;
