@@ -20,8 +20,9 @@ public class PSTirolina : AState
     {
         Transform endPoint = pc.transform.parent.Find("EndPoint");
         //pc.transform.position = Vector3.Lerp(pc.transform.position, new Vector3(pc.transform.parent.position.x, pc.transform.position.y, 0), .5f);
-        pc.transform.position = Vector3.Lerp(pc.transform.position, new Vector3(endPoint.position.x, endPoint.transform.position.y, 0), .5f);
-        pc.rb.velocity = new Vector2(0, pc.rb.velocity.y);
+        pc.transform.position = Vector3.Lerp(pc.transform.position, new Vector3(endPoint.position.x, endPoint.transform.position.y, 0), .1f);
+        //pc.rb.velocity = new Vector2(0, pc.rb.velocity.y);
+        //pc.rb.velocity = new Vector2(pc.rb.velocity.x, 0);
     }
 
     public override void Update(PlayerController pc)

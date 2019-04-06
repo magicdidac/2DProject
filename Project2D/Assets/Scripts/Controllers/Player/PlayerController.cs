@@ -122,22 +122,16 @@ public class PlayerController : MonoBehaviour, IMoveController
         else if (col.CompareTag("Trampoline"))
         {
             isTrampoline = detectCollision(trampolineMask);
-            if (isTrampoline)
-            {
-                floor++;
-            }
+            if (isTrampoline) floor++;
         }
 
-        else if (col.CompareTag("Tirolina"))
+        else if (col.tag.Contains("Tirolina"))
         {
             transform.SetParent(col.gameObject.transform);
             isTirolina = true;
             rb.bodyType = RigidbodyType2D.Kinematic;
             rb.velocity = Vector2.zero;
-            //float endPoint = col.bounds.max.x;
-            //if (transform.position.x >= endPoint)
-            //    rb.bodyType = RigidbodyType2D.Dynamic;
-            /* Tendria que buscar donde calcular esto del limite de manera mas limpia */
+            //floor--; //descomentar cuando se erregle la velocidad de la tirolina
         }
     }
 
