@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class PSTrampoline : AState
 {
-    public PSTrampoline(PlayerController pc)
-    {
 
-    }
-
-    public override void CheckTransition(PlayerController pc)
+    public override void CheckTransition(AMoveController pc)
     {
         if (pc.transform.position.y > 8 * pc.floor)
         {
@@ -18,13 +14,10 @@ public class PSTrampoline : AState
         }
     }
 
-    public override void FixedUpdate(PlayerController pc)
-    {
-
-    }
-
-    public override void Update(PlayerController pc)
+    public override void FixedUpdate(AMoveController pc)
     {
         pc.rb.velocity = Vector2.up * pc._playerModel.jumpForce;
     }
+
+    public override void Update(AMoveController pc) { }
 }

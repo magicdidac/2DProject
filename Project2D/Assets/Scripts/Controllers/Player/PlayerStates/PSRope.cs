@@ -5,7 +5,7 @@ using UnityEngine;
 public class PSRope : AState
 {
 
-    public override void CheckTransition(PlayerController pc)
+    public override void CheckTransition(AMoveController pc)
     {
         if (pc.transform.parent == null)
         {
@@ -17,14 +17,11 @@ public class PSRope : AState
             
     }
 
-    public override void FixedUpdate(PlayerController pc)
+    public override void FixedUpdate(AMoveController pc)
     {
         pc.transform.position = Vector3.Lerp(pc.transform.position, new Vector3(pc.transform.parent.position.x, pc.transform.position.y, 0), .5f);
         pc.rb.velocity = new Vector2(0, pc.rb.velocity.y);
     }
 
-    public override void Update(PlayerController pc)
-    {
-
-    }
+    public override void Update(AMoveController pc) { }
 }

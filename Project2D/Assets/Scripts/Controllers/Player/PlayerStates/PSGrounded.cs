@@ -4,29 +4,29 @@ using UnityEngine;
 
 public class PSGrounded : AState
 {
-    public PSGrounded(PlayerController pc)
+    public PSGrounded(AMoveController pc)
     {
         pc.rb.gravityScale = 2.7f;
     }
 
-    public override void CheckTransition(PlayerController pc)
+    public override void CheckTransition(AMoveController pc)
     {
         if (!pc.isGrounded) pc.ChangeState(new PSOnAir(pc));
         if (pc.isStuned) pc.ChangeState(new PSStun(pc));
         if (Input.GetKeyDown(KeyCode.S)) pc.ChangeState(new PSSliding(pc));
     }
 
-    public override void FixedUpdate(PlayerController pc)
+    public override void FixedUpdate(AMoveController pc)
     {
         pc.rb.velocity = new Vector2(pc._playerModel.speed, pc.rb.velocity.y);
     }
 
-    public override void Update(PlayerController pc)
+    public override void Update(AMoveController pc)
     {
         Jump(pc);
     }
 
-    private void Jump(PlayerController pc)
+    private void Jump(AMoveController pc)
     {
         pc._playerModel.jumpForce = 12.5f;
         if (pc.isGrounded && Input.GetButtonDown("Jump"))

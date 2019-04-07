@@ -6,35 +6,14 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
-public class PlayerController : MonoBehaviour, IMoveController
-{
-
-    //Components
-    [HideInInspector] public Rigidbody2D rb;
-    [HideInInspector] public SpriteRenderer spr;
-    [HideInInspector] public Animator anim;
-
-    //State
-    [HideInInspector] public AState currentState;
-    
+public class PlayerController : AMoveController
+{   
 
     [SerializeField] public LayerMask groundMask;
     [SerializeField] public LayerMask trampolineMask;
 
-    [SerializeField] public PlayerModel _playerModel;
-
     [SerializeField] private Vector3 stateInfoPosition = Vector3.zero;
     [SerializeField] private int fontSize = 20;
-
-
-    //NEW
-    
-    [HideInInspector] public bool isGrounded = false;
-    [HideInInspector] public bool isTrampoline = false;
-    [HideInInspector] public bool isStuned = false;
-    [HideInInspector] public bool isSliding = false;
-    [HideInInspector] public bool isRope = false;
-    [HideInInspector] public int floor = 0;
 
 
     void Start()
@@ -56,39 +35,13 @@ public class PlayerController : MonoBehaviour, IMoveController
     private void Update()
     {
         currentState.Update(this);
-        isGrounded = detectCollision(groundMask);
+        isGrounded = detectCollision(groundMask, _playerModel.offset);
         //isTrampoline = detectCollision(trampolineMask);
     }
 
     private void LateUpdate()
     {
         currentState.CheckTransition(this);
-    }
-
-    public void ChangeState(AState ps) { currentState = ps; }
-
-    public bool detectCollision(LayerMask p_lm)
-    {
-        List<RaycastHit2D> hits = new List<RaycastHit2D>();
-
-        float distanceBetweenRays = spr.bounds.size.x / _playerModel.precisionDown;
-
-
-        for (int i = 0; i <= _playerModel.precisionDown; i++)
-        {
-            Vector3 startPoint = new Vector3((spr.bounds.min.x + (_playerModel.offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
-            hits.Add(Physics2D.Raycast(startPoint, Vector2.down, .1f, p_lm));
-        }
-
-        foreach (RaycastHit2D hit in hits)
-        {
-            if (hit)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -119,27 +72,48 @@ public class PlayerController : MonoBehaviour, IMoveController
 
         else if (col.CompareTag("Trampoline"))
         {
-            isTrampoline = detectCollision(trampolineMask);
+            isTrampoline = detectCollision(trampolineMask, _playerModel.trampolineOffset);
             if (isTrampoline)
-            {
                 floor++;
-            }
         }
     }
+
+
+    #region Gizmos
 
     private void OnDrawGizmos()
     {
         spr = GetComponent<SpriteRenderer>();
 
-        float distanceBetweenRays = (spr.bounds.size.x - _playerModel.offset) / _playerModel.precisionDown;
+        drawGroundRayCast();
+        drawTrampolineRayCast();
+        drawState();
+    }
 
+    private void drawGroundRayCast()
+    {
+        float distanceBetweenRays = (spr.bounds.size.x - _playerModel.offset) / _playerModel.precisionDown;
 
         for (int i = 0; i <= _playerModel.precisionDown; i++)
         {
             Vector3 startPoint = new Vector3((spr.bounds.min.x + (_playerModel.offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
             Debug.DrawLine(startPoint, startPoint + (Vector3.down * .1f), Color.red);
         }
+    }
 
+    private void drawTrampolineRayCast()
+    {
+        float distanceBetweenRays = (spr.bounds.size.x - _playerModel.trampolineOffset) / _playerModel.precisionDown;
+
+        for (int i = 0; i <= _playerModel.precisionDown; i++)
+        {
+            Vector3 startPoint = new Vector3((spr.bounds.min.x + (_playerModel.trampolineOffset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
+            Debug.DrawLine(startPoint, startPoint + (Vector3.down * .1f), Color.magenta);
+        }
+    }
+
+    private void drawState()
+    {
         if (currentState != null)
         {
             GUIStyle style = new GUIStyle();
@@ -149,5 +123,7 @@ public class PlayerController : MonoBehaviour, IMoveController
             Handles.Label(stateInfoPosition + Camera.main.transform.position, "Current state: " + currentState + "\nFloor: " + floor, style);
         }
     }
+
+    #endregion
 
 }

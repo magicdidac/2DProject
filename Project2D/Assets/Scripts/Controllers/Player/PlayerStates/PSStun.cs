@@ -6,13 +6,13 @@ public class PSStun : AState
 {
     float duration = 0f;
 
-    public PSStun(PlayerController pc)
+    public PSStun(AMoveController pc)
     {
         pc.rb.gravityScale = 2.7f;
         pc.anim.SetBool("isSliding", false);
     }
 
-    public override void CheckTransition(PlayerController pc)
+    public override void CheckTransition(AMoveController pc)
     {
         if (duration >= pc._playerModel.stunTime)
         {
@@ -21,12 +21,12 @@ public class PSStun : AState
         } 
     }
 
-    public override void FixedUpdate(PlayerController pc)
+    public override void FixedUpdate(AMoveController pc)
     {
         pc.rb.velocity = new Vector2(pc._playerModel.stunSpeed, pc.rb.velocity.y);
     }
 
-    public override void Update(PlayerController pc)
+    public override void Update(AMoveController pc)
     {
         Debug.Log(duration);
         duration += Time.deltaTime;

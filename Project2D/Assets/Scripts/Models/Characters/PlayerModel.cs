@@ -8,6 +8,7 @@ public class PlayerModel : CharacterModel
     public float jumpForce;
     public int precisionDown;
     public float offset;
+    public float trampolineOffset;
     public float slideSpeed;
     public float stunSpeed;
     public float groundRangeX;
