@@ -321,18 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _perIncrease: 0.05
-  _normalChunks:
-  - {fileID: 11400000, guid: 02f1ecc0be67672418bc155beac50786, type: 2}
-  - {fileID: 11400000, guid: 2e588cdd390d1854099738ab129ee92e, type: 2}
-  - {fileID: 11400000, guid: 0029b9bb8085f8b4ea061fa047180474, type: 2}
-  - {fileID: 11400000, guid: 7b3e9a6bf0206be40a9eac91c332ee8e, type: 2}
-  - {fileID: 11400000, guid: 06d612b036f3f614e8da09f2b5604f5b, type: 2}
-  _topTransitions:
-  - {fileID: 11400000, guid: 0c56e8795fed26f42b20f64e01f6153b, type: 2}
-  _midTransitions:
-  - {fileID: 11400000, guid: 6c009f74363241542a135f2c475df063, type: 2}
-  _botTransitions:
-  - {fileID: 11400000, guid: 8250163112069464182a59363e8291c3, type: 2}
+  _chunkStore: {fileID: 11400000, guid: 106a2cdca2f887742a2ed1ef9ad9909a, type: 2}
 --- !u!1001 &1522633776
 PrefabInstance:
   m_ObjectHideFlags: 0

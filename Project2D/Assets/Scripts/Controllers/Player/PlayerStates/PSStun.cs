@@ -28,7 +28,6 @@ public class PSStun : AState
 
     public override void Update(AMoveController pc)
     {
-        Debug.Log(duration);
         duration += Time.deltaTime;
     }
 }

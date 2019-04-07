@@ -16,25 +16,7 @@ public class MapController : MonoBehaviour
 
     [SerializeField] private float _perIncrease = .05f;
 
-    #region Chunks'Arrays
-
-    [Header("Normal chunks...")]
-    [Tooltip("Array of chunks that will generated but they aren't transitional chunks.")]
-    [SerializeField] private Chunk[] _normalChunks = new Chunk[0];
-
-    [Header("Top transition chunks...")]
-    [Tooltip("Array of chunks that will generated to pass from top floor [1] to mid floor [0].")]
-    [SerializeField] private Chunk[] _topTransitions = new Chunk[0];
-
-    [Header("Mid transition chunks...")]
-    [Tooltip("Array of chunks that will generated to pass from mid floor [0] to top floor [1] or/and bot floor [-1].")]
-    [SerializeField] private Chunk[] _midTransitions = new Chunk[0];
-
-    [Header("Bot transition chunks...")]
-    [Tooltip("Array of chunks that will generated to pass from bot floor [-1] to mid floor [0].")]
-    [SerializeField] private Chunk[] _botTransitions = new Chunk[0];
-
-    #endregion
+    [SerializeField] private ChunkStore _chunkStore = null;
 
     private void Start()
     {
@@ -55,16 +37,16 @@ public class MapController : MonoBehaviour
             switch (gc.player.floor)
             {
                 case 1: //Top Transitions
-                    _nextChunk = Random.Range(0, _topTransitions.Length);
-                    instantiateChunk(_topTransitions[_nextChunk]);
+                    _nextChunk = Random.Range(0, _chunkStore.topTChunks.Length);
+                    instantiateChunk(_chunkStore.topTChunks[_nextChunk]);
                     break;
                 case 0: //Mid Transitions
-                    _nextChunk = Random.Range(0, _midTransitions.Length);
-                    instantiateChunk(_midTransitions[_nextChunk]);
+                    _nextChunk = Random.Range(0, _chunkStore.midTChunks.Length);
+                    instantiateChunk(_chunkStore.midTChunks[_nextChunk]);
                     break;
                 case -1: //Bot Transitions
-                    _nextChunk = Random.Range(0, _botTransitions.Length);
-                    instantiateChunk(_botTransitions[_nextChunk]);
+                    _nextChunk = Random.Range(0, _chunkStore.botTChunks.Length);
+                    instantiateChunk(_chunkStore.botTChunks[_nextChunk]);
                     break;
             }
             transitionProbability = .0f;
@@ -73,10 +55,10 @@ public class MapController : MonoBehaviour
 
         do
         {
-            _nextChunk = Random.Range(0, _normalChunks.Length);
+            _nextChunk = Random.Range(0, _chunkStore.continueChunks.Length);
         } while (_nextChunk == _currentChunk || _nextChunk == _oldChunk);
         
-        instantiateChunk(_normalChunks[_nextChunk]);
+        instantiateChunk(_chunkStore.continueChunks[_nextChunk]);
 
         transitionProbability += _perIncrease;
     }
