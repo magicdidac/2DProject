@@ -3,28 +3,12 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(Animator))]
 public class PlayerController : AMoveController
 {   
 
     [SerializeField] public LayerMask groundMask;
     [SerializeField] public LayerMask trampolineMask;
-
-    [SerializeField] private Vector3 stateInfoPosition = Vector3.zero;
-    [SerializeField] private int fontSize = 20;
-
-
-    void Start()
-    {
-        spr = GetComponent<SpriteRenderer>();
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        _playerModel = Instantiate(_playerModel);
-
-        ChangeState(new PSGrounded(this));
-    }
+    
 
     // Update is called once per frame
     private void FixedUpdate()
@@ -36,7 +20,6 @@ public class PlayerController : AMoveController
     {
         currentState.Update(this);
         isGrounded = detectCollision(groundMask, _playerModel.offset);
-        //isTrampoline = detectCollision(trampolineMask);
     }
 
     private void LateUpdate()
@@ -50,6 +33,7 @@ public class PlayerController : AMoveController
         {
             if (isGrounded && !anim.GetBool("isSliding"))
             {
+                gc.enemy.AddDistance();
                 isStuned = true;
                 col.gameObject.SetActive(false);
             }
@@ -61,20 +45,17 @@ public class PlayerController : AMoveController
             transform.SetParent(col.gameObject.transform);
             rb.velocity = Vector2.zero;
             rb.bodyType = RigidbodyType2D.Kinematic;
-            floor++;
+            gc.floor++;
             isRope = true;
             col.GetComponent<Rope> ().startMovement();
         }
         else if (col.CompareTag("Down"))
-        {
-            floor--;
-        }
-
+            gc.floor--;
         else if (col.CompareTag("Trampoline"))
         {
             isTrampoline = detectCollision(trampolineMask, _playerModel.trampolineOffset);
             if (isTrampoline)
-                floor++;
+                gc.floor++;
         }
     }
 
@@ -87,7 +68,6 @@ public class PlayerController : AMoveController
 
         drawGroundRayCast();
         drawTrampolineRayCast();
-        drawState();
     }
 
     private void drawGroundRayCast()
@@ -109,18 +89,6 @@ public class PlayerController : AMoveController
         {
             Vector3 startPoint = new Vector3((spr.bounds.min.x + (_playerModel.trampolineOffset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
             Debug.DrawLine(startPoint, startPoint + (Vector3.down * .1f), Color.magenta);
-        }
-    }
-
-    private void drawState()
-    {
-        if (currentState != null)
-        {
-            GUIStyle style = new GUIStyle();
-            style.normal.textColor = Color.red;
-            style.fontSize = fontSize;
-            style.alignment = TextAnchor.MiddleLeft;
-            Handles.Label(stateInfoPosition + Camera.main.transform.position, "Current state: " + currentState + "\nFloor: " + floor, style);
         }
     }
 

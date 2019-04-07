@@ -5,29 +5,25 @@ using UnityEngine;
 public class PlayerFollow: MonoBehaviour
 {
     
-    private PlayerController _player;
+    private GameController gc;
 
     [SerializeField]
     private float _offset = 0;
-
-    private Animator anim;
 
     private int myFloor = 0;
 
     private void Start()
     {
-        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController> ();
-        anim = Camera.main.GetComponent<Animator>();
+        gc = GameController.instance;
     }
 
     void FixedUpdate()
     {
-        
-        if(_player.floor != myFloor && _player.isGrounded)
-            myFloor = _player.floor;
-        else if (_player.floor != myFloor)
-            transform.position = Vector3.Lerp(transform.position, new Vector3(_player.transform.position.x + _offset, (_player.transform.position.y)+2, transform.position.z), .5f);
+        if(gc.floor != myFloor && gc.player.isGrounded)
+            myFloor = gc.floor;
+        else if (gc.floor != myFloor)
+            transform.position = Vector3.Lerp(transform.position, new Vector3(gc.player.transform.position.x + _offset, (gc.player.transform.position.y)+2, transform.position.z), .5f);
         else
-            transform.position = Vector3.Lerp(transform.position, new Vector3(_player.transform.position.x + _offset, (8 * _player.floor)+2, transform.position.z), .5f);
+            transform.position = Vector3.Lerp(transform.position, new Vector3(gc.player.transform.position.x + _offset, (8 * gc.floor)+2, transform.position.z), .5f);
     }
 }

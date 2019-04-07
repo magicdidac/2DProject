@@ -7,7 +7,7 @@ public class PSTrampoline : AState
 
     public override void CheckTransition(AMoveController pc)
     {
-        if (pc.transform.position.y > 8 * pc.floor)
+        if (pc.transform.position.y > 8 * pc.gc.floor)
         {
             pc.isTrampoline = false;
             pc.ChangeState(new PSOnAir(pc));

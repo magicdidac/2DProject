@@ -8,10 +8,13 @@ using UnityEngine;
 public abstract class AMoveController : MonoBehaviour
 {
 
+    [HideInInspector] public GameController gc;
+
     //Components
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public SpriteRenderer spr;
     [HideInInspector] public Animator anim;
+    //[HideInInspector] public Transform transform;
 
     //State
     [HideInInspector] public AState currentState;
@@ -25,7 +28,16 @@ public abstract class AMoveController : MonoBehaviour
     [HideInInspector] public bool isStuned = false;
     [HideInInspector] public bool isSliding = false;
     [HideInInspector] public bool isRope = false;
-    [HideInInspector] public int floor = 0;
+
+    private void Start()
+    {
+        gc = GameController.instance;
+        spr = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        _playerModel = Instantiate(_playerModel);
+        ChangeState(new PSGrounded(this));
+    }
 
     public void ChangeState(AState ps) { currentState = ps; }
 
