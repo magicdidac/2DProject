@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class PSTirolina : AState
 {
+    private float tirolinaSize;
+    private Transform endPoint;
+
     public PSTirolina(AMoveController pc)
     {
         pc.rb.gravityScale = 0;
+        endPoint = pc.transform.parent.Find("EndPoint");
+        tirolinaSize = endPoint.position.x - pc.transform.position.x;
     }
 
     public override void CheckTransition(AMoveController pc)
     {
-        Transform endPoint = pc.transform.parent.Find("EndPoint");
         if (pc.transform.position.x >= endPoint.position.x)
         {
             pc.isTirolina = false;
@@ -22,12 +26,25 @@ public class PSTirolina : AState
 
     public override void FixedUpdate(AMoveController pc)
     {
-        Transform endPoint = pc.transform.parent.Find("EndPoint");
-        pc.rb.velocity = (new Vector3(endPoint.position.x, pc.transform.position.y) - pc.transform.position).normalized * pc._playerModel.speed;
+        pc.rb.velocity = (endPoint.position - pc.transform.position).normalized * pc._playerModel.speed;
     }
 
     public override void Update(AMoveController pc)
     {
-        
+        Jump(pc);
+    }
+
+    private void Jump(AMoveController pc)
+    {
+        //pc._playerModel.jumpForce = 14f;
+        float distance = endPoint.position.x - pc.transform.position.x;
+        if (!pc.isTirolinaD && Input.GetButtonDown("Jump") && distance < tirolinaSize - 1) //-> saltar cuando me de la gana
+        //if (!pc.isTirolinaD && Input.GetButtonDown("Jump") && distance < 2) --> saltar solo al final
+        {
+            pc.isTirolina = false;
+            pc.transform.parent = null;
+            pc.ChangeState(new PSOnAir(pc));
+            pc.rb.velocity = Vector2.up * pc._playerModel.jumpForce;
+        }
     }
 }

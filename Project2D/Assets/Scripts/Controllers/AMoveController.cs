@@ -29,6 +29,7 @@ public abstract class AMoveController : MonoBehaviour
     [HideInInspector] public bool isSliding = false;
     [HideInInspector] public bool isRope = false;
     [HideInInspector] public bool isTirolina = false;
+    [HideInInspector] public bool isTirolinaD = false;
 
     private void Start()
     {

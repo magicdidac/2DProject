@@ -66,7 +66,7 @@ public class PlayerController : AMoveController
         {
             transform.SetParent(col.gameObject.transform);
             isTirolina = true;
-            //floor--; //descomentar cuando se erregle la velocidad de la tirolina
+            if (col.CompareTag("TirolinaD")) gc.floor--; 
         }
     }
 
