@@ -11,6 +11,7 @@ public class MapController : MonoBehaviour
     private int _currentChunk = -1;
     private int _nextChunk = -1;
     private float _lastPos = 0;
+    private float offset = 0;
     private float transitionProbability = .0f;
     private Queue<GameObject> chunksQueue = new Queue<GameObject>();
     [SerializeField] private GameObject enemyPPrefab = null;
@@ -20,14 +21,18 @@ public class MapController : MonoBehaviour
 
     [SerializeField] private ChunkStore _chunkStore = null;
 
+    [HideInInspector] public bool enemyNeedShoot = false;
+
     private void Start()
     {
         gc = GameController.instance;
+        offset = Mathf.Abs(gc.player.transform.position.x) / 2;
     }
 
     private void Update()
     {
-        if (gc.player.transform.position.x > _lastPos)
+
+        if (gc.player.transform.position.x > _lastPos - offset)
             changeChunk();
         
     }
@@ -35,7 +40,17 @@ public class MapController : MonoBehaviour
     private void changeChunk()
     {
 
-        if(Random.value < transitionProbability)
+        if (enemyNeedShoot)
+        {
+            _nextChunk = -1;
+            instantiateChunk(_chunkStore.enemyChunk);
+            gc.enemy.shootPosition = _lastPos;
+            gc.enemy.canCharge = true;
+            enemyNeedShoot = false;
+            return;
+        }
+
+        if (Random.value < transitionProbability)
         {
             switch (gc.floor)
             {
@@ -53,6 +68,7 @@ public class MapController : MonoBehaviour
                     break;
             }
             transitionProbability = .0f;
+            _nextChunk = -1;
             return;
         }
 

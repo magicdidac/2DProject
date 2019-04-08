@@ -13,6 +13,7 @@ TagManager:
   - Down
   - Trampoline
   - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX

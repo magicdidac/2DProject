@@ -36,7 +36,6 @@ public abstract class AMoveController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         _playerModel = Instantiate(_playerModel);
-        ChangeState(new PSGrounded(this));
     }
 
     public void ChangeState(AState ps) { currentState = ps; }

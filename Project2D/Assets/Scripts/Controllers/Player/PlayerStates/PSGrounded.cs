@@ -6,7 +6,8 @@ public class PSGrounded : AState
 {
     public PSGrounded(AMoveController pc)
     {
-        pc.rb.gravityScale = 2.7f;
+        if(pc.rb != null)
+            pc.rb.gravityScale = 2.7f;
     }
 
     public override void CheckTransition(AMoveController pc)

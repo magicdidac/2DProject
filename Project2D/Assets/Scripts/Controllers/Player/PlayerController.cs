@@ -8,7 +8,11 @@ public class PlayerController : AMoveController
 
     [SerializeField] public LayerMask groundMask;
     [SerializeField] public LayerMask trampolineMask;
-    
+
+    private void Awake()
+    {
+        ChangeState(new PSGrounded(this));
+    }
 
     // Update is called once per frame
     private void FixedUpdate()

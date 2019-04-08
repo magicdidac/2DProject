@@ -6,8 +6,7 @@ public class PlayerFollow: MonoBehaviour
 {
     
     private GameController gc;
-
-    [SerializeField]
+    
     private float _offset = 0;
 
     private int myFloor = 0;
@@ -15,6 +14,7 @@ public class PlayerFollow: MonoBehaviour
     private void Start()
     {
         gc = GameController.instance;
+        _offset = Mathf.Abs(gc.player.transform.position.x);
     }
 
     void FixedUpdate()

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af6b6e0c191a15849ac109fefe5837a8, type: 3}
   m_Name: ChunkStore
   m_EditorClassIdentifier: 
+  enemyChunk: {fileID: 11400000, guid: ba2365216170d3d4b94c287827c8e1df, type: 2}
   topTChunks:
   - {fileID: 11400000, guid: 0c56e8795fed26f42b20f64e01f6153b, type: 2}
   midTChunks:

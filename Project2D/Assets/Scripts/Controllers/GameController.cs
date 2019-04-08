@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     [HideInInspector] public int floor = 0;
     [HideInInspector] public float enemyDistance = 3;
+    [HideInInspector] public float maxDistance;
 
     private void Awake()
     {
@@ -28,11 +29,12 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
         DontDestroyOnLoad(gameObject);
         
-        while(player == null)
-            player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController> ();
-
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController> ();
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController> ();
         mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
+
+        enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
+        maxDistance = enemyDistance + 4.5f;
     }
 
     private void Update()
@@ -57,6 +59,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
+        //enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
         drawState();
     }
 
@@ -68,7 +71,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             style.normal.textColor = Color.red;
             style.fontSize = fontSize;
             style.alignment = TextAnchor.MiddleLeft;
-            Handles.Label(stateInfoPosition + Camera.main.transform.position, "Player state: " + player.currentState + "\nFloor: " + floor+ "\nEnemy: "+getEnemyDistance()+" ("+enemy.distanceBetween+")", style);
+            Handles.Label(stateInfoPosition + Camera.main.transform.position, "Player state: " + player.currentState + "\nEnemy state: " + enemy.currentState + "\nFloor: " + floor+ "\nEnemy: "+getEnemyDistance()+" ("+enemyDistance+")", style);
         //}
     }
 }

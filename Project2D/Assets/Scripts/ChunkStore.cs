@@ -7,6 +7,7 @@ using UnityEngine;
 public class ChunkStore : ScriptableObject
 {
 
+    [SerializeField] public Chunk enemyChunk;
     [SerializeField] public Chunk[] topTChunks;
     [SerializeField] public Chunk[] midTChunks;
     [SerializeField] public Chunk[] botTChunks;
