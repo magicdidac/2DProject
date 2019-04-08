@@ -13,6 +13,9 @@ TagManager:
   - Down
   - Trampoline
   - Tirolina
+  - Enemy
+  - Bullet
+  - TirolinaD
   layers:
   - Default
   - TransparentFX
