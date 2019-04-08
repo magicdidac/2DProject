@@ -10,6 +10,8 @@ public class PlayerModel : CharacterModel
     public float offset;
     public float trampolineOffset;
     public float slideSpeed;
+    public float normalSpeed;
+    public float plusJumpSpeedX;
     public float stunSpeed;
     public float groundRangeX;
     public float groundRangeY;

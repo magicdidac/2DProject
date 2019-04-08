@@ -19,6 +19,8 @@ MonoBehaviour:
   offset: -0.35
   trampolineOffset: 0.1
   slideSpeed: 7
+  normalSpeed: 5
+  plusJumpSpeedX: 8
   stunSpeed: 2
   groundRangeX: 0
   groundRangeY: 0
