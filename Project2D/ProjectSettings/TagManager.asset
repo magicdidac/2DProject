@@ -12,12 +12,14 @@ TagManager:
   - Rope
   - Down
   - Trampoline
+  - Tirolina
   - Coin
   - CoinUI
   - SuperCoin
   - ScoreManager
   - Enemy
   - Bullet
+  - TirolinaD
   layers:
   - Default
   - TransparentFX

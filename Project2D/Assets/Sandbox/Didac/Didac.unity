@@ -333,7 +333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPPrefab: {fileID: 573627921396306670, guid: 129389ded407af34f9ac7a397d3771b0,
     type: 3}
-  _perIncrease: 0
+  _perIncrease: 0.05
   _chunkStore: {fileID: 11400000, guid: 106a2cdca2f887742a2ed1ef9ad9909a, type: 2}
   enemyNeedShoot: 0
 --- !u!1 &652189783
@@ -829,7 +829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a7fb62144ff3f949aa5e51b09efe0c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateInfoPosition: {x: -6.4, y: 3.4, z: 0}
+  stateInfoPosition: {x: -6.5, y: 3.35, z: 0}
   fontSize: 20
   mapController: {fileID: 0}
   player: {fileID: 1095772794}
