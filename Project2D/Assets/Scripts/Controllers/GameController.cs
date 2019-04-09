@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [HideInInspector] public PlayerController player; //Player reference
 
     public Text scoreText;
-    private int score;
+    private int score = 0;
 
     private void Awake()
     {
@@ -43,7 +43,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     private void UpdateScore()
     {
-        scoreText.text += score;
+        scoreText.text = "Score: " + score.ToString();
     }
 
 }
