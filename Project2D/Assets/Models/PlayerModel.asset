@@ -16,10 +16,11 @@ MonoBehaviour:
   speed: 5
   jumpForce: 12.5
   precisionDown: 6
-  offset: -0.75
+  offset: -0.35
+  trampolineOffset: 0.1
   slideSpeed: 7
-  stunSpeed: 2
+  stunSpeed: 3
   groundRangeX: 0
   groundRangeY: 0
-  stunTime: 0.5
+  stunTime: 1
   exitRopeForce: 7

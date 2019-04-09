@@ -1,21 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour //This class follows the Singleton Pattern
 {
+    [SerializeField] private Vector3 stateInfoPosition = Vector3.zero;
+    [SerializeField] private int fontSize = 20;
 
     [HideInInspector] public static GameController instance = null; //Allows to acces to the game controller from any other script
 
-    [HideInInspector] public MapController mapGenerator; //Map controller reference
+    [HideInInspector] public MapController mapController; //Map controller reference
     [HideInInspector] public PlayerController player; //Player reference
+    [HideInInspector] public EnemyController enemy; //Enemy reference
+
+    [HideInInspector] public int floor = 0;
+    [HideInInspector] public float enemyDistance = 3;
+    [HideInInspector] public float maxDistance;
 
     [HideInInspector] public ScoreManager scoreManager; // Score Manager reference
-
-    public Text scoreText;
-    private int score = 0;
 
     private void Awake()
     {
@@ -28,38 +33,58 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         DontDestroyOnLoad(gameObject);
         
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController> ();
-        mapGenerator = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
-        //scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
-        scoreManager = FindObjectOfType<ScoreManager>(); 
-    }
+        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController> ();
+        mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
+        scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
 
-    private void Start()
-    {
-        //StartCoroutine(AddScoreByTime());
+        enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
+        maxDistance = enemyDistance + 4.5f;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
-            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex).completed += GameController_completed;  
     }
-
+    
     public void AddScore(int newScoreValue)
     {
-        //score += newScoreValue;
-        //UpdateScore();
         scoreManager.AddScore(newScoreValue);
     }
 
-    /*private void UpdateScore()
+    private void GameController_completed(AsyncOperation obj)
     {
-        scoreText.text = "Score: " + score.ToString();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
+        mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
     }
 
-    IEnumerator AddScoreByTime()
+    public float getEnemyDistance()
     {
-        yield return new WaitForSeconds(1);
-        AddScore(100); 
-    }*/
+        return (Mathf.Round((enemy.transform.position.x - player.transform.position.x)*100)/100);
+    }
 
+    private void OnDrawGizmos()
+    {
+        try
+        {
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
+            //enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
+            drawState();
+        }
+        catch { }
+    }
+
+    private void drawState()
+    {
+        //if (player.currentState != null)
+        //{
+            GUIStyle style = new GUIStyle();
+            style.normal.textColor = Color.red;
+            style.fontSize = fontSize;
+            style.alignment = TextAnchor.MiddleLeft;
+            Handles.Label(stateInfoPosition + Camera.main.transform.position, "Player state: " + player.currentState + "\nEnemy state: " + enemy.currentState + "\nFloor: " + floor+ "\nEnemy: "+getEnemyDistance()+" ("+enemyDistance+")", style);
+        //}
+    }
 }

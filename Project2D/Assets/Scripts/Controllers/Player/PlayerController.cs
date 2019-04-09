@@ -3,47 +3,14 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(Animator))]
-public class PlayerController : MonoBehaviour, IMoveController
-{
-
-    //Components
-    [HideInInspector] public Rigidbody2D rb;
-    [HideInInspector] public SpriteRenderer spr;
-    [HideInInspector] public Animator anim;
-
-    //State
-    [HideInInspector] public AState currentState;
-    
+public class PlayerController : AMoveController
+{   
 
     [SerializeField] public LayerMask groundMask;
     [SerializeField] public LayerMask trampolineMask;
 
-    [SerializeField] public PlayerModel _playerModel;
-
-    [SerializeField] private Vector3 stateInfoPosition = Vector3.zero;
-    [SerializeField] private int fontSize = 20;
-
-
-    //NEW
-    
-    [HideInInspector] public bool isGrounded = false;
-    [HideInInspector] public bool isTrampoline = false;
-    [HideInInspector] public bool isStuned = false;
-    [HideInInspector] public bool isSliding = false;
-    [HideInInspector] public bool isRope = false;
-    [HideInInspector] public int floor = 0;
-
-
-    void Start()
+    private void Awake()
     {
-        spr = GetComponent<SpriteRenderer>();
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        _playerModel = Instantiate(_playerModel);
-
         ChangeState(new PSGrounded(this));
     }
 
@@ -56,39 +23,12 @@ public class PlayerController : MonoBehaviour, IMoveController
     private void Update()
     {
         currentState.Update(this);
-        isGrounded = detectCollision(groundMask);
-        //isTrampoline = detectCollision(trampolineMask);
+        isGrounded = detectCollision(groundMask, _playerModel.offset);
     }
 
     private void LateUpdate()
     {
         currentState.CheckTransition(this);
-    }
-
-    public void ChangeState(AState ps) { currentState = ps; }
-
-    public bool detectCollision(LayerMask p_lm)
-    {
-        List<RaycastHit2D> hits = new List<RaycastHit2D>();
-
-        float distanceBetweenRays = spr.bounds.size.x / _playerModel.precisionDown;
-
-
-        for (int i = 0; i <= _playerModel.precisionDown; i++)
-        {
-            Vector3 startPoint = new Vector3((spr.bounds.min.x + (_playerModel.offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
-            hits.Add(Physics2D.Raycast(startPoint, Vector2.down, .1f, p_lm));
-        }
-
-        foreach (RaycastHit2D hit in hits)
-        {
-            if (hit)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -97,6 +37,7 @@ public class PlayerController : MonoBehaviour, IMoveController
         {
             if (isGrounded && !anim.GetBool("isSliding"))
             {
+                gc.enemy.AddDistance();
                 isStuned = true;
                 col.gameObject.SetActive(false);
             }
@@ -108,22 +49,17 @@ public class PlayerController : MonoBehaviour, IMoveController
             transform.SetParent(col.gameObject.transform);
             rb.velocity = Vector2.zero;
             rb.bodyType = RigidbodyType2D.Kinematic;
-            floor++;
+            gc.floor++;
             isRope = true;
             col.GetComponent<Rope> ().startMovement();
         }
         else if (col.CompareTag("Down"))
-        {
-            floor--;
-        }
-
+            gc.floor--;
         else if (col.CompareTag("Trampoline"))
         {
-            isTrampoline = detectCollision(trampolineMask);
+            isTrampoline = detectCollision(trampolineMask, _playerModel.trampolineOffset);
             if (isTrampoline)
-            {
-                floor++;
-            }
+                gc.floor++;
         }
 
         else if (col.CompareTag("Coin"))
@@ -139,27 +75,39 @@ public class PlayerController : MonoBehaviour, IMoveController
         }
     }
 
+
+    #region Gizmos
+
     private void OnDrawGizmos()
     {
         spr = GetComponent<SpriteRenderer>();
 
-        float distanceBetweenRays = (spr.bounds.size.x - _playerModel.offset) / _playerModel.precisionDown;
+        drawGroundRayCast();
+        drawTrampolineRayCast();
+    }
 
+    private void drawGroundRayCast()
+    {
+        float distanceBetweenRays = (spr.bounds.size.x - _playerModel.offset) / _playerModel.precisionDown;
 
         for (int i = 0; i <= _playerModel.precisionDown; i++)
         {
             Vector3 startPoint = new Vector3((spr.bounds.min.x + (_playerModel.offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
             Debug.DrawLine(startPoint, startPoint + (Vector3.down * .1f), Color.red);
         }
+    }
 
-        if (currentState != null)
+    private void drawTrampolineRayCast()
+    {
+        float distanceBetweenRays = (spr.bounds.size.x - _playerModel.trampolineOffset) / _playerModel.precisionDown;
+
+        for (int i = 0; i <= _playerModel.precisionDown; i++)
         {
-            GUIStyle style = new GUIStyle();
-            style.normal.textColor = Color.red;
-            style.fontSize = fontSize;
-            style.alignment = TextAnchor.MiddleLeft;
-            Handles.Label(stateInfoPosition + Camera.main.transform.position, "Current state: " + currentState + "\nFloor: " + floor, style);
+            Vector3 startPoint = new Vector3((spr.bounds.min.x + (_playerModel.trampolineOffset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
+            Debug.DrawLine(startPoint, startPoint + (Vector3.down * .1f), Color.magenta);
         }
     }
+
+    #endregion
 
 }

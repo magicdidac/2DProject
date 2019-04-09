@@ -16,6 +16,8 @@ TagManager:
   - CoinUI
   - SuperCoin
   - ScoreManager
+  - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX
