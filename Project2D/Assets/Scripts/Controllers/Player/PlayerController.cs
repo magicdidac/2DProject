@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController : AMoveController
 {   
 
-    [SerializeField] public LayerMask groundMask;
+    [SerializeField] public LayerMask groundMask;   
     [SerializeField] public LayerMask trampolineMask;
 
     private void Awake()
@@ -53,7 +53,6 @@ public class PlayerController : AMoveController
             isRope = true;
             col.GetComponent<Rope> ().startMovement();
         }
-
         else if (col.CompareTag("Down"))
             gc.floor--;
         else if (col.CompareTag("Trampoline"))
@@ -62,11 +61,17 @@ public class PlayerController : AMoveController
             if (isTrampoline)
                 gc.floor++;
         }
-        else if (col.tag.Contains("Tirolina"))
+
+        else if (col.CompareTag("Coin"))
         {
-            transform.SetParent(col.gameObject.transform);
-            isTirolina = true;
-            if (col.CompareTag("TirolinaD")) gc.floor--; 
+            GameController.instance.AddScore(1);
+            col.gameObject.SetActive(false);
+        }
+
+        else if (col.CompareTag("SuperCoin"))
+        {
+            GameController.instance.AddScore(5);
+            col.gameObject.SetActive(false);
         }
     }
 

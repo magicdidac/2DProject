@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour //This class follows the Singleton Pattern
 {
@@ -19,6 +20,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [HideInInspector] public float enemyDistance = 3;
     [HideInInspector] public float maxDistance;
 
+    [HideInInspector] public ScoreManager scoreManager; // Score Manager reference
+
     private void Awake()
     {
 
@@ -32,6 +35,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController> ();
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController> ();
         mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
+        scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
 
         enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
         maxDistance = enemyDistance + 4.5f;
@@ -41,6 +45,11 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     {
         if (Input.GetKeyDown(KeyCode.R))
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex).completed += GameController_completed;  
+    }
+    
+    public void AddScore(int newScoreValue)
+    {
+        scoreManager.AddScore(newScoreValue);
     }
 
     private void GameController_completed(AsyncOperation obj)
@@ -57,10 +66,14 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     private void OnDrawGizmos()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
-        //enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
-        drawState();
+        try
+        {
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
+            //enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
+            drawState();
+        }
+        catch { }
     }
 
     private void drawState()
