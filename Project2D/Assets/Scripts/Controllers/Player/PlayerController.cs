@@ -22,6 +22,7 @@ public class PlayerController : AMoveController
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         _playerModel = Instantiate(_playerModel);
+        combustible = _playerModel.maxCombustible;
 
         ChangeState(new PSGrounded(this));
     }
@@ -75,6 +76,11 @@ public class PlayerController : AMoveController
             isTrampoline = detectCollision(trampolineMask, _playerModel.trampolineOffset);
             if (isTrampoline)
                 floor++;
+        }
+        else if (col.CompareTag("Combustible"))
+        {
+            GameController.instance.GetCombustible(col.gameObject.GetComponent<Combustible>()._combustibleModel.quantity);
+            col.gameObject.SetActive(false);
         }
     }
 

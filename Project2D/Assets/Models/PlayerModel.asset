@@ -26,3 +26,4 @@ MonoBehaviour:
   groundRangeY: 0
   stunTime: 0.5
   exitRopeForce: 7
+  maxCombustible: 10

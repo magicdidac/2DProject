@@ -14,7 +14,7 @@ public class PSGrounded : AState
     {
         if (!pc.isGrounded) pc.ChangeState(new PSOnAir(pc));
         if (pc.isStuned) pc.ChangeState(new PSStun(pc));
-        if (Input.GetKey(KeyCode.S)) pc.ChangeState(new PSSliding(pc));
+        if (Input.GetKey(KeyCode.S) && pc.combustible > 0) pc.ChangeState(new PSSliding(pc));
     }
 
     public override void FixedUpdate(AMoveController pc)

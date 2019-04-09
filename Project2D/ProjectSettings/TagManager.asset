@@ -12,6 +12,8 @@ TagManager:
   - Rope
   - Down
   - Trampoline
+  - Combustible
+  - HUD
   layers:
   - Default
   - TransparentFX

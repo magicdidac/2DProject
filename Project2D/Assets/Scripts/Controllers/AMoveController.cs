@@ -12,6 +12,7 @@ public abstract class AMoveController : MonoBehaviour
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public SpriteRenderer spr;
     [HideInInspector] public Animator anim;
+    [HideInInspector] public float combustible;
 
     //State
     [HideInInspector] public AState currentState;

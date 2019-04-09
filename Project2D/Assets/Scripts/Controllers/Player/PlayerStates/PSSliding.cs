@@ -5,10 +5,16 @@ using UnityEngine;
 public class PSSliding : AState
 {
     float time;
+    bool goingDown;
 
     public PSSliding(AMoveController pc)
     {
-        pc.rb.gravityScale = 4;
+        if (!pc.isGrounded)
+        {
+            pc.rb.gravityScale = 7;
+            goingDown = true;
+        }
+        else goingDown = false;
         pc.anim.SetBool("isSliding", true);
     }
 
@@ -18,11 +24,6 @@ public class PSSliding : AState
         {
             pc.anim.SetBool("isSliding", false);
             pc.ChangeState(new PSGrounded(pc));
-        }
-        if (Input.GetButtonDown("Jump"))
-        {
-            pc.anim.SetBool("isSliding", false);
-            pc.ChangeState(new PSOnAir(pc));
         }
         if (pc.isRope)
         {
@@ -34,16 +35,16 @@ public class PSSliding : AState
             pc.anim.SetBool("isSliding", false);
             pc.ChangeState(new PSTrampoline());
         }
-        /*if (time >= pc._playerModel.slideTime)
+        if (pc.combustible <= 0 && pc.isGrounded)
         {
             pc.anim.SetBool("isSliding", false);
             pc.ChangeState(new PSGrounded(pc));
-        }*/
-        /*if (!pc.isGrounded)
+        }
+        if (!pc.isGrounded && !goingDown)
         {
             pc.anim.SetBool("isSliding", false);
             pc.ChangeState(new PSOnAir(pc));
-        }*/
+        }
     }
 
     public override void FixedUpdate(AMoveController pc)
@@ -53,13 +54,13 @@ public class PSSliding : AState
 
     public override void Update(AMoveController pc)
     {
+        if (pc.isGrounded) goingDown = false;
         Jump(pc);
-        time += Time.deltaTime;
+        GameController.instance.ConsumeCombustible();
     }
 
     private void Jump(AMoveController pc)
     {
-        //pc._playerModel.jumpForce = 12.5f;
         if (pc.isGrounded && Input.GetButtonDown("Jump"))
         {
             pc._playerModel.speed = pc._playerModel.plusJumpSpeedX;

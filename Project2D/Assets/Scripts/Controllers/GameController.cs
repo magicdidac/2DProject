@@ -31,4 +31,17 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void ConsumeCombustible()
+    {
+        player.combustible -= Time.deltaTime;
+        GameObject.FindWithTag("HUD").GetComponent<HUD>().ChangeFuelBar(player.combustible);
+    }
+
+    public void GetCombustible(float value)
+    {
+        if (player.combustible + value < player._playerModel.maxCombustible) player.combustible += value;
+        else player.combustible = player._playerModel.maxCombustible;
+        GameObject.FindWithTag("HUD").GetComponent<HUD>().ChangeFuelBar(player.combustible);
+    }
+
 }

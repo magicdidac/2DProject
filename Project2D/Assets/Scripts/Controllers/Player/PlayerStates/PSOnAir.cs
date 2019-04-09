@@ -11,7 +11,10 @@ public class PSOnAir : AState
 
     public override void CheckTransition(AMoveController pc)
     {
-        if (Input.GetKeyDown(KeyCode.S)) pc.ChangeState(new PSSliding(pc));
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            pc.ChangeState(new PSSliding(pc));
+        } 
         else if (pc.isGrounded) pc.ChangeState(new PSGrounded(pc));
 
         if (pc.isTrampoline) pc.ChangeState(new PSTrampoline());
