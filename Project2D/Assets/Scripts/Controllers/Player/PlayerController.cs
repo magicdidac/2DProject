@@ -70,13 +70,13 @@ public class PlayerController : AMoveController
         }
         else if (col.CompareTag("Coin"))
         {
-            GameController.instance.AddScore(1);
+            gc.AddScore(1);
             col.gameObject.SetActive(false);
         }
 
         else if (col.CompareTag("SuperCoin"))
         {
-            GameController.instance.AddScore(5);
+            gc.AddScore(5);
             col.gameObject.SetActive(false);
         }
         else if (col.CompareTag("Combustible"))

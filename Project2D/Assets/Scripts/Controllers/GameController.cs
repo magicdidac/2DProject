@@ -43,6 +43,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     private void Update()
     {
+        scoreManager.AddScore(player.transform.position.x);
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex).completed += GameController_completed;
