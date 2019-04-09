@@ -61,6 +61,18 @@ public class PlayerController : AMoveController
             if (isTrampoline)
                 gc.floor++;
         }
+
+        else if (col.CompareTag("Coin"))
+        {
+            GameController.instance.AddScore(1);
+            col.gameObject.SetActive(false);
+        }
+
+        else if (col.CompareTag("SuperCoin"))
+        {
+            GameController.instance.AddScore(5);
+            col.gameObject.SetActive(false);
+        }
     }
 
 
