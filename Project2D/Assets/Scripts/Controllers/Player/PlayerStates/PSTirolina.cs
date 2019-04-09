@@ -12,6 +12,7 @@ public class PSTirolina : AState
         pc.rb.gravityScale = 0;
         endPoint = pc.transform.parent.Find("EndPoint");
         tirolinaSize = endPoint.position.x - pc.transform.position.x;
+        pc._playerModel.speed = pc._playerModel.normalSpeed;
     }
 
     public override void CheckTransition(AMoveController pc)
@@ -23,7 +24,7 @@ public class PSTirolina : AState
             pc.ChangeState(new PSOnAir(pc));
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S))
         {
             pc.isTirolina = false;
             pc.transform.parent = null;
@@ -45,8 +46,8 @@ public class PSTirolina : AState
     {
         //pc._playerModel.jumpForce = 14f;
         float distance = endPoint.position.x - pc.transform.position.x;
-        if (!pc.isTirolinaD && Input.GetButtonDown("Jump") && distance < tirolinaSize - 1) //-> saltar cuando me de la gana
-        //if (!pc.isTirolinaD && Input.GetButtonDown("Jump") && distance < 2) --> saltar solo al final
+        //if (!pc.isTirolinaD && Input.GetButtonDown("Jump") && distance < tirolinaSize - 1) //-> saltar cuando me de la gana
+        if (!pc.isTirolinaD && Input.GetButtonDown("Jump") && distance < 2) //--> saltar solo al final
         {
             pc.isTirolina = false;
             pc.transform.parent = null;
