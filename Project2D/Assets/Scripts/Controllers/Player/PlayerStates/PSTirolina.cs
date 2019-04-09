@@ -27,7 +27,7 @@ public class PSTirolina : AState
         {
             pc.isTirolina = false;
             pc.transform.parent = null;
-            pc.ChangeState(new PSSliding(pc));
+            pc.ChangeState(new PSOnAir(pc));
         }
     }
 
