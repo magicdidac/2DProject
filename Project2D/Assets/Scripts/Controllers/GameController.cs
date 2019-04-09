@@ -43,10 +43,12 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex).completed += GameController_completed;
-
         scoreManager.AddScore(player.transform.position.x);
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex).completed += GameController_completed;
+            floor = 0;
+        }
     }
     
     public void AddScore(int newScoreValue)
@@ -61,6 +63,19 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
     }
 
+    public void ConsumeCombustible()
+    {
+        player.combustible -= Time.deltaTime;
+        GameObject.FindWithTag("HUD").GetComponent<HUD>().ChangeFuelBar(player.combustible);
+    }
+
+    public void GetCombustible(float value)
+    {
+        if (player.combustible + value < player._playerModel.maxCombustible) player.combustible += value;
+        else player.combustible = player._playerModel.maxCombustible;
+        GameObject.FindWithTag("HUD").GetComponent<HUD>().ChangeFuelBar(player.combustible);
+    }
+    
     public float getEnemyDistance()
     {
         return (Mathf.Round((enemy.transform.position.x - player.transform.position.x)*100)/100);

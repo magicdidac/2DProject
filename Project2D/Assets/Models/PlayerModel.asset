@@ -19,8 +19,11 @@ MonoBehaviour:
   offset: -0.35
   trampolineOffset: 0.1
   slideSpeed: 7
+  normalSpeed: 7.5
+  plusJumpSpeedX: 10
   stunSpeed: 3
   groundRangeX: 0
   groundRangeY: 0
   stunTime: 1
   exitRopeForce: 7
+  maxCombustible: 10

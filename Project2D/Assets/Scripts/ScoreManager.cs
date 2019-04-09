@@ -12,12 +12,10 @@ public class ScoreManager : MonoBehaviour
     private float score = 0;
     private float highScore = 0;
 
-    private float pointsPerSecond = 5;
-    private bool scoreIncreasing; //false when the player is dead
+    private bool scoreIncreasing = true; //false when the player is dead
     
     void Start()
     {
-        scoreIncreasing = true;
         scoreText.text = string.Format("000{0}", score);
         highScoreText.text = string.Format("000{0}", score);
     }

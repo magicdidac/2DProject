@@ -59,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 7688831546595525796}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children:
   - {fileID: 7836655232826595432}
   m_Father: {fileID: 0}
@@ -135,6 +135,8 @@ MonoBehaviour:
   isStuned: 0
   isSliding: 0
   isRope: 0
+  isTirolina: 0
+  isTirolinaD: 0
   reduceFactor: 0.01
   bulletPrefab: {fileID: 8686533054903447472, guid: 98275d561080dc14490309accdc73343,
     type: 3}
