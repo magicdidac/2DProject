@@ -22,6 +22,13 @@ public class PSTirolina : AState
             pc.transform.parent = null;
             pc.ChangeState(new PSOnAir(pc));
         }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            pc.isTirolina = false;
+            pc.transform.parent = null;
+            pc.ChangeState(new PSSliding(pc));
+        }
     }
 
     public override void FixedUpdate(AMoveController pc)
