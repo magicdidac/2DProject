@@ -45,6 +45,11 @@ public class PSSliding : AState
             pc.anim.SetBool("isSliding", false);
             pc.ChangeState(new PSOnAir(pc));
         }
+        if (pc.isTrampoline)
+        {
+            pc.anim.SetBool("isSliding", false);
+            pc.ChangeState(new PSTrampoline());
+        }
     }
 
     public override void FixedUpdate(AMoveController pc)

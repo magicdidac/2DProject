@@ -12,8 +12,16 @@ TagManager:
   - Rope
   - Down
   - Trampoline
-  - Combustible
+  - Tirolina
+  - Coin
+  - CoinUI
+  - SuperCoin
+  - ScoreManager
+  - Enemy
+  - Bullet
+  - TirolinaD
   - HUD
+  - Combustible
   layers:
   - Default
   - TransparentFX

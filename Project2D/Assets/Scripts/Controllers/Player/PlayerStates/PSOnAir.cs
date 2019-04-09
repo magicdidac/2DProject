@@ -14,18 +14,23 @@ public class PSOnAir : AState
         if (Input.GetKeyDown(KeyCode.S))
         {
             pc.ChangeState(new PSSliding(pc));
-        } 
-        else if (pc.isGrounded) pc.ChangeState(new PSGrounded(pc));
+        }
+
+        if (pc.isGrounded) pc.ChangeState(new PSGrounded(pc));
 
         if (pc.isTrampoline) pc.ChangeState(new PSTrampoline());
 
         if (pc.isRope) pc.ChangeState(new PSRope());
 
+        if (pc.isTirolina) pc.ChangeState(new PSTirolina(pc));
     }
 
     public override void FixedUpdate(AMoveController pc)
     {
-        pc.rb.velocity = new Vector2(pc._playerModel.speed, pc.rb.velocity.y);
+        if(pc.rb.velocity.x < pc._playerModel.speed)
+            pc.rb.velocity = new Vector2(pc._playerModel.speed, pc.rb.velocity.y);
+        else
+            pc.rb.velocity = new Vector2(pc.rb.velocity.x, pc.rb.velocity.y);
     }
 
     public override void Update(AMoveController pc)

@@ -8,6 +8,8 @@ using UnityEngine;
 public abstract class AMoveController : MonoBehaviour
 {
 
+    [HideInInspector] public GameController gc;
+
     //Components
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public SpriteRenderer spr;
@@ -26,7 +28,18 @@ public abstract class AMoveController : MonoBehaviour
     [HideInInspector] public bool isStuned = false;
     [HideInInspector] public bool isSliding = false;
     [HideInInspector] public bool isRope = false;
-    [HideInInspector] public int floor = 0;
+    [HideInInspector] public bool isTirolina = false;
+    [HideInInspector] public bool isTirolinaD = false;
+
+    private void Start()
+    {
+        gc = GameController.instance;
+        spr = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        _playerModel = Instantiate(_playerModel);
+        combustible = _playerModel.maxCombustible;
+    }
 
     public void ChangeState(AState ps) { currentState = ps; }
 

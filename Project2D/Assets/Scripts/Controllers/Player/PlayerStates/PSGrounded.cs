@@ -6,7 +6,9 @@ public class PSGrounded : AState
 {
     public PSGrounded(AMoveController pc)
     {
-        pc.rb.gravityScale = 2.7f;
+        if(pc.rb != null)
+            pc.rb.gravityScale = 2.7f;
+
         pc._playerModel.speed = pc._playerModel.normalSpeed;
     }
 
@@ -14,6 +16,7 @@ public class PSGrounded : AState
     {
         if (!pc.isGrounded) pc.ChangeState(new PSOnAir(pc));
         if (pc.isStuned) pc.ChangeState(new PSStun(pc));
+        if (pc.isTrampoline) pc.ChangeState(new PSTrampoline());
         if (Input.GetKey(KeyCode.S) && pc.combustible > 0) pc.ChangeState(new PSSliding(pc));
     }
 
@@ -29,7 +32,7 @@ public class PSGrounded : AState
 
     private void Jump(AMoveController pc)
     {
-        //pc._playerModel.jumpForce = 12.5f;
+        //pc._playerModel.jumpForce = 14f;
         if (pc.isGrounded && Input.GetButtonDown("Jump"))
         {
             pc.rb.velocity = Vector2.up * pc._playerModel.jumpForce;

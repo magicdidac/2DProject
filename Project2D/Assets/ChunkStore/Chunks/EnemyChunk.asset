@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9a62e60c482a1d498522a452f3eed1f, type: 3}
-  m_Name: 03
+  m_Name: EnemyChunk
   m_EditorClassIdentifier: 
   lenght: 18
-  prefab: {fileID: 8587872528580026598, guid: ba6c883200234924581ac9966f799d25, type: 3}
+  prefab: {fileID: 4602360175621304325, guid: 8fd3b3d11b4630145bc53f7f8b4fa516, type: 3}
