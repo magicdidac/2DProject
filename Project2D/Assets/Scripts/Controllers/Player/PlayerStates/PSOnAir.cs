@@ -18,6 +18,7 @@ public class PSOnAir : AState
 
         if (pc.isRope) pc.ChangeState(new PSRope());
 
+        if (pc.isTirolina) pc.ChangeState(new PSTirolina(pc));
     }
 
     public override void FixedUpdate(AMoveController pc)

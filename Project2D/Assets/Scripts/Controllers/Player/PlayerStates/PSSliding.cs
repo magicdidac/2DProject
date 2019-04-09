@@ -28,7 +28,7 @@ public class PSSliding : AState
             pc.anim.SetBool("isSliding", false);
             pc.ChangeState(new PSTrampoline());
         }
-        if (!pc.isGrounded)
+        if (!pc.isGrounded && !Input.GetKey(KeyCode.S))
         {
             pc.anim.SetBool("isSliding", false);
             pc.ChangeState(new PSOnAir(pc));
@@ -47,7 +47,6 @@ public class PSSliding : AState
 
     private void Jump(AMoveController pc)
     {
-        //pc._playerModel.jumpForce = 12.5f;
         if (pc.isGrounded && Input.GetButtonDown("Jump"))
         {
             pc.rb.velocity = Vector2.up * pc._playerModel.jumpForce;

@@ -29,7 +29,7 @@ public class PSGrounded : AState
 
     private void Jump(AMoveController pc)
     {
-        //pc._playerModel.jumpForce = 12.5f;
+        //pc._playerModel.jumpForce = 14f;
         if (pc.isGrounded && Input.GetButtonDown("Jump"))
         {
             pc.rb.velocity = Vector2.up * pc._playerModel.jumpForce;

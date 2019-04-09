@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController : AMoveController
 {   
 
-    [SerializeField] public LayerMask groundMask;
+    [SerializeField] public LayerMask groundMask;   
     [SerializeField] public LayerMask trampolineMask;
 
     private void Awake()
@@ -60,6 +60,23 @@ public class PlayerController : AMoveController
             isTrampoline = detectCollision(trampolineMask, _playerModel.trampolineOffset);
             if (isTrampoline)
                 gc.floor++;
+        }
+        else if (col.tag.Contains("Tirolina"))
+        {
+            transform.SetParent(col.gameObject.transform);
+            isTirolina = true;
+            if (col.CompareTag("TirolinaD")) gc.floor--;
+        }
+        else if (col.CompareTag("Coin"))
+        {
+            GameController.instance.AddScore(1);
+            col.gameObject.SetActive(false);
+        }
+
+        else if (col.CompareTag("SuperCoin"))
+        {
+            GameController.instance.AddScore(5);
+            col.gameObject.SetActive(false);
         }
     }
 
