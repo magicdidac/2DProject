@@ -12,6 +12,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [HideInInspector] public MapController mapGenerator; //Map controller reference
     [HideInInspector] public PlayerController player; //Player reference
 
+    [HideInInspector] public ScoreManager scoreManager; // Score Manager reference
+
     public Text scoreText;
     private int score = 0;
 
@@ -27,6 +29,13 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController> ();
         mapGenerator = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
+        //scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
+        scoreManager = FindObjectOfType<ScoreManager>(); 
+    }
+
+    private void Start()
+    {
+        //StartCoroutine(AddScoreByTime());
     }
 
     private void Update()
@@ -37,13 +46,20 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void AddScore(int newScoreValue)
     {
-        score += newScoreValue;
-        UpdateScore();
+        //score += newScoreValue;
+        //UpdateScore();
+        scoreManager.AddScore(newScoreValue);
     }
 
-    private void UpdateScore()
+    /*private void UpdateScore()
     {
         scoreText.text = "Score: " + score.ToString();
     }
+
+    IEnumerator AddScoreByTime()
+    {
+        yield return new WaitForSeconds(1);
+        AddScore(100); 
+    }*/
 
 }
