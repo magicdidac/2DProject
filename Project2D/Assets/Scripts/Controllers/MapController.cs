@@ -94,7 +94,7 @@ public class MapController : MonoBehaviour
         _lastChunk = p_chunk;
 
         GameObject chunkCreated = Instantiate(p_chunk.prefab, new Vector3(_lastPos, 8*gc.floor), Quaternion.identity, transform);
-        GameObject enemyPCreated = Instantiate(enemyPPrefab, new Vector3(_lastPos, -1.25f), Quaternion.identity);
+        GameObject enemyPCreated = Instantiate(enemyPPrefab, new Vector3(_lastPos, -1.25f), Quaternion.identity, transform);
         enemyPCreated.GetComponent<SpriteRenderer>().size = new Vector2(p_chunk.lenght, 1);
         chunksQueue.Enqueue(chunkCreated);
         enemyPath.Enqueue(enemyPCreated);
