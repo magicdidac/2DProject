@@ -11,6 +11,7 @@ public class PlayerController : AMoveController
 
     private void Awake()
     {
+        
         ChangeState(new PSGrounded(this));
     }
 
@@ -76,6 +77,11 @@ public class PlayerController : AMoveController
         else if (col.CompareTag("SuperCoin"))
         {
             GameController.instance.AddScore(5);
+            col.gameObject.SetActive(false);
+        }
+        else if (col.CompareTag("Combustible"))
+        {
+            GameController.instance.GetCombustible(col.gameObject.GetComponent<Combustible>()._combustibleModel.quantity);
             col.gameObject.SetActive(false);
         }
     }

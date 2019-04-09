@@ -19,7 +19,7 @@ public class PlayerFollow: MonoBehaviour
 
     void FixedUpdate()
     {
-        if(gc.floor != myFloor && gc.player.isGrounded)
+        if(gc.floor != myFloor && gc.player.isGrounded && !gc.player.isTrampoline)
             myFloor = gc.floor;
         else if (gc.floor != myFloor)
             transform.position = Vector3.Lerp(transform.position, new Vector3(gc.player.transform.position.x + _offset, (gc.player.transform.position.y)+2, transform.position.z), .5f);

@@ -14,7 +14,7 @@ public abstract class AMoveController : MonoBehaviour
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public SpriteRenderer spr;
     [HideInInspector] public Animator anim;
-    //[HideInInspector] public Transform transform;
+    [HideInInspector] public float combustible;
 
     //State
     [HideInInspector] public AState currentState;
@@ -38,6 +38,7 @@ public abstract class AMoveController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         _playerModel = Instantiate(_playerModel);
+        combustible = _playerModel.maxCombustible;
     }
 
     public void ChangeState(AState ps) { currentState = ps; }

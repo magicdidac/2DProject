@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8587872528580026599}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8240611104774842405
 MonoBehaviour:
@@ -74,7 +74,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8587872528580026599}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9026979265286420359
 MonoBehaviour:
@@ -120,24 +120,19 @@ Transform:
   - {fileID: 3729867695926347369}
   - {fileID: 3729867695902104279}
   - {fileID: 5500146137397290040}
-  - {fileID: 6767788140471606605}
   - {fileID: 1174350015537291916}
   - {fileID: 2332923327557672462}
+  - {fileID: 3165697089353839864}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &4753531267321360633
+--- !u!1001 &4032195350036207948
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 8587872528580026599}
     m_Modifications:
-    - target: {fileID: 2025472991266057658, guid: 80f72f0c5fad2fb4394fb229185d0601,
-        type: 3}
-      propertyPath: m_Name
-      value: Tirolina
-      objectReference: {fileID: 0}
     - target: {fileID: 2025472991266057652, guid: 80f72f0c5fad2fb4394fb229185d0601,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -146,7 +141,7 @@ PrefabInstance:
     - target: {fileID: 2025472991266057652, guid: 80f72f0c5fad2fb4394fb229185d0601,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2025472991266057652, guid: 80f72f0c5fad2fb4394fb229185d0601,
         type: 3}
@@ -176,7 +171,7 @@ PrefabInstance:
     - target: {fileID: 2025472991266057652, guid: 80f72f0c5fad2fb4394fb229185d0601,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2025472991266057652, guid: 80f72f0c5fad2fb4394fb229185d0601,
         type: 3}
@@ -193,13 +188,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 2025472991266057658, guid: 80f72f0c5fad2fb4394fb229185d0601,
+        type: 3}
+      propertyPath: m_Name
+      value: Tirolina
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80f72f0c5fad2fb4394fb229185d0601, type: 3}
---- !u!4 &6767788140471606605 stripped
+--- !u!4 &3165697089353839864 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2025472991266057652, guid: 80f72f0c5fad2fb4394fb229185d0601,
     type: 3}
-  m_PrefabInstance: {fileID: 4753531267321360633}
+  m_PrefabInstance: {fileID: 4032195350036207948}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8587872527408400331
 PrefabInstance:

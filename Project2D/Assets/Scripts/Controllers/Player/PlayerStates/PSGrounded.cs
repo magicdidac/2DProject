@@ -8,13 +8,16 @@ public class PSGrounded : AState
     {
         if(pc.rb != null)
             pc.rb.gravityScale = 2.7f;
+
+        pc._playerModel.speed = pc._playerModel.normalSpeed;
     }
 
     public override void CheckTransition(AMoveController pc)
     {
         if (!pc.isGrounded) pc.ChangeState(new PSOnAir(pc));
         if (pc.isStuned) pc.ChangeState(new PSStun(pc));
-        if (Input.GetKey(KeyCode.S)) pc.ChangeState(new PSSliding(pc));
+        if (pc.isTrampoline) pc.ChangeState(new PSTrampoline());
+        if (Input.GetKey(KeyCode.S) && pc.combustible > 0) pc.ChangeState(new PSSliding(pc));
     }
 
     public override void FixedUpdate(AMoveController pc)
