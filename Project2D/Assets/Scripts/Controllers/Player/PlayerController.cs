@@ -61,7 +61,12 @@ public class PlayerController : AMoveController
             if (isTrampoline)
                 gc.floor++;
         }
-
+        else if (col.tag.Contains("Tirolina"))
+        {
+            transform.SetParent(col.gameObject.transform);
+            isTirolina = true;
+            if (col.CompareTag("TirolinaD")) gc.floor--;
+        }
         else if (col.CompareTag("Coin"))
         {
             GameController.instance.AddScore(1);
