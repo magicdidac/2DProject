@@ -80,7 +80,7 @@ public class EnemyController : AMoveController
 
     public void attack()
     {
-        switch (gc.floor) {
+        switch (gc.getFloor()) {
             case 1:
                 Instantiate(granadePrefab, transform.GetChild(0).transform.position, Quaternion.identity);
                 break;
@@ -91,7 +91,7 @@ public class EnemyController : AMoveController
                     Instantiate(granadePrefab, transform.GetChild(0).transform.position, Quaternion.identity);
                 break;
             case -1:
-                Instantiate(bulletPrefab, transform.GetChild(0).transform.position, Quaternion.identity);
+                Instantiate(granadePrefab, transform.GetChild(0).transform.position, Quaternion.identity);
                 break;
         }
     }

@@ -16,13 +16,13 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [HideInInspector] public PlayerController player; //Player reference
     [HideInInspector] public EnemyController enemy; //Enemy reference
 
-    [HideInInspector] public int floor = 0;
+    [HideInInspector] private int floor = 0;
     [HideInInspector] public float enemyDistance = 3;
     [HideInInspector] public float maxDistance;
 
     [HideInInspector] public ScoreManager scoreManager; // Score Manager reference
 
-    private float highScore;
+    [HideInInspector] public float highScore;
 
     private void Awake()
     {
@@ -68,9 +68,20 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         player.ChangeState(new PSDead(player));
         scoreManager.CalculateFinalScore(win);
         scoreManager.panel.SetActive(true);
-        highScore = scoreManager.highScore;
+        highScore = (scoreManager.highScore > highScore) ? scoreManager.highScore:highScore;
     }
-    
+
+    public void setFloor(int p_floor)
+    {
+
+        floor = p_floor;
+    }
+
+    public int getFloor()
+    {
+        return floor;
+    }
+
     public void AddCoins(int newScoreValue)
     {
         scoreManager.AddCoins(newScoreValue);
@@ -81,6 +92,10 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
         mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
+        scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
+
+        enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
+        maxDistance = enemyDistance + 4.5f;
     }
 
     public void ConsumeCombustible()

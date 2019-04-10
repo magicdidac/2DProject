@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         gc = GameController.instance;
-        switch (gc.floor)
+        switch (gc.getFloor())
         {
             case 0:
                 rb.velocity = Vector2.left * speed;

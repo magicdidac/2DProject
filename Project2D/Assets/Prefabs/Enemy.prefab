@@ -139,10 +139,11 @@ MonoBehaviour:
   isRope: 0
   isTirolina: 0
   isTirolinaD: 0
-  reduceFactor: 0.01
+  isDead: 0
+  reduceFactor: 0.025
   bulletPrefab: {fileID: 8686533054903447472, guid: 98275d561080dc14490309accdc73343,
     type: 3}
-  granadePrefab: {fileID: 8686533054903447472, guid: 98275d561080dc14490309accdc73343,
+  granadePrefab: {fileID: 6493932739216059904, guid: 56da11a6ab24e214e9177fac34e1132f,
     type: 3}
   canShoot: 0
   canCharge: 0

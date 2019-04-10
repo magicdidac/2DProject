@@ -22,13 +22,12 @@ public class ScoreManager : MonoBehaviour
 
     [HideInInspector]
     public float highScore = 0;
-
-    private bool scoreIncreasing = true; //false when the player is dead
+    
 
     void Start()
     {
         scoreText.text = string.Format("000{0}", score);
-        highScoreText.text = string.Format("000{0}", score);
+        highScoreText.text = Format(GameController.instance.highScore);
         panel.SetActive(false);
     }
 
