@@ -30,6 +30,7 @@ public abstract class AMoveController : MonoBehaviour
     [HideInInspector] public bool isRope = false;
     [HideInInspector] public bool isTirolina = false;
     [HideInInspector] public bool isTirolinaD = false;
+    [HideInInspector] public bool isDead = false;
 
     private void Start()
     {

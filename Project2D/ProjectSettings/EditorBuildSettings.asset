@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Sandbox/Didac/Didac.unity
     guid: 1752e80abe6b89c4282f815e9009f9ba
+  - enabled: 1
+    path: Assets/Sandbox/Javi/Javi.unity
+    guid: 64963873cef236d4f81d8e26a28cc90d
   m_configObjects: {}
