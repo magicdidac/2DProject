@@ -3,7 +3,25 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Platform
+  - Box
+  - Kill
+  - MapController
+  - Dump
+  - Rope
+  - Down
+  - Trampoline
+  - Tirolina
+  - Coin
+  - CoinUI
+  - SuperCoin
+  - ScoreManager
+  - Enemy
+  - Bullet
+  - TirolinaD
+  - HUD
+  - Combustible
   layers:
   - Default
   - TransparentFX
@@ -13,8 +31,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Platform
+  - Trampoline
   - 
   - 
   - 
