@@ -6,6 +6,7 @@ public class PlayerFollow: MonoBehaviour
 {
     
     private GameController gc;
+    private GameObject indicator;
     
     private float _offset = 0;
 
@@ -14,6 +15,7 @@ public class PlayerFollow: MonoBehaviour
     private void Start()
     {
         gc = GameController.instance;
+        indicator = transform.GetChild(0).gameObject;
         _offset = Mathf.Abs(gc.player.transform.position.x);
     }
 
@@ -42,4 +44,10 @@ public class PlayerFollow: MonoBehaviour
         else
             transform.position = Vector3.Lerp(transform.position, new Vector3(gc.player.transform.position.x + _offset, (8 * gc.getFloor())+2, transform.position.z), .5f);
     }
+
+    private void Update()
+    {
+        indicator.SetActive(myFloor != 0);
+    }
+
 }

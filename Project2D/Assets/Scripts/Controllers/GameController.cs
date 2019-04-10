@@ -17,7 +17,6 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [HideInInspector] public EnemyController enemy; //Enemy reference
 
     [HideInInspector] private int floor = 0;
-    [HideInInspector] public int oldFloor = 0;
     [HideInInspector] public float enemyDistance = 3;
     [HideInInspector] public float maxDistance;
 
@@ -54,7 +53,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void setFloor(int p_floor)
     {
-        oldFloor = floor;
+
         floor = p_floor;
     }
 
