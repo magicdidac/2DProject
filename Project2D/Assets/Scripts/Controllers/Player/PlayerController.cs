@@ -70,19 +70,29 @@ public class PlayerController : AMoveController
         }
         else if (col.CompareTag("Coin"))
         {
-            gc.AddScore(1);
+            gc.AddCoins(1);
             col.gameObject.SetActive(false);
         }
 
         else if (col.CompareTag("SuperCoin"))
         {
-            gc.AddScore(5);
+            gc.AddCoins(5);
             col.gameObject.SetActive(false);
         }
         else if (col.CompareTag("Combustible"))
         {
-            GameController.instance.GetCombustible(col.gameObject.GetComponent<Combustible>()._combustibleModel.quantity);
+            gc.GetCombustible(col.gameObject.GetComponent<Combustible>()._combustibleModel.quantity);
             col.gameObject.SetActive(false);
+        }
+
+        else if (col.CompareTag("Enemy"))
+        {
+            gc.GameWin(true);
+        }
+
+        else if (col.CompareTag("Kill"))
+        {
+            gc.GameWin(false);
         }
     }
 

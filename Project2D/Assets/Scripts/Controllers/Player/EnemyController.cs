@@ -37,6 +37,7 @@ public class EnemyController : AMoveController
 
     public void AddDistance()
     {
+        if (isDead) return;
         CancelInvoke("reduceDistance");
         distanceToIncrement = gc.enemyDistance + 1;
         InvokeRepeating("incrementDistance", 0, .1f);
@@ -44,6 +45,7 @@ public class EnemyController : AMoveController
 
     private void incrementDistance()
     {
+        if (isDead) return;
         if (gc.enemyDistance >= distanceToIncrement || gc.enemyDistance >= gc.maxDistance)
         {
             CancelInvoke("incrementDistance");
@@ -55,7 +57,8 @@ public class EnemyController : AMoveController
 
     private void reduceDistance()
     {
-        if(gc.enemyDistance > 1.6f)
+        if (isDead) return;
+        if (gc.enemyDistance > 1.6f)
             gc.enemyDistance -= reduceFactor;
     }
 

@@ -22,6 +22,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     [HideInInspector] public ScoreManager scoreManager; // Score Manager reference
 
+    private float highScore;
+
     private void Awake()
     {
 
@@ -39,21 +41,39 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
         enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
         maxDistance = enemyDistance + 4.5f;
+
+        highScore = 0;
     }
 
     private void Update()
     {
-        scoreManager.AddScore(player.transform.position.x);
+        if (getEnemyDistance() > maxDistance)
+        {
+            GameWin(true);
+        }
+
+        if (!player.isDead) scoreManager.AddScore(player.transform.position.x);
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex).completed += GameController_completed;
             floor = 0;
         }
     }
-    
-    public void AddScore(int newScoreValue)
+
+    public void GameWin(bool win)
     {
-        scoreManager.AddScore(newScoreValue);
+        player.isDead = true;
+        enemy.isDead = true;
+        player.ChangeState(new PSDead(player));
+        scoreManager.CalculateFinalScore(win);
+        scoreManager.panel.SetActive(true);
+        highScore = scoreManager.highScore;
+    }
+    
+    public void AddCoins(int newScoreValue)
+    {
+        scoreManager.AddCoins(newScoreValue);
     }
 
     private void GameController_completed(AsyncOperation obj)
