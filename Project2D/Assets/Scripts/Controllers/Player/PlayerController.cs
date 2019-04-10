@@ -50,23 +50,23 @@ public class PlayerController : AMoveController
             transform.SetParent(col.gameObject.transform);
             rb.velocity = Vector2.zero;
             rb.bodyType = RigidbodyType2D.Kinematic;
-            gc.floor++;
+            gc.setFloor(gc.getFloor()+1);
             isRope = true;
             col.GetComponent<Rope> ().startMovement();
         }
         else if (col.CompareTag("Down"))
-            gc.floor--;
+            gc.setFloor(gc.getFloor() - 1);
         else if (col.CompareTag("Trampoline"))
         {
             isTrampoline = detectCollision(trampolineMask, _playerModel.trampolineOffset);
             if (isTrampoline)
-                gc.floor++;
+                gc.setFloor(gc.getFloor() + 1);
         }
         else if (col.tag.Contains("Tirolina"))
         {
             transform.SetParent(col.gameObject.transform);
             isTirolina = true;
-            if (col.CompareTag("TirolinaD")) gc.floor--;
+            if (col.CompareTag("TirolinaD")) gc.setFloor(gc.getFloor() - 1);
         }
         else if (col.CompareTag("Coin"))
         {

@@ -32,14 +32,14 @@ public class Granade : MonoBehaviour
     {
         if (!isFalling)
         {
-            if((gc.floor > -1 && transform.position.y > (gc.floor * 8)+1.5f) || (gc.floor == -1 && transform.position.y < (gc.floor * 8) + 1.5f))
+            if((gc.getFloor() > -1 && transform.position.y > (gc.getFloor() * 8)+1.5f) || (gc.getFloor() == -1 && transform.position.y < (gc.getFloor() * 8) + 1.5f))
             {
                 isFalling = true;
                 box.enabled = true;
-                rb.velocity = (gc.floor == -1) ? new Vector2(4, -7) : new Vector2(4, 7);
+                rb.velocity = (gc.getFloor() == -1) ? new Vector2(4, -7) : new Vector2(4, 7);
                 return;
             }
-            rb.velocity = (gc.floor == -1) ? new Vector2(7.5f, -15) : new Vector2(7.5f, 15);
+            rb.velocity = (gc.getFloor() == -1) ? new Vector2(7.5f, -15) : new Vector2(7.5f, 15);
             return;
         }
 
@@ -67,6 +67,7 @@ public class Granade : MonoBehaviour
     {
         ps.Play();
         spr.SetActive(false);
+        rb.velocity = Vector2.zero;
     }
 
 }

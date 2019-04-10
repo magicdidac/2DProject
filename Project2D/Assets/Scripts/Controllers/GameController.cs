@@ -16,7 +16,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [HideInInspector] public PlayerController player; //Player reference
     [HideInInspector] public EnemyController enemy; //Enemy reference
 
-    [HideInInspector] public int floor = 0;
+    [HideInInspector] private int floor = 0;
+    [HideInInspector] public int oldFloor = 0;
     [HideInInspector] public float enemyDistance = 3;
     [HideInInspector] public float maxDistance;
 
@@ -50,7 +51,18 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             floor = 0;
         }
     }
-    
+
+    public void setFloor(int p_floor)
+    {
+        oldFloor = floor;
+        floor = p_floor;
+    }
+
+    public int getFloor()
+    {
+        return floor;
+    }
+
     public void AddScore(int newScoreValue)
     {
         scoreManager.AddScore(newScoreValue);

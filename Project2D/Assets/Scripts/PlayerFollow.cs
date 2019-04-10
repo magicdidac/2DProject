@@ -19,11 +19,27 @@ public class PlayerFollow: MonoBehaviour
 
     void FixedUpdate()
     {
-        if(gc.floor != myFloor && gc.player.isGrounded && !gc.player.isTrampoline)
-            myFloor = gc.floor;
-        else if (gc.floor != myFloor)
-            transform.position = Vector3.Lerp(transform.position, new Vector3(gc.player.transform.position.x + _offset, (gc.player.transform.position.y)+2, transform.position.z), .5f);
+        if(gc.getFloor() != myFloor && gc.player.isGrounded && !gc.player.isTrampoline)
+            myFloor = gc.getFloor();
+        else if (gc.getFloor() != myFloor)
+        {
+            if(gc.getFloor() - myFloor > 0)//Subo
+            {
+                if(gc.player.transform.position.y < myFloor*8)
+                    transform.position = Vector3.Lerp(transform.position, new Vector3(gc.player.transform.position.x + _offset, (8 * myFloor) + 2, transform.position.z), .5f);
+                else
+                    transform.position = Vector3.Lerp(transform.position, new Vector3(gc.player.transform.position.x + _offset, (gc.player.transform.position.y) + 2, transform.position.z), .5f);
+            }
+            else //Bajo
+            {
+                if (gc.player.transform.position.y > myFloor*8)
+                    transform.position = Vector3.Lerp(transform.position, new Vector3(gc.player.transform.position.x + _offset, (8 * myFloor) + 2, transform.position.z), .5f);
+                else
+                    transform.position = Vector3.Lerp(transform.position, new Vector3(gc.player.transform.position.x + _offset, (gc.player.transform.position.y) + 2, transform.position.z), .5f);
+            }
+        }
+            
         else
-            transform.position = Vector3.Lerp(transform.position, new Vector3(gc.player.transform.position.x + _offset, (8 * gc.floor)+2, transform.position.z), .5f);
+            transform.position = Vector3.Lerp(transform.position, new Vector3(gc.player.transform.position.x + _offset, (8 * gc.getFloor())+2, transform.position.z), .5f);
     }
 }

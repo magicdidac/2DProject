@@ -52,7 +52,7 @@ public class MapController : MonoBehaviour
 
         if (Random.value < transitionProbability)
         {
-            switch (gc.floor)
+            switch (gc.getFloor())
             {
                 case 1: //Top Transitions
                     _nextChunk = Random.Range(0, _chunkStore.topTChunks.Length);
@@ -93,7 +93,7 @@ public class MapController : MonoBehaviour
         _lastPos += p_chunk.lenght / 2;
         _lastChunk = p_chunk;
 
-        GameObject chunkCreated = Instantiate(p_chunk.prefab, new Vector3(_lastPos, 8*gc.floor), Quaternion.identity, transform);
+        GameObject chunkCreated = Instantiate(p_chunk.prefab, new Vector3(_lastPos, 8*gc.getFloor()), Quaternion.identity, transform);
         GameObject enemyPCreated = Instantiate(enemyPPrefab, new Vector3(_lastPos, -1.25f), Quaternion.identity, transform);
         enemyPCreated.GetComponent<SpriteRenderer>().size = new Vector2(p_chunk.lenght, 1);
         chunksQueue.Enqueue(chunkCreated);
