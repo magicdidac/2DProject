@@ -136,7 +136,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             style.normal.textColor = Color.red;
             style.fontSize = fontSize;
             style.alignment = TextAnchor.MiddleLeft;
-            Handles.Label(stateInfoPosition + Camera.main.transform.position, "Player state: " + player.currentState + "\nEnemy state: " + enemy.currentState + "\nFloor: " + floor+ "\nEnemy: "+getEnemyDistance()+" ("+enemyDistance+")", style);
+            //Handles.Label(stateInfoPosition + Camera.main.transform.position, "Player state: " + player.currentState + "\nEnemy state: " + enemy.currentState + "\nFloor: " + floor+ "\nEnemy: "+getEnemyDistance()+" ("+enemyDistance+")", style);
         //}
     }
 }
