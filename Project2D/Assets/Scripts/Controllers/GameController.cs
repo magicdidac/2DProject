@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [HideInInspector] public float maxDistance;
 
     [HideInInspector] public ScoreManager scoreManager; // Score Manager reference
+    [HideInInspector] public EndGame endGame; // End Game menu reference
 
     [HideInInspector] public float highScore;
 
@@ -38,6 +39,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController> ();
         mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
         scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
+        endGame = GameObject.FindGameObjectWithTag("Finish").GetComponent<EndGame>();
 
         enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
         maxDistance = enemyDistance + 4.5f;
@@ -54,11 +56,11 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
         if (!player.isDead) scoreManager.AddScore(player.transform.position.x);
 
-        if (Input.GetKeyDown(KeyCode.R))
+        /*if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex).completed += GameController_completed;
             floor = 0;
-        }
+        }*/
     }
 
     public void GameWin(bool win)
@@ -66,9 +68,11 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         player.isDead = true;
         enemy.isDead = true;
         player.ChangeState(new PSDead(player));
-        scoreManager.CalculateFinalScore(win);
-        scoreManager.panel.SetActive(true);
-        highScore = (scoreManager.highScore > highScore) ? scoreManager.highScore:highScore;
+        //scoreManager.GameOver(win);
+        //scoreManager.panel.SetActive(true);
+        endGame.gameObject.SetActive(true);
+        endGame.GameWin(win);
+        highScore = (scoreManager.HighScore > highScore) ? scoreManager.HighScore:highScore;
     }
 
     public void setFloor(int p_floor)
@@ -87,7 +91,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         scoreManager.AddCoins(newScoreValue);
     }
 
-    private void GameController_completed(AsyncOperation obj)
+    //lo he pasado a public para usarlo desde EndGame.cs que controla las escenas
+    public void GameController_completed(AsyncOperation obj)
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
