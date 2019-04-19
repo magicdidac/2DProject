@@ -13,6 +13,9 @@ public class EnemyController : AMoveController
     [HideInInspector] public bool canCharge = false;
     [HideInInspector] public float shootPosition;
 
+    [HideInInspector] public float RadiusDetection { get; } = 2f;
+    [SerializeField] public LayerMask groundMask;
+
     private void Awake()
     {
         ChangeState(new ESWaiting(this));
@@ -28,6 +31,8 @@ public class EnemyController : AMoveController
     private void Update()
     {
         currentState.Update(this);
+        isGrounded = detectCollision(groundMask, _playerModel.offset);
+        //CalculateDistance();
     }
 
     private void LateUpdate()
@@ -96,4 +101,28 @@ public class EnemyController : AMoveController
         }
     }
 
+    /*private void CalculateDistance()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x + RadiusDetection, transform.position.y + 1), Vector2.right, RadiusDetection);
+        if (hit.collider != null)
+        {
+            if (isGrounded && hit.collider.CompareTag("Box"))
+            {
+                Jump(this);
+                ChangeState(new ESOnAir(this));
+            }
+        }
+    }
+
+    private void Jump(EnemyController ec)
+    {
+        Debug.Log("Jump");
+        ec.rb.velocity = Vector2.up * ec._playerModel.jumpForce;
+    }*/
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, RadiusDetection);
+    }
 }
