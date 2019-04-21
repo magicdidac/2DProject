@@ -16,8 +16,12 @@ public class EnemyController : AMoveController
     [HideInInspector] public float RadiusDetection { get; } = 2f;
     [SerializeField] public LayerMask groundMask;
 
+    [HideInInspector] public ParticleSystem shield;
+
     private void Awake()
     {
+        shield = GetComponentInChildren<ParticleSystem>();
+        shield.Stop();
         ChangeState(new ESWaiting(this));
         InvokeRepeating("reduceDistance", 5, .1f);
     }

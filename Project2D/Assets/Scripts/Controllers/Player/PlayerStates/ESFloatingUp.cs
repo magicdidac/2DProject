@@ -17,6 +17,7 @@ public class ESFloatingUp : AState
         ec.rb.bodyType = RigidbodyType2D.Kinematic;
         ec.GetComponent<BoxCollider2D>().isTrigger = true;
         ec.rb.velocity = Vector2.up * plusOffset;
+        ec.shield.gameObject.SetActive(true);
         Debug.Log(this);
     }
 

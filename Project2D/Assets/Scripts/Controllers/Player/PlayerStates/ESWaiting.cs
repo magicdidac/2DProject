@@ -18,6 +18,7 @@ public class ESWaiting : AState
             ec.rb.bodyType = RigidbodyType2D.Kinematic;
             ec.GetComponent<BoxCollider2D>().isTrigger = true;
         }
+        ec.shield.gameObject.SetActive(false);
         Debug.Log(this);
     }
 
