@@ -98,6 +98,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
         mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
         scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
+        endGame = GameObject.FindGameObjectWithTag("Finish").GetComponent<EndGame>();
 
         enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
         maxDistance = enemyDistance + 4.5f;
