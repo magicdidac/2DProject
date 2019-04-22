@@ -48,7 +48,7 @@ public class EndGame : MonoBehaviour
         }
         else
         {
-            panel.GetComponent<Image>().color = new Color(255, 0, 0, 196);
+            panel.GetComponent<Image>().color = new Color(r:255f, g:0f, b:0f, a:.100f);
             panel.transform.GetChild(0).GetComponent<Text>().text = "LOSER";
             highScore = coins + score;
         }
