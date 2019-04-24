@@ -8,7 +8,6 @@ public class EndGame : MonoBehaviour
 {
     public GameObject totalScoreObject;
     public GameObject totalCoinsObject;
-    public GameObject highScoreObject;
 
     private Image panel;
 
@@ -38,8 +37,8 @@ public class EndGame : MonoBehaviour
         score = gc.scoreManager.Score;
         coins = gc.scoreManager.Coins;
 
-        StartCoroutine(AnimateScore(totalScoreObject.GetComponent<Text>(), score));
-        StartCoroutine(AnimateScore(totalCoinsObject.GetComponent<Text>(), coins));
+        StartCoroutine(IncreaseScore(totalScoreObject.GetComponent<Text>(), score));
+        StartCoroutine(IncreaseScore(totalCoinsObject.GetComponent<Text>(), coins));
 
         if (win)
         {
@@ -52,14 +51,26 @@ public class EndGame : MonoBehaviour
             panel.transform.GetChild(0).GetComponent<Text>().text = "LOSER";
             highScore = coins + score;
         }
-        StartCoroutine(AnimateScore(highScoreObject.GetComponent<Text>(), highScore));
+        //StartCoroutine(AnimateScore(highScoreObject.GetComponent<Text>(), highScore));
     }
 
-    IEnumerator AnimateScore(Text t_score, float f_score)
+    IEnumerator IncreaseScore(Text t_score, float f_score)
     {
         t_score.text = "0";
         int score = 0;
         while(score < f_score)
+        {
+            score++;
+            t_score.text = score.ToString();
+            yield return new WaitForSeconds(.005f);
+        }
+    }
+
+    IEnumerator DicreaseCoins(Text t_score, float f_score)
+    {
+        t_score.text = "0";
+        int score = 0;
+        while (score < f_score)
         {
             score++;
             t_score.text = score.ToString();
