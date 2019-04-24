@@ -38,7 +38,7 @@ public class ESWaiting : AState
     {
         EnemyController ec = (EnemyController)pc;
 
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(ec.transform.position.x + ec.RadiusDetection, ec.transform.position.y + 1),
+        /*RaycastHit2D hit = Physics2D.Raycast(new Vector2(ec.transform.position.x + ec.RadiusDetection, ec.transform.position.y + 1),
             Vector2.right, ec.RadiusDetection);
 
         if (hit.collider != null)
@@ -49,10 +49,41 @@ public class ESWaiting : AState
                 ec.rb.velocity = Vector2.up * ec._playerModel.jumpForce;
                 hasJump = true;
             }
-        }
+        }*/
+        Jump(ec);
     }
 
     private void Jump(EnemyController ec)
     {
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(ec.transform.position.x + ec.RadiusDetection, ec.transform.position.y + 1),
+            Vector2.right, ec.RadiusDetection);
+
+        if (hit.collider != null)
+        {
+            if (ec.isGrounded && (hit.collider.CompareTag("Box"))) //salta los Box y atraviesa los Kill o viceversa??
+            {
+                float upDistance = Mathf.Abs(hit.collider.transform.position.y - ec.transform.position.y);
+                float forwardDistance = Mathf.Abs(hit.collider.bounds.max.x - hit.collider.bounds.min.x);
+                /*
+                 * UpDistance
+                 *      Box normal -> 0.75f
+                 *      Box alta -> 1.16f
+                 *      Box larga -> 0.75f
+                 *      
+                 * ForwardDistance
+                 *      Box normal -> 1f
+                 *      Box alta -> 2f
+                 *      Box larga -> 2f
+                 *      
+                 *      podria utilizar simplemente la altura y ancchura de box sin tener en cuenta la propia del enemy
+                 */
+
+                Debug.Log("UpDistance: " + upDistance);
+                Debug.Log("Jump");
+                ec.rb.velocity = Vector2.up * ec._playerModel.jumpForce * (upDistance * (forwardDistance));
+                hasJump = true;
+            }
+        }
+
     }
 }

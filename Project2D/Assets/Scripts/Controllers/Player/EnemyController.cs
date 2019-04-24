@@ -13,7 +13,7 @@ public class EnemyController : AMoveController
     [HideInInspector] public bool canCharge = false;
     [HideInInspector] public float shootPosition;
 
-    [HideInInspector] public float RadiusDetection { get; } = 2f;
+    [HideInInspector] public float RadiusDetection { get; } = 1.5f; //2 by default
     [SerializeField] public LayerMask groundMask;
 
     [HideInInspector] public ParticleSystem shield;
