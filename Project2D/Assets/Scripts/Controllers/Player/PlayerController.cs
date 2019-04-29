@@ -24,7 +24,7 @@ public class PlayerController : AMoveController
     private void Update()
     {
         if(anim != null)
-            anim.SetBool("Ground",isGrounded);
+            anim.SetBool("B-Ground",isGrounded);
         currentState.Update(this);
         isGrounded = detectCollision(groundMask, _playerModel.offset);
     }
@@ -103,7 +103,7 @@ public class PlayerController : AMoveController
 
     private void OnDrawGizmos()
     {
-        spr = GetComponent<SpriteRenderer>();
+        spr = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
         drawGroundRayCast();
         drawTrampolineRayCast();
