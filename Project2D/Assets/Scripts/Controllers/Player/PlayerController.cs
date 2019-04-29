@@ -23,6 +23,8 @@ public class PlayerController : AMoveController
 
     private void Update()
     {
+        if(anim != null)
+            anim.SetBool("Ground",isGrounded);
         currentState.Update(this);
         isGrounded = detectCollision(groundMask, _playerModel.offset);
     }

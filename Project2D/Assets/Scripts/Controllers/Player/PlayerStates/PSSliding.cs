@@ -28,7 +28,7 @@ public class PSSliding : AState
         if (pc.isRope)
         {
             pc.anim.SetBool("isSliding", false);
-            pc.ChangeState(new PSRope());
+            pc.ChangeState(new PSRope(pc));
         }
         if (pc.isTrampoline)
         {

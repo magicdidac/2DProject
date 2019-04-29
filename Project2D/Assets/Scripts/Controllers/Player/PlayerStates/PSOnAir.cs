@@ -7,6 +7,7 @@ public class PSOnAir : AState
     public PSOnAir(AMoveController pc)
     {
         pc.rb.gravityScale = 2.7f;
+        pc.anim.SetBool("Ground", false);
     }
 
     public override void CheckTransition(AMoveController pc)
@@ -20,7 +21,11 @@ public class PSOnAir : AState
 
         if (pc.isTrampoline) pc.ChangeState(new PSTrampoline());
 
-        if (pc.isRope) pc.ChangeState(new PSRope());
+        if (pc.isRope)
+        {
+            pc.anim.SetTrigger("Rope");
+            pc.ChangeState(new PSRope(pc));
+        }
 
         if (pc.isTirolina) pc.ChangeState(new PSTirolina(pc));
     }
@@ -35,6 +40,7 @@ public class PSOnAir : AState
 
     public override void Update(AMoveController pc)
     {
+        pc.anim.SetFloat("SpeedY", pc.rb.velocity.y);
         return;
     }
 }
