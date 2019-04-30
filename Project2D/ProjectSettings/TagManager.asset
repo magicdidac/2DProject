@@ -22,6 +22,9 @@ TagManager:
   - TirolinaD
   - HUD
   - Combustible
+  - Pause
+  - Options
+  - Light
   layers:
   - Default
   - TransparentFX
