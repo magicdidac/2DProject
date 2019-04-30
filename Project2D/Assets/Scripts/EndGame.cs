@@ -1,13 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EndGame : MonoBehaviour
 {
-    public GameObject totalScoreObject;
-    public GameObject totalCoinsObject;
 
     private Image panel;
 
@@ -16,6 +15,8 @@ public class EndGame : MonoBehaviour
     private float highScore;
 
     private GameController gc;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI coinsText;
 
     private void Start()
     {
@@ -36,28 +37,36 @@ public class EndGame : MonoBehaviour
     {
         score = gc.scoreManager.Score;
         coins = gc.scoreManager.Coins;
+        gc.scoreManager.coinsText.gameObject.SetActive(false);
+        gc.scoreManager.scoreText.gameObject.SetActive(false);
+        gc.scoreManager.gameObject.SetActive(false);
 
-        StartCoroutine(IncreaseScore(totalScoreObject.GetComponent<Text>(), score));
-        StartCoroutine(IncreaseScore(totalCoinsObject.GetComponent<Text>(), coins));
+        scoreText.text = score.ToString();
+        coinsText.text = coins.ToString();
 
         if (win)
         {
-            panel.transform.GetChild(0).GetComponent<Text>().text = "WINNER";
+            panel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "WINNER";
             highScore = (coins + score) * 2;
         }
         else
         {
             panel.GetComponent<Image>().color = new Color(r:255f, g:0f, b:0f, a:.100f);
-            panel.transform.GetChild(0).GetComponent<Text>().text = "LOSER";
+            panel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "LOSER";
             highScore = coins + score;
         }
-        //StartCoroutine(AnimateScore(highScoreObject.GetComponent<Text>(), highScore));
+
+        Invoke("InvokeIncreaseScore", 1f);
     }
 
-    IEnumerator IncreaseScore(Text t_score, float f_score)
+    private void InvokeIncreaseScore()
     {
-        t_score.text = "0";
-        int score = 0;
+        StartCoroutine(DicreaseCoins(coinsText, coins));
+        StartCoroutine(IncreaseScore(scoreText, highScore));
+    }
+
+    IEnumerator IncreaseScore(TextMeshProUGUI t_score, float f_score)
+    {
         while(score < f_score)
         {
             score++;
@@ -66,14 +75,12 @@ public class EndGame : MonoBehaviour
         }
     }
 
-    IEnumerator DicreaseCoins(Text t_score, float f_score)
+    IEnumerator DicreaseCoins(TextMeshProUGUI t_score, float f_score)
     {
-        t_score.text = "0";
-        int score = 0;
-        while (score < f_score)
+        while (f_score > 0)
         {
-            score++;
-            t_score.text = score.ToString();
+            f_score--;
+            t_score.text = f_score.ToString();
             yield return new WaitForSeconds(.005f);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +9,9 @@ public class ScoreManager : MonoBehaviour
 
     //public GameObject panel;
 
-    public Text scoreText;
-    public Text coinsText;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI coinsText;
+    public TextMeshProUGUI highScoreText;
 
     /*public Text totalScoreMeters;
     public Text totalScoreCoins;
