@@ -11,18 +11,26 @@ public class PSOnAir : AState
 
     public override void CheckTransition(AMoveController pc)
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) && pc.rb.velocity.y <= 0)
         {
             pc.ChangeState(new PSSliding(pc));
         }
 
-        if (pc.isGrounded) pc.ChangeState(new PSGrounded(pc));
+        if (pc.isGrounded)
+        {
+            if (pc.anim.GetBool("B-Rope"))
+                pc.anim.SetBool("B-Rope", false);
+            if (pc.anim.GetBool("B-ZipLine"))
+                pc.anim.SetBool("B-ZipLine", false);
+            pc.ChangeState(new PSGrounded(pc));
+        }
 
         if (pc.isTrampoline) pc.ChangeState(new PSTrampoline());
 
-        if (pc.isRope) pc.ChangeState(new PSRope());
+        if (pc.isRope)
+            pc.ChangeState(new PSRope(pc));
 
-        if (pc.isTirolina) pc.ChangeState(new PSTirolina(pc));
+        if (pc.isTirolina) pc.ChangeState(new PSZipLine(pc));
     }
 
     public override void FixedUpdate(AMoveController pc)

@@ -73,8 +73,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void setFloor(int p_floor)
     {
-
-        floor = p_floor;
+        if(p_floor == 1 || p_floor == 0 || p_floor == -1)
+            floor = p_floor;
     }
 
     public int getFloor()
@@ -130,13 +130,13 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     private void drawState()
     {
-        //if (player.currentState != null)
-        //{
+        if (player.currentState != null)
+        {
             GUIStyle style = new GUIStyle();
             style.normal.textColor = Color.red;
             style.fontSize = fontSize;
             style.alignment = TextAnchor.MiddleLeft;
-            //Handles.Label(stateInfoPosition + Camera.main.transform.position, "Player state: " + player.currentState + "\nEnemy state: " + enemy.currentState + "\nFloor: " + floor+ "\nEnemy: "+getEnemyDistance()+" ("+enemyDistance+")", style);
-        //}
+            Handles.Label(stateInfoPosition + Camera.main.transform.position, "Player state: " + player.currentState + "\nEnemy state: " + enemy.currentState + "\nFloor: " + floor+ "\nEnemy: "+getEnemyDistance()+" ("+enemyDistance+")", style);
+        }
     }
 }
