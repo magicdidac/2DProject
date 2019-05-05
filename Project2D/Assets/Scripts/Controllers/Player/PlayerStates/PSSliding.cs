@@ -15,39 +15,39 @@ public class PSSliding : AState
             goingDown = true;
         }
         else goingDown = false;
-        pc.anim.SetBool("isSliding", true);
+        pc.anim.SetBool("B-Slide", true);
     }
 
     public override void CheckTransition(AMoveController pc)
     {
         if (Input.GetKeyUp(KeyCode.S))
         {
-            pc.anim.SetBool("isSliding", false);
+            pc.anim.SetBool("B-Slide", false);
             pc.ChangeState(new PSGrounded(pc));
         }
         if (pc.isRope)
         {
-            pc.anim.SetBool("isSliding", false);
+            pc.anim.SetBool("B-Slide", false);
             pc.ChangeState(new PSRope(pc));
         }
         if (pc.isTrampoline)
         {
-            pc.anim.SetBool("isSliding", false);
+            pc.anim.SetBool("B-Slide", false);
             pc.ChangeState(new PSTrampoline());
         }
         if (pc.combustible <= 0 && pc.isGrounded)
         {
-            pc.anim.SetBool("isSliding", false);
+            pc.anim.SetBool("B-Slide", false);
             pc.ChangeState(new PSGrounded(pc));
         }
         if (!pc.isGrounded && !goingDown)
         {
-            pc.anim.SetBool("isSliding", false);
+            pc.anim.SetBool("B-Slide", false);
             pc.ChangeState(new PSOnAir(pc));
         }
         if (pc.isTrampoline)
         {
-            pc.anim.SetBool("isSliding", false);
+            pc.anim.SetBool("B-Slide", false);
             pc.ChangeState(new PSTrampoline());
         }
     }

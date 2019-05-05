@@ -9,7 +9,7 @@ public class PSStun : AState
     public PSStun(AMoveController pc)
     {
         pc.rb.gravityScale = 2.7f;
-        pc.anim.SetBool("isSliding", false);
+        pc.anim.SetBool("B-Slide", false);
     }
 
     public override void CheckTransition(AMoveController pc)

@@ -38,7 +38,7 @@ public class PlayerController : AMoveController
     {
         if(col.CompareTag("Box"))
         {
-            if (isGrounded && !anim.GetBool("isSliding"))
+            if (isGrounded && !anim.GetBool("B-Slide"))
             {
                 gc.enemy.AddDistance();
                 isStuned = true;

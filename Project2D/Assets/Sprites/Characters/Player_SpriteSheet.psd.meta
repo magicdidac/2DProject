@@ -15,23 +15,23 @@ TextureImporter:
     21300020: LND_2
     21300022: P_JP_11
     21300024: P_JP_12
-    21300026: P_JP_13
-    21300028: P_JP_14
-    21300030: P_JP_15
-    21300032: P_S_0
-    21300034: P_S_1
-    21300036: P_S_2
-    21300038: P_S_3
+    21300026: CRCH_0
+    21300028: CRCH_1
+    21300030: CRCH_2
+    21300032: BTTM
+    21300034: GTP_0
+    21300036: GTP_1
+    21300038: GTP_2
     21300040: P_S_4
     21300042: P_S_5
-    21300044: P_S_6
-    21300046: P_S_7
-    21300048: P_R_0
-    21300050: P_R_1
-    21300052: P_R_2
-    21300054: P_R_3
-    21300056: P_R_4
-    21300058: P_R_5
+    21300044: CTCH_R_0
+    21300046: CTCH_R_1
+    21300048: CTCH_R_2
+    21300050: CTCH_R_X
+    21300052: LV_RP_0
+    21300054: LV_RP_1
+    21300056: LV_RP_2
+    21300058: LV_RP_3
     21300060: P_R_6
     21300062: P_R_7
     21300064: P_R_8
@@ -359,27 +359,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: P_JP_12
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 1536
-        width: 256
-        height: 256
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 226aca059c1d95a49ae2f6f46a2c3b3c
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: P_JP_13
+      name: CRCH_0
       rect:
         serializedVersion: 2
         x: 1280
@@ -399,7 +379,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: P_JP_14
+      name: CRCH_1
       rect:
         serializedVersion: 2
         x: 1536
@@ -419,7 +399,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: P_JP_15
+      name: CRCH_2
       rect:
         serializedVersion: 2
         x: 1792
@@ -439,7 +419,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: P_S_0
+      name: BTTM
       rect:
         serializedVersion: 2
         x: 0
@@ -459,7 +439,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: P_S_1
+      name: GTP_0
       rect:
         serializedVersion: 2
         x: 256
@@ -479,7 +459,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: P_S_2
+      name: GTP_1
       rect:
         serializedVersion: 2
         x: 512
@@ -499,7 +479,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: P_S_3
+      name: GTP_2
       rect:
         serializedVersion: 2
         x: 768
@@ -519,47 +499,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: P_S_4
-      rect:
-        serializedVersion: 2
-        x: 1024
-        y: 1280
-        width: 256
-        height: 256
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b2e960febf7bfed499886e969a638f33
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: P_S_5
-      rect:
-        serializedVersion: 2
-        x: 1280
-        y: 1280
-        width: 256
-        height: 256
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dd5d6b50fc5b18648aef4745d007a0e2
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: P_S_6
+      name: CTCH_R_0
       rect:
         serializedVersion: 2
         x: 1536
@@ -579,7 +519,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: P_S_7
+      name: CTCH_R_1
       rect:
         serializedVersion: 2
         x: 1792
@@ -599,7 +539,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: P_R_0
+      name: CTCH_R_2
       rect:
         serializedVersion: 2
         x: 0
@@ -619,7 +559,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: P_R_1
+      name: CTCH_R_X
       rect:
         serializedVersion: 2
         x: 256
@@ -639,7 +579,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: P_R_2
+      name: LV_RP_0
       rect:
         serializedVersion: 2
         x: 512
@@ -659,7 +599,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: P_R_3
+      name: LV_RP_1
       rect:
         serializedVersion: 2
         x: 768
@@ -679,7 +619,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: P_R_4
+      name: LV_RP_2
       rect:
         serializedVersion: 2
         x: 1024
@@ -699,7 +639,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: P_R_5
+      name: LV_RP_3
       rect:
         serializedVersion: 2
         x: 1280
@@ -714,26 +654,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 3b6b35626f5797745b8d2cd7d006fae2
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: P_R_6
-      rect:
-        serializedVersion: 2
-        x: 1536
-        y: 1024
-        width: 256
-        height: 256
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 904be16bf959e6846a07b3331823a20f
       vertices: []
       indices: 
       edges: []
@@ -1014,26 +934,6 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: abf3c5e08d35580488aa86305f047228
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: IDL_5
-      rect:
-        serializedVersion: 2
-        x: 1280
-        y: 512
-        width: 256
-        height: 256
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 79a369da2f809144da62e5a6f313a67f
       vertices: []
       indices: 
       edges: []

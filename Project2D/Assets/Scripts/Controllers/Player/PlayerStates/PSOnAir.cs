@@ -12,7 +12,7 @@ public class PSOnAir : AState
 
     public override void CheckTransition(AMoveController pc)
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) && pc.rb.velocity.y <= 0)
         {
             pc.ChangeState(new PSSliding(pc));
         }
@@ -23,7 +23,7 @@ public class PSOnAir : AState
 
         if (pc.isRope)
         {
-            pc.anim.SetTrigger("Rope");
+            pc.anim.SetBool("B-Rope", true);
             pc.ChangeState(new PSRope(pc));
         }
 
