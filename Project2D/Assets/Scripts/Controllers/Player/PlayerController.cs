@@ -70,9 +70,9 @@ public class PlayerController : AMoveController
         }
         else if (col.tag.Contains("Tirolina"))
         {
-            transform.SetParent(col.gameObject.transform);
+            zipLine = col.gameObject.transform.parent.GetComponent<ZipLine> ();
             isTirolina = true;
-            if (col.CompareTag("TirolinaD")) gc.setFloor(gc.getFloor() - 1);
+            gc.setFloor(gc.getFloor() + zipLine.floorDiference);
         }
         else if (col.CompareTag("Coin"))
         {

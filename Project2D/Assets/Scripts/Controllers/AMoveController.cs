@@ -31,6 +31,9 @@ public abstract class AMoveController : MonoBehaviour
     [HideInInspector] public bool isTirolinaD = false;
     [HideInInspector] public bool isDead = false;
 
+    //Others
+    [HideInInspector] public ZipLine zipLine = null;
+
     private void Start()
     {
         gc = GameController.instance;
