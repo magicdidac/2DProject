@@ -7,13 +7,15 @@ public class PSRope : AState
 
     public PSRope(AMoveController pc)
     {
+        pc.anim.SetTrigger("T-Rope");
+        pc.anim.SetBool("B-Rope", true);
     }
 
     public override void CheckTransition(AMoveController pc)
     {
         if (pc.transform.parent == null)
         {
-            pc.anim.SetBool("B-Rope", false);
+            pc.anim.SetTrigger("T-RopeOut");
             pc.isRope = false;
             pc.rb.bodyType = RigidbodyType2D.Dynamic;
             pc.rb.AddForce(Vector2.one * pc._playerModel.exitRopeForce, ForceMode2D.Impulse);
