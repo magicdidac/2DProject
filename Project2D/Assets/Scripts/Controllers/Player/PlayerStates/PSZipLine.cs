@@ -26,7 +26,10 @@ public class PSZipLine : AState
     public override void CheckTransition(AMoveController pc)
     {
         if (pc.transform.position.x >= endPoint.position.x)
+        {
             ChangeStateTo(new PSOnAir(pc));
+            moveController.anim.SetTrigger("T-ZipLineOut");
+        }
 
         if (Input.GetKeyDown(KeyCode.S))
             ChangeStateTo(new PSSliding(pc));
@@ -35,7 +38,6 @@ public class PSZipLine : AState
     private void ChangeStateTo(AState state)
     {
         moveController.transform.parent.GetComponent<BoxCollider2D>().enabled = false;
-        moveController.anim.SetTrigger("T-ZipLineOut");
 
         moveController.isTirolina = false;
         moveController.transform.parent = null;
@@ -63,6 +65,7 @@ public class PSZipLine : AState
         {
             pc.rb.velocity = Vector2.up * pc._playerModel.jumpForce;
             ChangeStateTo(new PSOnAir(pc));
+            moveController.anim.SetTrigger("T-ZipLineOut");
         }
     }
 }
