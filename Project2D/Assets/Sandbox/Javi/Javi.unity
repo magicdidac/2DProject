@@ -206,7 +206,7 @@ PrefabInstance:
     - target: {fileID: 7688831546595525793, guid: f3f0e1e9e82b64d4eb73fa6eb13a2048,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.75
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7688831546595525793, guid: f3f0e1e9e82b64d4eb73fa6eb13a2048,
         type: 3}
@@ -262,6 +262,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7688831546595525792, guid: f3f0e1e9e82b64d4eb73fa6eb13a2048,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868631842418426964, guid: f3f0e1e9e82b64d4eb73fa6eb13a2048,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868631842418426964, guid: f3f0e1e9e82b64d4eb73fa6eb13a2048,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868631842418426964, guid: f3f0e1e9e82b64d4eb73fa6eb13a2048,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7688831546595525798, guid: f3f0e1e9e82b64d4eb73fa6eb13a2048,
+        type: 3}
+      propertyPath: m_BodyType
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3f0e1e9e82b64d4eb73fa6eb13a2048, type: 3}
@@ -475,7 +500,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.069000006, y: 0.845}
   m_AnchorMax: {x: 0.09052084, y: 0.8821482}
-  m_AnchoredPosition: {x: -0.80029297, y: -1.0200195}
+  m_AnchoredPosition: {x: -0.80078125, y: -1.0200195}
   m_SizeDelta: {x: -7.1400146, y: -6.1400146}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &284536196
@@ -1638,7 +1663,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPPrefab: {fileID: 573627921396306670, guid: 129389ded407af34f9ac7a397d3771b0,
     type: 3}
-  _perIncrease: 0.05
+  _perIncrease: 0
   _chunkStore: {fileID: 11400000, guid: 106a2cdca2f887742a2ed1ef9ad9909a, type: 2}
   enemyNeedShoot: 0
 --- !u!4 &1901534431
