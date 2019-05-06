@@ -96,10 +96,10 @@ public class PlayerController : AMoveController
             gc.GameWin(true);
         }
 
-        else if (col.CompareTag("Kill"))
+        /*else if (col.CompareTag("Kill"))
         {
             gc.GameWin(false);
-        }
+        }*/
     }
 
 

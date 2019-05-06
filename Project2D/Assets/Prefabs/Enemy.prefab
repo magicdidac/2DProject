@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7836655232826595432}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 7688831546595525798}
   - component: {fileID: 1567120741061893845}
   - component: {fileID: 1868631842418426964}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -130,6 +130,9 @@ MonoBehaviour:
   canShoot: 0
   canCharge: 0
   shootPosition: 0
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!50 &7688831546595525798
 Rigidbody2D:
   serializedVersion: 4
@@ -146,7 +149,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 2.7
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: f2e37c3b1cbad334e893db64d215b592, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
