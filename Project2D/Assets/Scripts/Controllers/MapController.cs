@@ -14,8 +14,6 @@ public class MapController : MonoBehaviour
     private float offset = 0;
     private float transitionProbability = .0f;
     private Queue<GameObject> chunksQueue = new Queue<GameObject>();
-    [SerializeField] private GameObject enemyPPrefab = null;
-    private Queue<GameObject> enemyPath = new Queue<GameObject>();
 
     [SerializeField] private float _perIncrease = .05f;
 
@@ -94,14 +92,10 @@ public class MapController : MonoBehaviour
         _lastChunk = p_chunk;
 
         GameObject chunkCreated = Instantiate(p_chunk.prefab, new Vector3(_lastPos, 8*gc.getFloor()), Quaternion.identity, transform);
-        GameObject enemyPCreated = Instantiate(enemyPPrefab, new Vector3(_lastPos, -1.25f), Quaternion.identity, transform);
-        enemyPCreated.GetComponent<SpriteRenderer>().size = new Vector2(p_chunk.lenght, 1);
         chunksQueue.Enqueue(chunkCreated);
-        enemyPath.Enqueue(enemyPCreated);
         if (chunksQueue.Count >= 3)
         {
             GameObject.Destroy(chunksQueue.Dequeue());
-            GameObject.Destroy(enemyPath.Dequeue());
         }
 
         _currentChunk = _nextChunk;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 public abstract class AMoveController : MonoBehaviour
 {
@@ -32,10 +31,13 @@ public abstract class AMoveController : MonoBehaviour
     [HideInInspector] public bool isTirolinaD = false;
     [HideInInspector] public bool isDead = false;
 
+    //Others
+    [HideInInspector] public ZipLine zipLine = null;
+
     private void Start()
     {
         gc = GameController.instance;
-        spr = GetComponent<SpriteRenderer>();
+        spr = transform.GetChild(0).GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         _playerModel = Instantiate(_playerModel);

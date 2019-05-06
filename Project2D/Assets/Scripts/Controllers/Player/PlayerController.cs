@@ -9,6 +9,8 @@ public class PlayerController : AMoveController
     [SerializeField] public LayerMask groundMask;   
     [SerializeField] public LayerMask trampolineMask;
 
+    [HideInInspector] private GameObject downObject;
+
     private void Awake()
     {
         
@@ -23,6 +25,8 @@ public class PlayerController : AMoveController
 
     private void Update()
     {
+        if(anim != null)
+            anim.SetBool("B-Ground",isGrounded);
         currentState.Update(this);
         isGrounded = detectCollision(groundMask, _playerModel.offset);
     }
@@ -34,9 +38,9 @@ public class PlayerController : AMoveController
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.CompareTag("Box"))
+        if (col.CompareTag("Box"))
         {
-            if (isGrounded && !anim.GetBool("isSliding"))
+            if (isGrounded && !anim.GetBool("B-Slide"))
             {
                 gc.enemy.AddDistance();
                 isStuned = true;
@@ -46,16 +50,18 @@ public class PlayerController : AMoveController
         }
         else if (col.CompareTag("Rope") && !isRope)
         {
-            //Add rope animation start
             transform.SetParent(col.gameObject.transform);
             rb.velocity = Vector2.zero;
             rb.bodyType = RigidbodyType2D.Kinematic;
-            gc.setFloor(gc.getFloor()+1);
+            gc.setFloor(gc.getFloor() + 1);
             isRope = true;
-            col.GetComponent<Rope> ().startMovement();
+            col.GetComponent<Rope>().startMovement();
         }
-        else if (col.CompareTag("Down"))
+        else if (col.CompareTag("Down") && col.gameObject != downObject)
+        {
+            downObject = col.gameObject;
             gc.setFloor(gc.getFloor() - 1);
+        }
         else if (col.CompareTag("Trampoline"))
         {
             isTrampoline = detectCollision(trampolineMask, _playerModel.trampolineOffset);
@@ -64,9 +70,9 @@ public class PlayerController : AMoveController
         }
         else if (col.tag.Contains("Tirolina"))
         {
-            transform.SetParent(col.gameObject.transform);
+            zipLine = col.gameObject.transform.parent.GetComponent<ZipLine> ();
             isTirolina = true;
-            if (col.CompareTag("TirolinaD")) gc.setFloor(gc.getFloor() - 1);
+            gc.setFloor(gc.getFloor() + zipLine.floorDiference);
         }
         else if (col.CompareTag("Coin"))
         {
@@ -101,7 +107,7 @@ public class PlayerController : AMoveController
 
     private void OnDrawGizmos()
     {
-        spr = GetComponent<SpriteRenderer>();
+        spr = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
         drawGroundRayCast();
         drawTrampolineRayCast();
