@@ -139,4 +139,22 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             Handles.Label(stateInfoPosition + Camera.main.transform.position, "Player state: " + player.currentState + "\nEnemy state: " + enemy.currentState + "\nFloor: " + floor+ "\nEnemy: "+getEnemyDistance()+" ("+enemyDistance+")", style);
         }
     }
+
+    //DATABASE
+    /*
+    public void UploadScore()
+    {
+        StartCoroutine(Upload());
+    }
+
+    IEnumerator Upload()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("name", username);
+        form.AddField("distance_score", );
+        form.AddField("coins_score", );
+        WWW www = new WWW("http://www.magicdvstudio.com/RobotRunner/uploadScore.php", form);
+        yield return www;
+        Debug.Log(www.text);
+    }*/
 }
