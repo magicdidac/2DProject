@@ -69,7 +69,7 @@ public class PlayerController : AMoveController
         }
         else if (col.tag.Contains("Tirolina"))
         {
-            zipLine = col.gameObject.transform.parent.GetComponent<ZipLine> ();
+            zipLine = col.gameObject.transform.parent.GetComponent<ZipLine>();
             isTirolina = true;
             gc.setFloor(gc.getFloor() + zipLine.floorDiference);
         }
@@ -89,6 +89,8 @@ public class PlayerController : AMoveController
             gc.GetCombustible(col.gameObject.GetComponent<Combustible>()._combustibleModel.quantity);
             col.gameObject.SetActive(false);
         }
+        else if (col.CompareTag("Shoot"))
+            gc.enemy.attack();
 
         /*else if (col.CompareTag("Kill"))
         {

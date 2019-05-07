@@ -19,8 +19,6 @@ public class MapController : MonoBehaviour
 
     [SerializeField] private ChunkStore _chunkStore = null;
 
-    [HideInInspector] public bool enemyNeedShoot = false;
-
     private void Start()
     {
         gc = GameController.instance;
@@ -37,16 +35,6 @@ public class MapController : MonoBehaviour
 
     private void changeChunk()
     {
-
-        if (enemyNeedShoot)
-        {
-            _nextChunk = -1;
-            instantiateChunk(_chunkStore.enemyChunk);
-            gc.enemy.shootPosition = _lastPos;
-            gc.enemy.canCharge = true;
-            enemyNeedShoot = false;
-            return;
-        }
 
         if (Random.value < transitionProbability)
         {

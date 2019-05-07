@@ -6,9 +6,6 @@ public class ESOnAir : AState
 {
     public ESOnAir(AMoveController pc)
     {
-        EnemyController ec = ((EnemyController)pc);
-        ec.canShoot = false;
-        ec.canCharge = false;
     }
 
     public override void CheckTransition(AMoveController pc)

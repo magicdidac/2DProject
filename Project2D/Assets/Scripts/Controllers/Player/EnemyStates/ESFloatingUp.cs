@@ -10,8 +10,6 @@ public class ESFloatingUp : AState
     public ESFloatingUp(AMoveController pc)
     {
         EnemyController ec = ((EnemyController)pc);
-        ec.canShoot = false;
-        ec.canCharge = false;
         ec.rb.bodyType = RigidbodyType2D.Kinematic;
         ec.col.isTrigger = true;
         ec.shield.gameObject.SetActive(true);

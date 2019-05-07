@@ -6,10 +6,7 @@ public class EnemyController : AMoveController
 {
     [SerializeField] private GameObject bulletPrefab = null;
     [SerializeField] private GameObject granadePrefab = null;
-
-    [HideInInspector] public bool canShoot = false;
-    [HideInInspector] public bool canCharge = false;
-    [HideInInspector] public float shootPosition;
+    
 
     [Range(0,5)][SerializeField] public float RadiusDetection = 1.3f;
     [Range(0,5)][SerializeField] public float verticalDetectionDistance = 2;
@@ -51,30 +48,14 @@ public class EnemyController : AMoveController
         currentState.CheckTransition(this);
     }
 
-    /*public void calculateTimeToNextShoot()
-    {
-        Invoke("setupShootScenario", Random.Range(10f, 20f));
-    }
-
-    private void setupShootScenario()
-    {
-        if (gc.enemyDistance > 3f)
-        {
-            ChangeState(new ESShootingUp(this));
-            gc.mapController.enemyNeedShoot = true;
-        }
-        else
-            ChangeState(new ESGrounded(this));
-    }
-
-    public void attack()
+    public  void attack()
     {
         switch (gc.getFloor()) {
             case 1:
                 Instantiate(granadePrefab, transform.GetChild(0).transform.position, Quaternion.identity);
                 break;
             case 0:
-                if(gc.enemyDistance > 3 && Random.Range(0,2)==1)
+                if(gc.getEnemyDistance() > 3 && Random.Range(0,2)==1)
                     Instantiate(bulletPrefab, transform.GetChild(0).transform.position, Quaternion.identity);
                 else
                     Instantiate(granadePrefab, transform.GetChild(0).transform.position, Quaternion.identity);
@@ -83,7 +64,7 @@ public class EnemyController : AMoveController
                 Instantiate(granadePrefab, transform.GetChild(0).transform.position, Quaternion.identity);
                 break;
         }
-    }*/
+    }
 
     public bool DetectObstacleToJump()
     {
