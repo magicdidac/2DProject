@@ -10,6 +10,10 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [SerializeField] private Vector3 stateInfoPosition = Vector3.zero;
     [SerializeField] private int fontSize = 20;
 
+    [HideInInspector] public GameObject HUD;
+    [HideInInspector] public GameObject pauseMenu;
+    [HideInInspector] public GameObject optionsMenu;    
+
     [HideInInspector] public static GameController instance = null; //Allows to acces to the game controller from any other script
 
     [HideInInspector] public MapController mapController; //Map controller reference
@@ -20,7 +24,13 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [SerializeField] public float minEnemyDistance;
     [SerializeField] public float maxEnemydistance;
 
+    [HideInInspector] public bool pauseActive;
+    [HideInInspector] public bool fpsShowed;
+
+    [HideInInspector] public Scene activeScene;
+
     [HideInInspector] public ScoreManager scoreManager; // Score Manager reference
+    [HideInInspector] public EndGame endGame; // End Game menu reference
 
     [HideInInspector] public float highScore;
 
@@ -32,31 +42,68 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         else if (instance != this)
             Destroy(gameObject);
 
-        DontDestroyOnLoad(gameObject);
-        
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController> ();
-        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController> ();
-        mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
-        scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
-        
 
-        highScore = 0;
+        DontDestroyOnLoad(gameObject);
+
+        activeScene = SceneManager.GetActiveScene();
+
+        if(activeScene.buildIndex != 0)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
+            mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
+            scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
+            HUD = GameObject.FindGameObjectWithTag("HUD");
+
+            pauseMenu = HUD.transform.GetChild(2).gameObject;
+            optionsMenu = HUD.transform.GetChild(3).gameObject;
+
+            endGame = GameObject.FindGameObjectWithTag("Finish").GetComponent<EndGame>();
+            
+        }
+
+    }
+
+    private void Start()
+    {
+        pauseActive = false;
+        fpsShowed = (PlayerPrefs.GetInt("ShowFPS") == 0) ? false : true;
+
+        if(activeScene.buildIndex != 0)
+        {
+            pauseMenu.SetActive(false);
+            optionsMenu.SetActive(false);
+        }
+
+        if (Time.timeScale == 0) Time.timeScale = 1;
     }
 
     private void Update()
     {
-        if (getEnemyDistance() < minEnemyDistance && floor == 0)
-            GameWin(true);
-        if (getEnemyDistance() > maxEnemydistance)
-            GameWin(false);
-
-        if (!player.isDead) scoreManager.AddScore(player.transform.position.x);
-
-        if (Input.GetKeyDown(KeyCode.R))
+        if(activeScene.buildIndex != 0)
         {
-            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex).completed += GameController_completed;
-            floor = 0;
+
+            if (getEnemyDistance() < minEnemyDistance && floor == 0)
+                GameWin(true);
+            if (getEnemyDistance() > maxEnemydistance)
+                GameWin(false);
+            
+            if (!player.isDead) scoreManager.AddScore(player.transform.position.x);
+
+            if (Input.GetKeyDown(KeyCode.Escape) && !optionsMenu.activeSelf)
+                Pause();
+
+            if (Input.GetKeyDown(KeyCode.Escape) && optionsMenu.activeSelf)
+            {
+                pauseMenu.SetActive(true);
+                optionsMenu.SetActive(false);
+            }
         }
+    }
+
+    public void LoadScene(int index)
+    {
+        SceneManager.LoadScene(index);
     }
 
     public void GameWin(bool win)
@@ -64,9 +111,10 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         player.isDead = true;
         enemy.isDead = true;
         player.ChangeState(new PSDead(player));
-        scoreManager.CalculateFinalScore(win);
-        scoreManager.panel.SetActive(true);
-        highScore = (scoreManager.highScore > highScore) ? scoreManager.highScore:highScore;
+        endGame.gameObject.SetActive(true);
+        endGame.GameWin(win);
+        highScore = (scoreManager.HighScore > highScore) ? scoreManager.HighScore : highScore;
+        Debug.Log(highScore);
     }
 
     public void setFloor(int p_floor)
@@ -85,13 +133,17 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         scoreManager.AddCoins(newScoreValue);
     }
 
-    private void GameController_completed(AsyncOperation obj)
+    //lo he pasado a public para usarlo desde EndGame.cs que controla las escenas
+    public void GameController_completed(AsyncOperation obj)
     {
+        highScore = (scoreManager.HighScore > highScore) ? scoreManager.HighScore : highScore;
+        Debug.Log(highScore);
+
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
         mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
         scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
-        
+        endGame = GameObject.FindGameObjectWithTag("Finish").GetComponent<EndGame>();
     }
 
     public void ConsumeCombustible()
@@ -110,6 +162,28 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     public float getEnemyDistance()
     {
         return (Mathf.Round((enemy.transform.position.x - player.transform.position.x)*100)/100);
+    }
+
+    public void Pause()
+    {
+        pauseActive = !pauseActive;
+        pauseMenu.SetActive(pauseActive);
+        //GameManager._gameManager.isPaused = active;
+        Time.timeScale = (pauseActive) ? 0 : 1;
+    }
+
+    public void ShowFPS(bool show)
+    {
+        fpsShowed = show;
+        if (GameObject.FindWithTag("HUD") != null)
+        {
+            GameObject.FindWithTag("HUD").GetComponent<HUD>().fpsText.SetActive(show);
+        }
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
     }
 
     private void OnDrawGizmos()
@@ -135,6 +209,20 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             Handles.Label(stateInfoPosition + Camera.main.transform.position, "Player state: " + player.currentState + "\nEnemy state: " + enemy.currentState + "\nFloor: " + floor+ "\nEnemy: "+getEnemyDistance(), style);
         }
     }
+    
+    private void DeletePlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+
+    private void InitializePlayerPrefs()
+    {
+        PlayerPrefs.SetFloat("MasterVolume", 0.6f);
+        PlayerPrefs.SetInt("MusicActive", 1); //0 = OFF, 1 = ON
+        PlayerPrefs.SetInt("ShowFPS", 0); //0 = OFF, 1 = ON
+        PlayerPrefs.SetFloat("Brightness", 0.0f);
+    }
+
 
     //DATABASE
     /*

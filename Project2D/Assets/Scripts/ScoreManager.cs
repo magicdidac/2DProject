@@ -1,61 +1,66 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
+    //public GameObject panel;
 
-    public GameObject panel;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI coinsText;
+    public TextMeshProUGUI highScoreText;
 
-    public Text scoreText;
-    public Text coinsText;
-
-    public Text totalScoreMeters;
+    /*public Text totalScoreMeters;
     public Text totalScoreCoins;
 
     public Text highScoreText;
-    public Text totalScoreText;
-
-    private float score = 0;
-    private float coins = 0;
+    public Text totalScoreText;*/
 
     [HideInInspector]
-    public float highScore = 0;
-    
+    public float Score { get; set; } = 0;
+    [HideInInspector]
+    public float Coins { get; set; } = 0;
 
+    [HideInInspector]
+    public float HighScore { get; set; } = 0;
+    
     void Start()
     {
-        scoreText.text = string.Format("000{0}", score);
+        scoreText.text = string.Format("000{0}", Score);
         highScoreText.text = Format(GameController.instance.highScore);
-        panel.SetActive(false);
+        //panel.SetActive(false);
     }
 
     public void AddScore(float newScoreValue)
     {
         if (newScoreValue > 0)
         {
-            score = Mathf.Round(newScoreValue);
-            scoreText.text = Format(score);
+            Score = Mathf.Round(newScoreValue);
+            scoreText.text = Format(Score);
         }
     }
 
     public void AddCoins(int newScoreValue)
     {
-        coins += newScoreValue;
-        coinsText.text = Format(coins);
+        Coins += newScoreValue;
+        coinsText.text = Format(Coins);
     }
 
-    public void CalculateFinalScore(bool win)
+    public void GameOver(bool win)
     {
+        /*if(Score > HighScore)
+        {
+            HighScore = Score;
+        }
 
-        highScore = score;
+        
         totalScoreCoins.text += coins.ToString();
         totalScoreMeters.text += score.ToString();
 
         if (win)
         {
-            panel.GetComponent<Image>().color = new Color(0, 255, 34, 196);
             panel.transform.GetChild(0).GetComponent<Text>().text = "WINNER";
             highScore = (coins + score) * 2;
             totalScoreText.text = highScore.ToString();
@@ -66,7 +71,7 @@ public class ScoreManager : MonoBehaviour
             panel.transform.GetChild(0).GetComponent<Text>().text = "LOSER";
             highScore = coins + score;
             totalScoreText.text = highScore.ToString();
-        }
+        }*/
     }
 
     private string Format(float pScore)

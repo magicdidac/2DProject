@@ -22,6 +22,9 @@ TagManager:
   - TirolinaD
   - HUD
   - Combustible
+  - Pause
+  - Options
+  - Light
   - Shoot
   layers:
   - Default
@@ -71,4 +74,7 @@ TagManager:
     locked: 0
   - name: Front
     uniqueID: 2636844771
+    locked: 0
+  - name: UI
+    uniqueID: 2597635111
     locked: 0
