@@ -53,22 +53,22 @@ public class PSSliding : AState
 
     public override void FixedUpdate(AMoveController pc)
     {
-        pc.rb.velocity = new Vector2(pc._playerModel.slideSpeed, pc.rb.velocity.y);
+        pc.rb.velocity = new Vector2(pc.model.slideSpeed, pc.rb.velocity.y);
     }
 
     public override void Update(AMoveController pc)
     {
         if (pc.isGrounded) goingDown = false;
         Jump(pc);
-        GameController.instance.ConsumeCombustible();
+        pc.gc.ConsumeCombustible();
     }
 
     private void Jump(AMoveController pc)
     {
         if (pc.isGrounded && Input.GetButtonDown("Jump"))
         {
-            pc._playerModel.speed = pc._playerModel.plusJumpSpeedX;
-            pc.rb.velocity = Vector2.up * pc._playerModel.jumpForce;
+            pc.model.speed = pc.model.plusJumpSpeedX;
+            pc.rb.velocity = Vector2.up * pc.model.jumpForce;
         }
     }
 }

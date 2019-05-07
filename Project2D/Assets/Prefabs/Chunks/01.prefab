@@ -1074,11 +1074,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: InstaKill
       objectReference: {fileID: 0}
-    - target: {fileID: 1359980483023106583, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4285792237192567278, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1134,6 +1129,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4285792237192567278, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4285792237192567278, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7636848873243516782, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
         type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
@@ -1143,6 +1148,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.y
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7636848873243516782, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.drawMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7636848873243516782, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.adaptiveTiling
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5239021160919851062, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
         type: 3}
@@ -1173,11 +1188,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Platform
-      objectReference: {fileID: 0}
-    - target: {fileID: 2193205714565949887, guid: 8628c6ba2e2ac464194cd0d16a72f5d2,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4966738630949248284, guid: 8628c6ba2e2ac464194cd0d16a72f5d2,
         type: 3}
@@ -1263,11 +1273,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Box
-      objectReference: {fileID: 0}
-    - target: {fileID: 4470613651233996452, guid: e4c9487eb3ffe7346b6632bc8751a27c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5521590077372196774, guid: e4c9487eb3ffe7346b6632bc8751a27c,
         type: 3}
@@ -1503,11 +1508,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Coin
-      objectReference: {fileID: 0}
-    - target: {fileID: 3269207504211342350, guid: c62b5480e03ad454ab60c504af75e6d5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3269207504211342349, guid: c62b5480e03ad454ab60c504af75e6d5,
         type: 3}

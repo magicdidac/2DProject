@@ -9,7 +9,7 @@ public class PSGrounded : AState
         if(pc.rb != null)
             pc.rb.gravityScale = 2.7f;
 
-        pc._playerModel.speed = pc._playerModel.normalSpeed;
+        pc.model.speed = pc.model.normalSpeed;
     }
 
     public override void CheckTransition(AMoveController pc)
@@ -22,7 +22,7 @@ public class PSGrounded : AState
 
     public override void FixedUpdate(AMoveController pc)
     {
-        pc.rb.velocity = new Vector2(pc._playerModel.speed, pc.rb.velocity.y);
+        pc.rb.velocity = new Vector2(pc.model.speed, pc.rb.velocity.y);
     }
 
     public override void Update(AMoveController pc)
@@ -35,7 +35,7 @@ public class PSGrounded : AState
         if (pc.isGrounded && Input.GetButtonDown("Jump"))
         {
             pc.anim.SetTrigger("T-Jump");
-            pc.rb.velocity = Vector2.up * pc._playerModel.jumpForce;
+            pc.rb.velocity = Vector2.up * pc.model.jumpForce;
         }
     }
 }

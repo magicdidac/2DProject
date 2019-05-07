@@ -35,8 +35,8 @@ public class PSOnAir : AState
 
     public override void FixedUpdate(AMoveController pc)
     {
-        if(pc.rb.velocity.x < pc._playerModel.speed)
-            pc.rb.velocity = new Vector2(pc._playerModel.speed, pc.rb.velocity.y);
+        if(pc.rb.velocity.x < pc.model.speed)
+            pc.rb.velocity = new Vector2(pc.model.speed, pc.rb.velocity.y);
         else
             pc.rb.velocity = new Vector2(pc.rb.velocity.x, pc.rb.velocity.y);
     }
