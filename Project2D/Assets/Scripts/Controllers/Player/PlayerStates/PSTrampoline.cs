@@ -16,7 +16,7 @@ public class PSTrampoline : AState
 
     public override void FixedUpdate(AMoveController pc)
     {
-        pc.rb.velocity = new Vector2(pc._playerModel.speed, pc._playerModel.jumpForce);
+        pc.rb.velocity = new Vector2(pc.model.speed, pc.model.jumpForce);
     }
 
     public override void Update(AMoveController pc) { }

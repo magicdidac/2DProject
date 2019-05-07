@@ -3470,11 +3470,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab370b2edca4b8b4d9cbb2fcf3a16c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPPrefab: {fileID: 573627921396306670, guid: 129389ded407af34f9ac7a397d3771b0,
-    type: 3}
   _perIncrease: 0.05
   _chunkStore: {fileID: 11400000, guid: 106a2cdca2f887742a2ed1ef9ad9909a, type: 2}
-  enemyNeedShoot: 0
 --- !u!4 &944333090
 Transform:
   m_ObjectHideFlags: 0
@@ -7841,11 +7838,6 @@ PrefabInstance:
     - target: {fileID: 7283841785218382501, guid: 244ac27c83234f34299258e8f8cf0049,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7283841785218382502, guid: 244ac27c83234f34299258e8f8cf0049,
-        type: 3}
-      propertyPath: music.Array.size
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

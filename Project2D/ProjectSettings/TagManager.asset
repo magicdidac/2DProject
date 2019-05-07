@@ -25,6 +25,7 @@ TagManager:
   - Pause
   - Options
   - Light
+  - Shoot
   layers:
   - Default
   - TransparentFX
@@ -61,4 +62,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Platform
+    uniqueID: 1212693793
+    locked: 0
+  - name: Player
+    uniqueID: 3593692793
+    locked: 0
+  - name: Chains
+    uniqueID: 2119255247
+    locked: 0
+  - name: Front
+    uniqueID: 2636844771
+    locked: 0
+  - name: UI
+    uniqueID: 2597635111
     locked: 0

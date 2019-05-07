@@ -9,12 +9,12 @@ public class PSStun : AState
     public PSStun(AMoveController pc)
     {
         pc.rb.gravityScale = 2.7f;
-        pc.anim.SetBool("isSliding", false);
+        pc.anim.SetBool("B-Slide", false);
     }
 
     public override void CheckTransition(AMoveController pc)
     {
-        if (duration >= pc._playerModel.stunTime)
+        if (duration >= pc.model.stunTime)
         {
             pc.isStuned = false;
             pc.ChangeState(new PSGrounded(pc));
@@ -23,7 +23,7 @@ public class PSStun : AState
 
     public override void FixedUpdate(AMoveController pc)
     {
-        pc.rb.velocity = new Vector2(pc._playerModel.stunSpeed, pc.rb.velocity.y);
+        pc.rb.velocity = new Vector2(pc.model.stunSpeed, pc.rb.velocity.y);
     }
 
     public override void Update(AMoveController pc)

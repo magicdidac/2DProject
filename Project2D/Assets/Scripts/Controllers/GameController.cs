@@ -21,8 +21,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [HideInInspector] public EnemyController enemy; //Enemy reference
 
     [HideInInspector] private int floor = 0;
-    [HideInInspector] public float enemyDistance = 3;
-    [HideInInspector] public float maxDistance;
+    [SerializeField] public float minEnemyDistance;
+    [SerializeField] public float maxEnemydistance;
 
     [HideInInspector] public bool pauseActive;
     [HideInInspector] public bool fpsShowed;
@@ -42,7 +42,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         else if (instance != this)
             Destroy(gameObject);
 
-        DontDestroyOnLoad(this);
+
+        DontDestroyOnLoad(gameObject);
 
         activeScene = SceneManager.GetActiveScene();
 
@@ -58,10 +59,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             optionsMenu = HUD.transform.GetChild(3).gameObject;
 
             endGame = GameObject.FindGameObjectWithTag("Finish").GetComponent<EndGame>();
-
-            enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
-            maxDistance = enemyDistance + 4.5f;
-        }        
+            
+        }
 
     }
 
@@ -84,17 +83,16 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         if(activeScene.buildIndex != 0)
         {
 
-            if (getEnemyDistance() > maxDistance)
-            {
+            if (getEnemyDistance() < minEnemyDistance && floor == 0)
                 GameWin(true);
-            }
-
+            if (getEnemyDistance() > maxEnemydistance)
+                GameWin(false);
+            
             if (!player.isDead) scoreManager.AddScore(player.transform.position.x);
 
             if (Input.GetKeyDown(KeyCode.Escape) && !optionsMenu.activeSelf)
-            {
                 Pause();
-            }
+
             if (Input.GetKeyDown(KeyCode.Escape) && optionsMenu.activeSelf)
             {
                 pauseMenu.SetActive(true);
@@ -113,8 +111,6 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         player.isDead = true;
         enemy.isDead = true;
         player.ChangeState(new PSDead(player));
-        //scoreManager.GameOver(win);
-        //scoreManager.panel.SetActive(true);
         endGame.gameObject.SetActive(true);
         endGame.GameWin(win);
         highScore = (scoreManager.HighScore > highScore) ? scoreManager.HighScore : highScore;
@@ -123,8 +119,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void setFloor(int p_floor)
     {
-
-        floor = p_floor;
+        if(p_floor == 1 || p_floor == 0 || p_floor == -1)
+            floor = p_floor;
     }
 
     public int getFloor()
@@ -148,9 +144,6 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
         scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
         endGame = GameObject.FindGameObjectWithTag("Finish").GetComponent<EndGame>();
-
-        enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
-        maxDistance = enemyDistance + 4.5f;
     }
 
     public void ConsumeCombustible()
@@ -161,8 +154,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void GetCombustible(float value)
     {
-        if (player.combustible + value < player._playerModel.maxCombustible) player.combustible += value;
-        else player.combustible = player._playerModel.maxCombustible;
+        if (player.combustible + value < player.model.maxCombustible) player.combustible += value;
+        else player.combustible = player.model.maxCombustible;
         GameObject.FindWithTag("HUD").GetComponent<HUD>().ChangeFuelBar(player.combustible);
     }
     
@@ -207,16 +200,16 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     private void drawState()
     {
-        //if (player.currentState != null)
-        //{
+        if (player.currentState != null)
+        {
             GUIStyle style = new GUIStyle();
             style.normal.textColor = Color.red;
             style.fontSize = fontSize;
             style.alignment = TextAnchor.MiddleLeft;
-            //Handles.Label(stateInfoPosition + Camera.main.transform.position, "Player state: " + player.currentState + "\nEnemy state: " + enemy.currentState + "\nFloor: " + floor+ "\nEnemy: "+getEnemyDistance()+" ("+enemyDistance+")", style);
-        //}
+            Handles.Label(stateInfoPosition + Camera.main.transform.position, "Player state: " + player.currentState + "\nEnemy state: " + enemy.currentState + "\nFloor: " + floor+ "\nEnemy: "+getEnemyDistance(), style);
+        }
     }
-
+    
     private void DeletePlayerPrefs()
     {
         PlayerPrefs.DeleteAll();
@@ -229,4 +222,23 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         PlayerPrefs.SetInt("ShowFPS", 0); //0 = OFF, 1 = ON
         PlayerPrefs.SetFloat("Brightness", 0.0f);
     }
+
+
+    //DATABASE
+    /*
+    public void UploadScore()
+    {
+        StartCoroutine(Upload());
+    }
+
+    IEnumerator Upload()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("name", username);
+        form.AddField("distance_score", );
+        form.AddField("coins_score", );
+        WWW www = new WWW("http://www.magicdvstudio.com/RobotRunner/uploadScore.php", form);
+        yield return www;
+        Debug.Log(www.text);
+    }*/
 }

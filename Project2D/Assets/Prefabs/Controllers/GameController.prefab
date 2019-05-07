@@ -45,12 +45,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateInfoPosition: {x: -6.4, y: 2.3, z: 0}
   fontSize: 20
+  HUD: {fileID: 0}
   pauseMenu: {fileID: 0}
   optionsMenu: {fileID: 0}
   mapController: {fileID: 0}
   player: {fileID: 0}
   enemy: {fileID: 0}
-  enemyDistance: 3
-  maxDistance: 0
+  minEnemyDistance: 0.75
+  maxEnemydistance: 10.5
+  pauseActive: 0
+  fpsShowed: 0
+  activeScene:
+    m_Handle: 0
   scoreManager: {fileID: 0}
+  endGame: {fileID: 0}
   highScore: 0
