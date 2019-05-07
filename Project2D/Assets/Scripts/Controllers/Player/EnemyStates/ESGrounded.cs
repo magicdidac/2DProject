@@ -31,7 +31,8 @@ public class ESGrounded : AState
 
     private void Jump(AMoveController pc)
     {
-        //Anim Jump
+        pc.anim.SetTrigger("T-Jump");
+        pc.anim.SetBool("B-Ground", false);
         pc.rb.velocity = Vector2.up * pc.model.jumpForce;
     }
 

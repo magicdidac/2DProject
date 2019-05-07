@@ -34,6 +34,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     [HideInInspector] public float highScore;
 
+    [HideInInspector] public EnemyIndicator enemyIndicator;
+
     private void Awake()
     {
         if (instance == null)
@@ -53,6 +55,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
             scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
             HUD = GameObject.FindGameObjectWithTag("HUD");
+            enemyIndicator = Camera.main.transform.GetChild(0).GetComponent<EnemyIndicator>();
 
             pauseMenu = HUD.transform.GetChild(2).gameObject;
             optionsMenu = HUD.transform.GetChild(3).gameObject;

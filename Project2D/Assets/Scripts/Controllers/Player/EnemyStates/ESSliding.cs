@@ -9,6 +9,7 @@ public class ESSliding : AState
 
     public ESSliding(AMoveController pc)
     {
+        pc.anim.SetTrigger("T-Slide");
     }
 
     public override void CheckTransition(AMoveController pc)
@@ -18,7 +19,10 @@ public class ESSliding : AState
         if (!enterSlideZone && ec.DetectObstacleUp())
             enterSlideZone = true;
         if (enterSlideZone && !ec.DetectObstacleUp())
+        {
+            pc.anim.SetTrigger("T-SlideOut");
             ec.ChangeState(new ESGrounded(ec));
+        }
                 
     }
 

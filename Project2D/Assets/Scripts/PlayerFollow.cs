@@ -6,7 +6,7 @@ public class PlayerFollow: MonoBehaviour
 {
     
     private GameController gc;
-    private GameObject indicator;
+    [HideInInspector] public GameObject indicator;
     
     private float _offset = 0;
 

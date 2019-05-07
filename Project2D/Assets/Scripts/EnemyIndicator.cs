@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
 public class EnemyIndicator : MonoBehaviour
 {
 
     private GameController gc;
     private SpriteRenderer spr;
+    [HideInInspector] public Animator anim;
 
     private void Start()
     {
         gc = GameController.instance;
         spr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
 
@@ -33,6 +36,16 @@ public class EnemyIndicator : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.parent.position.y - 3, transform.position.z);
             spr.flipY = false;
         }
+    }
+
+    public void LoadShoot()
+    {
+        anim.SetTrigger("T-Shoot");
+    }
+
+    public void Shoot()
+    {
+        gc.enemy.GranadeShoot();
     }
 
 }

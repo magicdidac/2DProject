@@ -26,14 +26,15 @@ public class EnemyController : AMoveController
     private void FixedUpdate()
     {
         currentState.FixedUpdate(this);
-        if (isDead) return;
-        if (!gc.player.isRope && (gc.getFloor() == 0 || (gc.getFloor()!=0 && gc.getEnemyDistance() > gc.minEnemyDistance + 1)))
-            rb.velocity = new Vector2((gc.player.isSliding) ? model.slideSpeed : model.normalSpeed, rb.velocity.y);
-        else if (gc.player.isRope)
-            rb.velocity = new Vector2(1, rb.velocity.y);
-        else if (gc.getEnemyDistance() <= gc.minEnemyDistance+1)
+
+        if (!isDead)
         {
-            transform.position = new Vector2(gc.player.transform.position.x+(gc.minEnemyDistance+1), transform.position.y);
+            if (!gc.player.isRope && (gc.getFloor() == 0 || (gc.getFloor() != 0 && gc.getEnemyDistance() > gc.minEnemyDistance + 1)))
+                rb.velocity = new Vector2((gc.player.isSliding) ? model.slideSpeed : model.normalSpeed, rb.velocity.y);
+            else if (gc.player.isRope)
+                rb.velocity = new Vector2(1, rb.velocity.y);
+            else if (gc.getEnemyDistance() <= gc.minEnemyDistance + 1)
+                transform.position = new Vector2(gc.player.transform.position.x + (gc.minEnemyDistance + 1), transform.position.y);
         }
 
     }
@@ -53,18 +54,29 @@ public class EnemyController : AMoveController
     {
         switch (gc.getFloor()) {
             case 1:
-                Instantiate(granadePrefab, transform.GetChild(0).transform.position, Quaternion.identity);
+                gc.enemyIndicator.LoadShoot();
                 break;
             case 0:
-                if(gc.getEnemyDistance() > 3 && Random.Range(0,2)==1)
-                    Instantiate(bulletPrefab, transform.GetChild(0).transform.position, Quaternion.identity);
+                if (gc.getEnemyDistance() > 3 && Random.Range(0, 2) == 1)
+                    anim.SetTrigger("T-MidLaserShoot");
                 else
-                    Instantiate(granadePrefab, transform.GetChild(0).transform.position, Quaternion.identity);
+                    anim.SetTrigger("T-MidGranadeShoot");
                 break;
             case -1:
-                Instantiate(granadePrefab, transform.GetChild(0).transform.position, Quaternion.identity);
+                gc.enemyIndicator.LoadShoot();
                 break;
         }
+    }
+
+    public void LaserShoot()
+    {
+        Instantiate(bulletPrefab, transform.GetChild(0).transform.position, Quaternion.identity);
+    }
+
+    public void GranadeShoot()
+    {
+        Instantiate(granadePrefab, transform.GetChild(0).transform.position, Quaternion.identity);
+        //granade.rb.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
     }
 
     public bool DetectObstacleToJump()
@@ -111,7 +123,6 @@ public class EnemyController : AMoveController
 
         return hit.collider.CompareTag("Kill") || hit.collider.CompareTag("Box");
     }
-
 
     #region Gizmos
 

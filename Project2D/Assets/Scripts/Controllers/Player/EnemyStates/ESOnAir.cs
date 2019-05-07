@@ -13,7 +13,10 @@ public class ESOnAir : AState
 
         EnemyController ec = (EnemyController)pc;
         if (pc.isGrounded)
+        {
+            pc.anim.SetBool("B-Ground", true);
             pc.ChangeState(new ESGrounded(pc));
+        }
 
         if (pc.transform.position.y < -1)
             pc.ChangeState(new ESFloatingUp(pc));
