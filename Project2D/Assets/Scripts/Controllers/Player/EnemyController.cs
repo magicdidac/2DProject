@@ -26,6 +26,7 @@ public class EnemyController : AMoveController
     private void FixedUpdate()
     {
         currentState.FixedUpdate(this);
+        if (isDead) return;
         if (!gc.player.isRope && (gc.getFloor() == 0 || (gc.getFloor()!=0 && gc.getEnemyDistance() > gc.minEnemyDistance + 1)))
             rb.velocity = new Vector2((gc.player.isSliding) ? model.slideSpeed : model.normalSpeed, rb.velocity.y);
         else if (gc.player.isRope)
