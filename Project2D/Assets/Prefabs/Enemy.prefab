@@ -4958,16 +4958,13 @@ MonoBehaviour:
     type: 3}
   granadePrefab: {fileID: 6493932739216059904, guid: 56da11a6ab24e214e9177fac34e1132f,
     type: 3}
-  canShoot: 0
-  canCharge: 0
-  shootPosition: 0
-  RadiusDetection: 2.5
-  verticalDetectionDistance: 1.5
+  RadiusDetection: 1.3
+  verticalDetectionDistance: 2
+  verticalDetectionXOffset: 0.5
   groundMask:
     serializedVersion: 2
     m_Bits: 256
   shield: {fileID: 5943803321948890181}
-  hasJump: 0
   col: {fileID: 7565217064731188147}
 --- !u!95 &1567120741061893845
 Animator:

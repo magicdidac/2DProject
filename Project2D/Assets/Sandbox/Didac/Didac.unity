@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _perIncrease: 0.5
-  _chunkStore: {fileID: 11400000, guid: 26e45b3cce7f4fd40a80c96bca5caae8, type: 2}
+  _chunkStore: {fileID: 11400000, guid: 6b30d670ddcdc31439b8166882cc8b52, type: 2}
 --- !u!4 &150279554
 Transform:
   m_ObjectHideFlags: 0
