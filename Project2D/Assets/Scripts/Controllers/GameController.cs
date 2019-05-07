@@ -36,7 +36,6 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     private void Awake()
     {
-
         if (instance == null)
             instance = this;
         else if (instance != this)
@@ -58,10 +57,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             pauseMenu = HUD.transform.GetChild(2).gameObject;
             optionsMenu = HUD.transform.GetChild(3).gameObject;
 
-            endGame = GameObject.FindGameObjectWithTag("Finish").GetComponent<EndGame>();
-            
+            endGame = GameObject.FindGameObjectWithTag("Finish").GetComponent<EndGame>();            
         }
-
     }
 
     private void Start()
@@ -82,10 +79,9 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     {
         if(activeScene.buildIndex != 0)
         {
-
-            if (getEnemyDistance() < minEnemyDistance && floor == 0)
+            if (getEnemyDistance() < minEnemyDistance && floor == 0 && !player.isDead)
                 GameWin(true);
-            if (getEnemyDistance() > maxEnemydistance)
+            if (getEnemyDistance() > maxEnemydistance && !player.isDead)
                 GameWin(false);
             
             if (!player.isDead) scoreManager.AddScore(player.transform.position.x);
@@ -113,8 +109,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         player.ChangeState(new PSDead(player));
         endGame.gameObject.SetActive(true);
         endGame.GameWin(win);
-        highScore = (scoreManager.HighScore > highScore) ? scoreManager.HighScore : highScore;
-        Debug.Log(highScore);
+        /*highScore = (scoreManager.HighScore > highScore) ? scoreManager.HighScore : highScore;
+        if (win) highScore *= 2;*/
     }
 
     public void setFloor(int p_floor)
@@ -136,8 +132,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     //lo he pasado a public para usarlo desde EndGame.cs que controla las escenas
     public void GameController_completed(AsyncOperation obj)
     {
-        highScore = (scoreManager.HighScore > highScore) ? scoreManager.HighScore : highScore;
-        Debug.Log(highScore);
+        instance.highScore = (instance.scoreManager.HighScore > instance.highScore) ? instance.scoreManager.HighScore : instance.highScore;
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
@@ -148,12 +143,15 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void ConsumeCombustible()
     {
-        player.combustible -= Time.deltaTime;
-        GameObject.FindWithTag("HUD").GetComponent<HUD>().ChangeFuelBar(player.combustible);
+        if (player.combustible > 0)
+        {
+            player.combustible -= Time.deltaTime;
+            GameObject.FindWithTag("HUD").GetComponent<HUD>().ChangeFuelBar(player.combustible);
+        }
     }
 
     public void GetCombustible(float value)
-    {
+    { 
         if (player.combustible + value < player.model.maxCombustible) player.combustible += value;
         else player.combustible = player.model.maxCombustible;
         GameObject.FindWithTag("HUD").GetComponent<HUD>().ChangeFuelBar(player.combustible);
@@ -221,6 +219,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         PlayerPrefs.SetInt("MusicActive", 1); //0 = OFF, 1 = ON
         PlayerPrefs.SetInt("ShowFPS", 0); //0 = OFF, 1 = ON
         PlayerPrefs.SetFloat("Brightness", 0.0f);
+        PlayerPrefs.SetFloat("HighScore", 0.0f);
     }
 
 
