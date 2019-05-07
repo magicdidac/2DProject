@@ -12,24 +12,20 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI coinsText;
     public TextMeshProUGUI highScoreText;
 
-    /*public Text totalScoreMeters;
-    public Text totalScoreCoins;
-
-    public Text highScoreText;
-    public Text totalScoreText;*/
+    private GameController gc;
 
     [HideInInspector]
     public float Score { get; set; } = 0;
     [HideInInspector]
     public float Coins { get; set; } = 0;
-
     [HideInInspector]
-    public float HighScore { get; set; } = 0;
+    public float HighScore { get; set; }
     
     void Start()
     {
+        gc = GameController.instance;
         scoreText.text = string.Format("000{0}", Score);
-        highScoreText.text = Format(GameController.instance.highScore);
+        highScoreText.text = Format(PlayerPrefs.GetFloat("HighScore"));
         //panel.SetActive(false);
     }
 
@@ -46,32 +42,6 @@ public class ScoreManager : MonoBehaviour
     {
         Coins += newScoreValue;
         coinsText.text = Format(Coins);
-    }
-
-    public void GameOver(bool win)
-    {
-        /*if(Score > HighScore)
-        {
-            HighScore = Score;
-        }
-
-        
-        totalScoreCoins.text += coins.ToString();
-        totalScoreMeters.text += score.ToString();
-
-        if (win)
-        {
-            panel.transform.GetChild(0).GetComponent<Text>().text = "WINNER";
-            highScore = (coins + score) * 2;
-            totalScoreText.text = highScore.ToString();
-        }
-        else
-        {
-            panel.GetComponent<Image>().color = new Color(255, 0, 0, 196);
-            panel.transform.GetChild(0).GetComponent<Text>().text = "LOSER";
-            highScore = coins + score;
-            totalScoreText.text = highScore.ToString();
-        }*/
     }
 
     private string Format(float pScore)
