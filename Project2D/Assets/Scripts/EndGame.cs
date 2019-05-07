@@ -51,13 +51,15 @@ public class EndGame : MonoBehaviour
         scoreText.text = score.ToString();
         coinsText.text = coins.ToString();
 
-        if (gc.scoreManager.Score + gc.scoreManager.Coins > gc.highScore)
+        if (gc.scoreManager.Score + gc.scoreManager.Coins > PlayerPrefs.GetFloat("HighScore"))
         {
-            gc.scoreManager.HighScore = gc.scoreManager.Score + gc.scoreManager.Coins;
+            PlayerPrefs.SetFloat("HighScore", gc.scoreManager.Score + gc.scoreManager.Coins);
         }
 
         if (win)
         {
+            PlayerPrefs.SetFloat("HighScore", (gc.scoreManager.Score + gc.scoreManager.Coins) * 2);
+            gc.highScore *= 2;
             panel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "WINNER";
             highScore = (coins + score) * 2;
         }
