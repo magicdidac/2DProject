@@ -82,7 +82,6 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     {
         if(activeScene.buildIndex != 0)
         {
-
             if (getEnemyDistance() < minEnemyDistance && floor == 0)
                 GameWin(true);
             if (getEnemyDistance() > maxEnemydistance)
@@ -114,6 +113,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         endGame.gameObject.SetActive(true);
         endGame.GameWin(win);
         highScore = (scoreManager.HighScore > highScore) ? scoreManager.HighScore : highScore;
+        if (win) highScore *= 2;
         Debug.Log(highScore);
     }
 
@@ -148,12 +148,15 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void ConsumeCombustible()
     {
-        player.combustible -= Time.deltaTime;
-        GameObject.FindWithTag("HUD").GetComponent<HUD>().ChangeFuelBar(player.combustible);
+        if (player.combustible > 0)
+        {
+            player.combustible -= Time.deltaTime;
+            GameObject.FindWithTag("HUD").GetComponent<HUD>().ChangeFuelBar(player.combustible);
+        }
     }
 
     public void GetCombustible(float value)
-    {
+    { 
         if (player.combustible + value < player.model.maxCombustible) player.combustible += value;
         else player.combustible = player.model.maxCombustible;
         GameObject.FindWithTag("HUD").GetComponent<HUD>().ChangeFuelBar(player.combustible);

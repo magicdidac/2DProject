@@ -30,6 +30,6 @@ public class HUD : MonoBehaviour
 
     public void ChangeFuelBar(float value)
     {
-        fuelBar.fillAmount = value / 10;
+        fuelBar.fillAmount = value / GameController.instance.player.model.maxCombustible;
     }
 }

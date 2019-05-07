@@ -54,7 +54,6 @@ public class EndGame : MonoBehaviour
         if (gc.scoreManager.Score + gc.scoreManager.Coins > gc.highScore)
         {
             gc.scoreManager.HighScore = gc.scoreManager.Score + gc.scoreManager.Coins;
-            Debug.Log(gc.scoreManager.HighScore);
         }
 
         if (win)
