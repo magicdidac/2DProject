@@ -15,7 +15,7 @@ public class ESShootingUp : AState
 
         if (ec.canShoot)
         {
-            ec.attack();
+            //ec.attack();
             ec.canShoot = false;
             pc.ChangeState(new ESGrounded(pc));
         }
@@ -35,6 +35,6 @@ public class ESShootingUp : AState
             pc.anim.SetTrigger("Charge");
         }
 
-        ec.JumpSlideDetect(pc);
+        //ec.JumpSlideDetect(pc);
     }
 }

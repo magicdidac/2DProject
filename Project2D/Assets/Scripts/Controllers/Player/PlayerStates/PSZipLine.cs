@@ -19,7 +19,7 @@ public class PSZipLine : AState
         pc.rb.gravityScale = 0;
         pc.rb.velocity = Vector2.zero;
         tirolinaSize = zip.endPoint.position.x - pc.transform.position.x;
-        pc._playerModel.speed = pc._playerModel.normalSpeed;
+        pc.model.speed = pc.model.normalSpeed;
         pc.transform.position = new Vector2(pc.transform.position.x, GetVerticalPosition());
 
         pc.anim.SetBool("B-ZipLine", true);
@@ -52,7 +52,7 @@ public class PSZipLine : AState
     {
         Vector2 startPoint = new Vector2 (pc.transform.position.x, pc.transform.position.y);
         Vector2 destPoint = new Vector2(zip.endPoint.position.x, zip.endPoint.position.y-1.25f);
-        pc.rb.velocity = (destPoint - startPoint).normalized * pc._playerModel.speed;
+        pc.rb.velocity = (destPoint - startPoint).normalized * pc.model.speed;
     }
 
     public override void Update(AMoveController pc)
@@ -66,7 +66,7 @@ public class PSZipLine : AState
         if (!pc.isTirolinaD && Input.GetButtonDown("Jump") && distance < tirolinaSize - 1) //-> saltar cuando me de la gana
         //if (!pc.isTirolinaD && Input.GetButtonDown("Jump") && distance < 2) //--> saltar solo al final
         {
-            pc.rb.velocity = Vector2.up * pc._playerModel.jumpForce;
+            pc.rb.velocity = Vector2.up * pc.model.jumpForce;
             ChangeStateTo(new PSOnAir(pc));
             moveController.anim.SetTrigger("T-ZipLineOut");
         }

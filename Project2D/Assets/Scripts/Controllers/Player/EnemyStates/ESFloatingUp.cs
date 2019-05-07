@@ -13,16 +13,20 @@ public class ESFloatingUp : AState
         ec.canShoot = false;
         ec.canCharge = false;
         ec.rb.bodyType = RigidbodyType2D.Kinematic;
-        ec.GetComponent<BoxCollider2D>().isTrigger = true;
-        ec.rb.velocity = Vector2.up * plusOffset;
+        ec.col.isTrigger = true;
         ec.shield.gameObject.SetActive(true);
-        Debug.Log(this + "\n" + ec.isGrounded);
     }
 
     public override void CheckTransition(AMoveController pc)
     {
         EnemyController ec = ((EnemyController)pc);
-        if (ec.isGrounded) ec.ChangeState(new ESGrounded(ec));
+        if (ec.DetectGroundToLand())
+        {
+            ec.rb.bodyType = RigidbodyType2D.Dynamic;
+            ec.col.isTrigger = false;
+            ec.shield.gameObject.SetActive(false);
+            ec.ChangeState(new ESOnAir(ec));
+        }
     }
 
     public override void FixedUpdate(AMoveController pc)
@@ -32,17 +36,10 @@ public class ESFloatingUp : AState
 
     public override void Update(AMoveController pc)
     {
-        //Floating functionality
         EnemyController ec = (EnemyController)pc;
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(ec.transform.position.x, ec.transform.position.y + 1), Vector2.down, Mathf.Infinity);
-
-        if (hit.collider == null) return;
-
-        if (!ec.isGrounded && (hit.collider.CompareTag("Platform")))
-        {
-            ec.rb.bodyType = RigidbodyType2D.Dynamic;
-            //ec.GetComponent<BoxCollider2D>().isTrigger = false;
-            //ec.isGrounded = true;
-        }
+        if (ec.transform.position.y < 1)
+            ec.rb.velocity = new Vector2(ec.rb.velocity.x, plusOffset);
+        else
+            ec.rb.velocity = new Vector2(ec.rb.velocity.x, 0);
     }
 }

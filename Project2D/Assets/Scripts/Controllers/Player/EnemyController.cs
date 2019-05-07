@@ -4,40 +4,38 @@ using UnityEngine;
 
 public class EnemyController : AMoveController
 {
-    [SerializeField] private float reduceFactor = .5f;
     [SerializeField] private GameObject bulletPrefab = null;
     [SerializeField] private GameObject granadePrefab = null;
-    [HideInInspector] private float distanceToIncrement;
 
     [HideInInspector] public bool canShoot = false;
     [HideInInspector] public bool canCharge = false;
     [HideInInspector] public float shootPosition;
 
-    [HideInInspector] public float RadiusDetection { get; } = 1.3f;
+    [Range(0,5)][SerializeField] public float RadiusDetection = 1.3f;
+    [Range(0,5)][SerializeField] public float verticalDetectionDistance = 2;
+    [Range(0,5)][SerializeField] public float verticalDetectionXOffset = .5f;
     [SerializeField] public LayerMask groundMask;
 
-    [HideInInspector] public ParticleSystem shield;
-    [HideInInspector] public bool hasJump;
+    [SerializeField] public ParticleSystem shield;
+
+    [SerializeField] public Collider2D col = null;
 
     private void Awake()
     {
-        shield = GetComponentInChildren<ParticleSystem>();
         shield.Stop();
         ChangeState(new ESGrounded(this));
-        InvokeRepeating("reduceDistance", 5, .1f);
     }
 
     private void FixedUpdate()
     {
         currentState.FixedUpdate(this);
-        transform.position = Vector3.Lerp(transform.position, new Vector3(gc.player.transform.position.x + gc.enemyDistance, transform.position.y, transform.position.z), .25f);
+        rb.velocity = new Vector2((gc.player.isSliding) ? model.slideSpeed:model.normalSpeed, rb.velocity.y);
     }
 
     private void Update()
     {
         currentState.Update(this);
-        isGrounded = detectCollision(groundMask, _playerModel.offset);
-        //CalculateDistance();
+        isGrounded = detectCollision(groundMask, model.offset);
     }
 
     private void LateUpdate()
@@ -45,34 +43,7 @@ public class EnemyController : AMoveController
         currentState.CheckTransition(this);
     }
 
-    public void AddDistance()
-    {
-        if (isDead) return;
-        CancelInvoke("reduceDistance");
-        distanceToIncrement = gc.enemyDistance + 1;
-        InvokeRepeating("incrementDistance", 0, .1f);
-    }
-
-    private void incrementDistance()
-    {
-        if (isDead) return;
-        if (gc.enemyDistance >= distanceToIncrement || gc.enemyDistance >= gc.maxDistance)
-        {
-            CancelInvoke("incrementDistance");
-            InvokeRepeating("reduceDistance", 5, .1f);
-        }
-        else
-            gc.enemyDistance += .1f;
-    }
-
-    private void reduceDistance()
-    {
-        if (isDead) return;
-        if (gc.enemyDistance > 1.6f)
-            gc.enemyDistance -= reduceFactor;
-    }
-
-    public void calculateTimeToNextShoot()
+    /*public void calculateTimeToNextShoot()
     {
         Invoke("setupShootScenario", Random.Range(10f, 20f));
     }
@@ -104,73 +75,109 @@ public class EnemyController : AMoveController
                 Instantiate(granadePrefab, transform.GetChild(0).transform.position, Quaternion.identity);
                 break;
         }
-    }
+    }*/
 
-    public void JumpSlideDetect(AMoveController pc)
+    public bool DetectObstacleToJump()
     {
-        EnemyController ec = (EnemyController)pc;
+        //Horizontal RayCast
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.min.y+.25f), Vector2.right, RadiusDetection);
 
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(ec.transform.position.x + ec.RadiusDetection, ec.transform.position.y + 1),
-            Vector2.right, ec.RadiusDetection);
+        //If doesn't hit anything
+        if (hit.collider == null) return false;
 
-        if (hit.collider == null) return;
-
-        if (/*ec.isGrounded &&*/ (hit.collider.CompareTag("Box") || hit.collider.CompareTag("Kill")))
-        {
-            if (hit.collider.bounds.min.y >= 0.25f)
-            {
-                //SLIDE
-                // ESSliding class la he creado pero no la uso, pensando por si lo necesitamos en un furuto con las nuevas animaciones
-                //ec.ChangeState(new ESSliding(ec));
-                Debug.Log("Slide");
-                ec.anim.SetBool("isSliding", true);
-            }
-
-            else
-            {
-                //JUMP
-                float limitedHeight = hit.collider.bounds.size.y;
-
-                ec.rb.velocity = (ec.rb.position.y >= limitedHeight) ? Vector2.down * 10f : Vector2.up * 10f;
-                //if (ec.rb.position.y <= limitedHeight) ec.rb.velocity = Vector2.up * 10f;
-                hasJump = true;
-                ec.anim.SetBool("isSliding", false);
-            }
-        }
+        return hit.collider.CompareTag("Box") || hit.collider.CompareTag("Kill");
     }
+
+    public bool DetectObstacleToSlide()
+    {
+        //Horizontal RayCast
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.max.y + .5f), Vector2.right, RadiusDetection-.5f);
+
+        //If doesn't hit anything
+        if (hit.collider == null) return false;
+
+        return hit.collider.CompareTag("Box") || hit.collider.CompareTag("Kill");
+    }
+
+    public bool DetectGroundToLand()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.max.x + verticalDetectionXOffset, col.bounds.min.y), Vector2.down, verticalDetectionDistance);
+
+        if (hit.collider == null) return false;
+
+        return hit.collider.CompareTag("Platform");
+    }
+
+    public bool DetectObstacleUp()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.min.x, col.bounds.max.y), Vector2.up, .5f);
+
+        if (hit.collider == null) return false;
+
+        return hit.collider.CompareTag("Kill") || hit.collider.CompareTag("Box");
+    }
+
+
+    #region Gizmos
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        SpriteRenderer sp = GetComponent<SpriteRenderer>();
-        Gizmos.DrawLine(new Vector3(sp.bounds.max.x, sp.bounds.center.y, 0f), 
-            new Vector3(sp.bounds.max.x + RadiusDetection, sp.bounds.center.y));
-
-        DrawGroundRayCast(sp);
-        DrawGroundLine(sp);
+        DrawHorizontalDetectionUp();
+        DrawHorizontalDetection();
+        DrawVerticalDetection();
+        DrawVerticalDetectionUp();
+        DrawGroundRayCast();
     }
 
-    private void DrawGroundRayCast(SpriteRenderer sp)
+    private void DrawHorizontalDetection()
     {
-        float distanceBetweenRays = (sp.bounds.size.x - _playerModel.offset) / _playerModel.precisionDown;
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(
+            new Vector3(col.bounds.max.x, col.bounds.min.y+.25f),
+            new Vector3(col.bounds.max.x + RadiusDetection, col.bounds.min.y+.25f)
+            );
+    }
 
-        for (int i = 0; i <= _playerModel.precisionDown; i++)
+    private void DrawHorizontalDetectionUp()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(
+            new Vector3(col.bounds.max.x, col.bounds.max.y + .5f),
+            new Vector3(col.bounds.max.x + RadiusDetection-.5f, col.bounds.max.y + .5f)
+            );
+    }
+
+    private void DrawVerticalDetection()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(
+            new Vector3(col.bounds.max.x + verticalDetectionXOffset, col.bounds.min.y),
+            new Vector3(col.bounds.max.x + verticalDetectionXOffset, col.bounds.min.y-verticalDetectionDistance)
+            );
+    }
+
+    private void DrawVerticalDetectionUp()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(
+            new Vector3(col.bounds.min.x, col.bounds.max.y),
+            new Vector3(col.bounds.min.x, col.bounds.max.y + .5f)
+            );
+    }
+
+    private void DrawGroundRayCast()
+    {
+        Gizmos.color = Color.red;
+
+        float distanceBetweenRays = (col.bounds.size.x - model.offset) / model.precisionDown;
+
+        for (int i = 0; i <= model.precisionDown; i++)
         {
-            Vector3 startPoint = new Vector3((sp.bounds.min.x + (_playerModel.offset / 2)) + distanceBetweenRays * i, sp.bounds.min.y, 0);
-            Debug.DrawLine(startPoint, startPoint + (Vector3.down * .1f), Color.red);
+            Vector3 startPoint = new Vector3((col.bounds.min.x + (model.offset / 2)) + distanceBetweenRays * i, col.bounds.min.y, 0);
+            Gizmos.DrawLine(startPoint, startPoint + (Vector3.down * .1f));
         }
     }
 
-    private void DrawGroundLine(SpriteRenderer sp)
-    {
-        Debug.DrawLine(new Vector3(sp.bounds.max.x, sp.bounds.center.y, 0f),
-            new Vector3(sp.bounds.max.x, Vector2.down.y, 0f), Color.blue);
-    }
+    #endregion
 
-    public virtual IEnumerator ChangeState(EnemyController ec)
-    {
-        yield return new WaitForSeconds(.9f);
-        ec.anim.SetBool("isSliding", false);
-        ec.ChangeState(new ESGrounded(ec));
-    }
 }

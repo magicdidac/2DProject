@@ -9,19 +9,12 @@ public class ESOnAir : AState
         EnemyController ec = ((EnemyController)pc);
         ec.canShoot = false;
         ec.canCharge = false;
-        ec.rb.gravityScale = 2.7f;
-        ec.rb.bodyType = RigidbodyType2D.Dynamic;
-        ec.GetComponent<BoxCollider2D>().isTrigger = false;
-        Debug.Log(this + "\n" + ec.isGrounded);
     }
 
     public override void CheckTransition(AMoveController pc)
     {
-        EnemyController ec = ((EnemyController)pc);
-        if (ec.isGrounded)
-        {
-            ec.ChangeState(new ESGrounded(ec));
-        }
+        if (pc.isGrounded)
+            pc.ChangeState(new ESGrounded(pc));
     }
 
     public override void FixedUpdate(AMoveController pc)

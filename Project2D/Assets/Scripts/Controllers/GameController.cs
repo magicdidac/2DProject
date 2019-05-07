@@ -17,8 +17,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [HideInInspector] public EnemyController enemy; //Enemy reference
 
     [HideInInspector] private int floor = 0;
-    [HideInInspector] public float enemyDistance = 3;
-    [HideInInspector] public float maxDistance;
+    [SerializeField] public float minEnemyDistance;
 
     [HideInInspector] public ScoreManager scoreManager; // Score Manager reference
 
@@ -38,16 +37,14 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController> ();
         mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
         scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
-
-        enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
-        maxDistance = enemyDistance + 4.5f;
+        
 
         highScore = 0;
     }
 
     private void Update()
     {
-        if (getEnemyDistance() > maxDistance)
+        if (getEnemyDistance() < minEnemyDistance && floor == 0)
         {
             GameWin(true);
         }
@@ -93,9 +90,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
         mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
         scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
-
-        enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
-        maxDistance = enemyDistance + 4.5f;
+        
     }
 
     public void ConsumeCombustible()
@@ -106,8 +101,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void GetCombustible(float value)
     {
-        if (player.combustible + value < player._playerModel.maxCombustible) player.combustible += value;
-        else player.combustible = player._playerModel.maxCombustible;
+        if (player.combustible + value < player.model.maxCombustible) player.combustible += value;
+        else player.combustible = player.model.maxCombustible;
         GameObject.FindWithTag("HUD").GetComponent<HUD>().ChangeFuelBar(player.combustible);
     }
     
@@ -136,7 +131,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             style.normal.textColor = Color.red;
             style.fontSize = fontSize;
             style.alignment = TextAnchor.MiddleLeft;
-            Handles.Label(stateInfoPosition + Camera.main.transform.position, "Player state: " + player.currentState + "\nEnemy state: " + enemy.currentState + "\nFloor: " + floor+ "\nEnemy: "+getEnemyDistance()+" ("+enemyDistance+")", style);
+            Handles.Label(stateInfoPosition + Camera.main.transform.position, "Player state: " + player.currentState + "\nEnemy state: " + enemy.currentState + "\nFloor: " + floor+ "\nEnemy: "+getEnemyDistance(), style);
         }
     }
 }

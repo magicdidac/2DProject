@@ -18,7 +18,7 @@ public class PSRope : AState
             pc.anim.SetTrigger("T-RopeOut");
             pc.isRope = false;
             pc.rb.bodyType = RigidbodyType2D.Dynamic;
-            pc.rb.AddForce(Vector2.one * pc._playerModel.exitRopeForce, ForceMode2D.Impulse);
+            pc.rb.AddForce(Vector2.one * pc.model.exitRopeForce, ForceMode2D.Impulse);
             pc.ChangeState(new PSOnAir(pc));
         }
             

@@ -28,7 +28,7 @@ public class PlayerController : AMoveController
         if(anim != null)
             anim.SetBool("B-Ground",isGrounded);
         currentState.Update(this);
-        isGrounded = detectCollision(groundMask, _playerModel.offset);
+        isGrounded = detectCollision(groundMask, model.offset);
     }
 
     private void LateUpdate()
@@ -42,7 +42,6 @@ public class PlayerController : AMoveController
         {
             if (isGrounded && !anim.GetBool("B-Slide"))
             {
-                gc.enemy.AddDistance();
                 isStuned = true;
                 col.gameObject.SetActive(false);
             }
@@ -64,7 +63,7 @@ public class PlayerController : AMoveController
         }
         else if (col.CompareTag("Trampoline"))
         {
-            isTrampoline = detectCollision(trampolineMask, _playerModel.trampolineOffset);
+            isTrampoline = detectCollision(trampolineMask, model.trampolineOffset);
             if (isTrampoline)
                 gc.setFloor(gc.getFloor() + 1);
         }
@@ -115,22 +114,22 @@ public class PlayerController : AMoveController
 
     private void drawGroundRayCast()
     {
-        float distanceBetweenRays = (spr.bounds.size.x - _playerModel.offset) / _playerModel.precisionDown;
+        float distanceBetweenRays = (spr.bounds.size.x - model.offset) / model.precisionDown;
 
-        for (int i = 0; i <= _playerModel.precisionDown; i++)
+        for (int i = 0; i <= model.precisionDown; i++)
         {
-            Vector3 startPoint = new Vector3((spr.bounds.min.x + (_playerModel.offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
+            Vector3 startPoint = new Vector3((spr.bounds.min.x + (model.offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
             Debug.DrawLine(startPoint, startPoint + (Vector3.down * .1f), Color.red);
         }
     }
 
     private void drawTrampolineRayCast()
     {
-        float distanceBetweenRays = (spr.bounds.size.x - _playerModel.trampolineOffset) / _playerModel.precisionDown;
+        float distanceBetweenRays = (spr.bounds.size.x - model.trampolineOffset) / model.precisionDown;
 
-        for (int i = 0; i <= _playerModel.precisionDown; i++)
+        for (int i = 0; i <= model.precisionDown; i++)
         {
-            Vector3 startPoint = new Vector3((spr.bounds.min.x + (_playerModel.trampolineOffset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
+            Vector3 startPoint = new Vector3((spr.bounds.min.x + (model.trampolineOffset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
             Debug.DrawLine(startPoint, startPoint + (Vector3.down * .1f), Color.magenta);
         }
     }
