@@ -6,9 +6,7 @@ public class ESGrounded : AState
 {
     public ESGrounded(AMoveController pc)
     {
-        EnemyController ec = (EnemyController)pc;
-        //ec.calculateTimeToNextShoot();
-        
+        EnemyController ec = (EnemyController)pc;        
         ec.shield.gameObject.SetActive(false);
     }
 

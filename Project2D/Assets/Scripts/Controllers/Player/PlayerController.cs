@@ -91,8 +91,8 @@ public class PlayerController : AMoveController
         }
         else if (col.CompareTag("Shoot"))
             gc.enemy.attack();
-        else if (col.CompareTag("Kill"))
-            gc.GameWin(false);
+        /*else if (col.CompareTag("Kill"))
+            gc.GameWin(false);*/
     }
 
 
