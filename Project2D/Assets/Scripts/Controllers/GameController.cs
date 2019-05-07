@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     [HideInInspector] private int floor = 0;
     [SerializeField] public float minEnemyDistance;
+    [SerializeField] public float maxEnemydistance;
 
     [HideInInspector] public ScoreManager scoreManager; // Score Manager reference
 
@@ -45,9 +46,9 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     private void Update()
     {
         if (getEnemyDistance() < minEnemyDistance && floor == 0)
-        {
             GameWin(true);
-        }
+        if (getEnemyDistance() > maxEnemydistance)
+            GameWin(false);
 
         if (!player.isDead) scoreManager.AddScore(player.transform.position.x);
 

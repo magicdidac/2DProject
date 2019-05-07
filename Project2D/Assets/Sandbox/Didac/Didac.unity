@@ -147,6 +147,7 @@ MonoBehaviour:
   player: {fileID: 1398477985}
   enemy: {fileID: 1592794514}
   minEnemyDistance: 0.75
+  maxEnemydistance: 10.5
   scoreManager: {fileID: 0}
   highScore: 0
 --- !u!4 &46855655
@@ -194,7 +195,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _perIncrease: 0.5
   _chunkStore: {fileID: 11400000, guid: 26e45b3cce7f4fd40a80c96bca5caae8, type: 2}
-  enemyNeedShoot: 0
 --- !u!4 &150279554
 Transform:
   m_ObjectHideFlags: 0
