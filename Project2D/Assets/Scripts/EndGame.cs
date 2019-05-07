@@ -16,7 +16,11 @@ public class EndGame : MonoBehaviour
 
     private GameController gc;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI highScoreText;
     public TextMeshProUGUI coinsText;
+
+    public GameObject coinImage;
+    public GameObject fuelBar;
 
     private void Start()
     {
@@ -39,10 +43,19 @@ public class EndGame : MonoBehaviour
         coins = gc.scoreManager.Coins;
         gc.scoreManager.coinsText.gameObject.SetActive(false);
         gc.scoreManager.scoreText.gameObject.SetActive(false);
+        gc.scoreManager.highScoreText.gameObject.SetActive(false);
         gc.scoreManager.gameObject.SetActive(false);
+        coinImage.SetActive(false);
+        fuelBar.SetActive(false);
 
         scoreText.text = score.ToString();
         coinsText.text = coins.ToString();
+
+        if (gc.scoreManager.Score + gc.scoreManager.Coins > gc.highScore)
+        {
+            gc.scoreManager.HighScore = gc.scoreManager.Score + gc.scoreManager.Coins;
+            Debug.Log(gc.scoreManager.HighScore);
+        }
 
         if (win)
         {
@@ -71,7 +84,7 @@ public class EndGame : MonoBehaviour
         {
             score++;
             t_score.text = score.ToString();
-            yield return new WaitForSeconds(.005f);
+            yield return new WaitForSeconds(.02f);
         }
     }
 
@@ -81,7 +94,7 @@ public class EndGame : MonoBehaviour
         {
             f_score--;
             t_score.text = f_score.ToString();
-            yield return new WaitForSeconds(.005f);
+            yield return new WaitForSeconds(.02f);
         }
     }
 
@@ -89,10 +102,5 @@ public class EndGame : MonoBehaviour
     {
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex).completed += gc.GameController_completed;
         gc.setFloor(0);
-    }
-
-    public void Menu(string name)
-    {
-        SceneManager.LoadScene(name);
     }
 }

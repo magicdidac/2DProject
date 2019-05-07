@@ -27,6 +27,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [HideInInspector] public bool pauseActive;
     [HideInInspector] public bool fpsShowed;
 
+    [HideInInspector] public Scene activeScene;
+
     [HideInInspector] public ScoreManager scoreManager; // Score Manager reference
     [HideInInspector] public EndGame endGame; // End Game menu reference
 
@@ -40,23 +42,27 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         else if (instance != this)
             Destroy(gameObject);
 
-        DontDestroyOnLoad(gameObject);
-        
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController> ();
-        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController> ();
-        mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
-        scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
-        HUD = GameObject.FindGameObjectWithTag("HUD");
+        DontDestroyOnLoad(this);
 
-        pauseMenu = HUD.transform.GetChild(2).gameObject;
-        optionsMenu = HUD.transform.GetChild(3).gameObject;
+        activeScene = SceneManager.GetActiveScene();
 
-        endGame = GameObject.FindGameObjectWithTag("Finish").GetComponent<EndGame>();
+        if(activeScene.buildIndex != 0)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
+            mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
+            scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
+            HUD = GameObject.FindGameObjectWithTag("HUD");
 
-        enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
-        maxDistance = enemyDistance + 4.5f;
+            pauseMenu = HUD.transform.GetChild(2).gameObject;
+            optionsMenu = HUD.transform.GetChild(3).gameObject;
 
-        highScore = 0;
+            endGame = GameObject.FindGameObjectWithTag("Finish").GetComponent<EndGame>();
+
+            enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
+            maxDistance = enemyDistance + 4.5f;
+        }        
+
     }
 
     private void Start()
@@ -64,33 +70,42 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         pauseActive = false;
         fpsShowed = (PlayerPrefs.GetInt("ShowFPS") == 0) ? false : true;
 
-        pauseMenu.SetActive(false);
-        optionsMenu.SetActive(false);
+        if(activeScene.buildIndex != 0)
+        {
+            pauseMenu.SetActive(false);
+            optionsMenu.SetActive(false);
+        }
+
+        if (Time.timeScale == 0) Time.timeScale = 1;
     }
 
     private void Update()
     {
-        if (getEnemyDistance() > maxDistance)
+        if(activeScene.buildIndex != 0)
         {
-            GameWin(true);
-        }
 
-        if (!player.isDead) scoreManager.AddScore(player.transform.position.x);
+            if (getEnemyDistance() > maxDistance)
+            {
+                GameWin(true);
+            }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !optionsMenu.activeSelf)
-        {
-            Pause();
-        }
-        if (Input.GetKeyDown(KeyCode.Escape) && optionsMenu.activeSelf)
-        {
-            pauseMenu.SetActive(true);
-            optionsMenu.SetActive(false);
+            if (!player.isDead) scoreManager.AddScore(player.transform.position.x);
+
+            if (Input.GetKeyDown(KeyCode.Escape) && !optionsMenu.activeSelf)
+            {
+                Pause();
+            }
+            if (Input.GetKeyDown(KeyCode.Escape) && optionsMenu.activeSelf)
+            {
+                pauseMenu.SetActive(true);
+                optionsMenu.SetActive(false);
+            }
         }
     }
 
-    public void LoadScene(string name)
+    public void LoadScene(int index)
     {
-        SceneManager.LoadScene(name);
+        SceneManager.LoadScene(index);
     }
 
     public void GameWin(bool win)
@@ -102,7 +117,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         //scoreManager.panel.SetActive(true);
         endGame.gameObject.SetActive(true);
         endGame.GameWin(win);
-        highScore = (scoreManager.HighScore > highScore) ? scoreManager.HighScore:highScore;
+        highScore = (scoreManager.HighScore > highScore) ? scoreManager.HighScore : highScore;
+        Debug.Log(highScore);
     }
 
     public void setFloor(int p_floor)
@@ -124,14 +140,14 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     //lo he pasado a public para usarlo desde EndGame.cs que controla las escenas
     public void GameController_completed(AsyncOperation obj)
     {
+        highScore = (scoreManager.HighScore > highScore) ? scoreManager.HighScore : highScore;
+        Debug.Log(highScore);
+
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
         mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
         scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
         endGame = GameObject.FindGameObjectWithTag("Finish").GetComponent<EndGame>();
-
-        pauseMenu.SetActive(false);
-        optionsMenu.SetActive(false);
 
         enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
         maxDistance = enemyDistance + 4.5f;
@@ -170,6 +186,11 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         {
             GameObject.FindWithTag("HUD").GetComponent<HUD>().fpsText.SetActive(show);
         }
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
     }
 
     private void OnDrawGizmos()

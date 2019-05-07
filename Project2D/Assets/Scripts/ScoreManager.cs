@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-
     //public GameObject panel;
 
     public TextMeshProUGUI scoreText;
@@ -30,7 +29,7 @@ public class ScoreManager : MonoBehaviour
     void Start()
     {
         scoreText.text = string.Format("000{0}", Score);
-        //highScoreText.text = Format(GameController.instance.highScore);
+        highScoreText.text = Format(GameController.instance.highScore);
         //panel.SetActive(false);
     }
 
@@ -51,8 +50,13 @@ public class ScoreManager : MonoBehaviour
 
     public void GameOver(bool win)
     {
-        HighScore = Score;
-        /*totalScoreCoins.text += coins.ToString();
+        /*if(Score > HighScore)
+        {
+            HighScore = Score;
+        }
+
+        
+        totalScoreCoins.text += coins.ToString();
         totalScoreMeters.text += score.ToString();
 
         if (win)
