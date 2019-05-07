@@ -27,6 +27,12 @@ public class ESFloatingUp : AState
             ec.shield.gameObject.SetActive(false);
             ec.ChangeState(new ESOnAir(ec));
         }
+        if (ec.gc.getFloor() != 0)
+        {
+            ec.rb.bodyType = RigidbodyType2D.Dynamic;
+            ec.col.isTrigger = false;
+            ec.ChangeState(new ESOtherFloor(ec));
+        }
     }
 
     public override void FixedUpdate(AMoveController pc)
@@ -40,6 +46,9 @@ public class ESFloatingUp : AState
         if (ec.transform.position.y < 1)
             ec.rb.velocity = new Vector2(ec.rb.velocity.x, plusOffset);
         else
+        {
             ec.rb.velocity = new Vector2(ec.rb.velocity.x, 0);
+            ec.transform.position = new Vector3(ec.transform.position.x, 1);
+        }
     }
 }

@@ -13,8 +13,17 @@ public class ESOnAir : AState
 
     public override void CheckTransition(AMoveController pc)
     {
+
+        EnemyController ec = (EnemyController)pc;
         if (pc.isGrounded)
             pc.ChangeState(new ESGrounded(pc));
+
+        if (pc.transform.position.y < -1)
+            pc.ChangeState(new ESFloatingUp(pc));
+
+        if (ec.DetectGroundToLand("Down"))
+            pc.ChangeState(new ESFloatingUp(pc));
+
     }
 
     public override void FixedUpdate(AMoveController pc)

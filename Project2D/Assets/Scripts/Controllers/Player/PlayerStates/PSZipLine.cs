@@ -8,6 +8,8 @@ public class PSZipLine : AState
     private ZipLine zip;
     private float startTime;
 
+    private float verticalVelocity;
+
     private AMoveController moveController;
 
     public PSZipLine(AMoveController pc)
@@ -21,6 +23,7 @@ public class PSZipLine : AState
         tirolinaSize = zip.endPoint.position.x - pc.transform.position.x;
         pc.model.speed = pc.model.normalSpeed;
         pc.transform.position = new Vector2(pc.transform.position.x, GetVerticalPosition());
+        calculateVerticalVelocity();
 
         pc.anim.SetBool("B-ZipLine", true);
         pc.anim.SetTrigger("T-ZipLine");
@@ -50,9 +53,8 @@ public class PSZipLine : AState
 
     public override void FixedUpdate(AMoveController pc)
     {
-        Vector2 startPoint = new Vector2 (pc.transform.position.x, pc.transform.position.y);
-        Vector2 destPoint = new Vector2(zip.endPoint.position.x, zip.endPoint.position.y-1.25f);
-        pc.rb.velocity = (destPoint - startPoint).normalized * pc.model.speed;
+        pc.rb.velocity = new Vector2(pc.model.normalSpeed, 0);
+        pc.transform.position = new Vector3(pc.transform.position.x, GetVerticalPosition());
     }
 
     public override void Update(AMoveController pc)
@@ -80,7 +82,16 @@ public class PSZipLine : AState
         percentage = (100 - percentage);
         float totalVertical = zip.endPoint.position.y - zip.startPoint.position.y;
         float currentvertical = (totalVertical * percentage) / 100;
-        return (zip.startPoint.position.y + currentvertical)-1.25f;
+        return (zip.startPoint.position.y + currentvertical)-1.3f;
+    }
+
+    private void calculateVerticalVelocity()
+    {
+        Vector2 startPoint = new Vector2(moveController.transform.position.x, moveController.transform.position.y);
+        Vector2 destPoint = new Vector2(zip.endPoint.position.x, zip.endPoint.position.y - 1.25f);
+        Vector3 direction = destPoint - startPoint;
+        float angle = Mathf.Atan2(direction.y, direction.x);
+        verticalVelocity = Mathf.Sin(angle) * 7.5f;
     }
 
 }

@@ -11,9 +11,11 @@ public class ESOtherFloor : AState
 
     public override void CheckTransition(AMoveController pc)
     {
-        if(pc.gc.getFloor() == 0)
+        EnemyController ec = (EnemyController)pc;
+        if(pc.gc.getFloor() == 0 && ec.DetectGroundToLand())
         {
             pc.rb.bodyType = RigidbodyType2D.Dynamic;
+            ec.shield.gameObject.SetActive(false);
             pc.ChangeState(new ESOnAir(pc));
         }
     }
@@ -26,5 +28,6 @@ public class ESOtherFloor : AState
     public override void Update(AMoveController pc)
     {
         pc.rb.velocity = new Vector2(pc.rb.velocity.x, 0);
+        pc.transform.position = Vector3.Lerp(pc.transform.position, new Vector3(pc.transform.position.x, 1), .1f);
     }
 }

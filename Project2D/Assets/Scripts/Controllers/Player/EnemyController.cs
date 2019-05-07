@@ -29,7 +29,15 @@ public class EnemyController : AMoveController
     private void FixedUpdate()
     {
         currentState.FixedUpdate(this);
-        rb.velocity = new Vector2((gc.player.isSliding) ? model.slideSpeed:model.normalSpeed, rb.velocity.y);
+        if (!gc.player.isRope && (gc.getFloor() == 0 || (gc.getFloor()!=0 && gc.getEnemyDistance() > gc.minEnemyDistance + 1)))
+            rb.velocity = new Vector2((gc.player.isSliding) ? model.slideSpeed : model.normalSpeed, rb.velocity.y);
+        else if (gc.player.isRope)
+            rb.velocity = new Vector2(1, rb.velocity.y);
+        else if (gc.getEnemyDistance() <= gc.minEnemyDistance+1)
+        {
+            transform.position = new Vector2(gc.player.transform.position.x+(gc.minEnemyDistance+1), transform.position.y);
+        }
+
     }
 
     private void Update()
@@ -101,11 +109,16 @@ public class EnemyController : AMoveController
 
     public bool DetectGroundToLand()
     {
+        return DetectGroundToLand("Platform");
+    }
+
+    public bool DetectGroundToLand(string tagToLand)
+    {
         RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.max.x + verticalDetectionXOffset, col.bounds.min.y), Vector2.down, verticalDetectionDistance);
 
         if (hit.collider == null) return false;
 
-        return hit.collider.CompareTag("Platform");
+        return hit.collider.CompareTag(tagToLand);
     }
 
     public bool DetectObstacleUp()

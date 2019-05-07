@@ -90,11 +90,6 @@ public class PlayerController : AMoveController
             col.gameObject.SetActive(false);
         }
 
-        else if (col.CompareTag("Enemy"))
-        {
-            gc.GameWin(true);
-        }
-
         /*else if (col.CompareTag("Kill"))
         {
             gc.GameWin(false);
