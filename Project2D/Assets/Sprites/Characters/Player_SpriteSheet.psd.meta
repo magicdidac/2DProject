@@ -62,11 +62,12 @@ TextureImporter:
     21300114: P_JP_13
     21300116: P_JP_14
     21300118: P_JP_15
-    21300120: Player_SpriteSheet_0
-    21300122: Player_SpriteSheet_1
+    21300120: 37-Impact_0
+    21300122: 39-Impact_2
     21300124: IDL_4
     21300126: IDL_5
     21300128: 36-Run_4
+    21300130: 38-Impact_1
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -895,6 +896,66 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: abf3c5e08d35580488aa86305f047228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 37-Impact_0
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9da9482c79852f46ace682320b15fc0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 38-Impact_1
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d7cd1bf1fe0705419ca7f657163f547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 39-Impact_2
+      rect:
+        serializedVersion: 2
+        x: 1792
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39552d34e98537f48ada16390d9a646b
       vertices: []
       indices: 
       edges: []
