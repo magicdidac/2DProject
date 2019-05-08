@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             Destroy(gameObject);
 
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         activeScene = SceneManager.GetActiveScene();
 

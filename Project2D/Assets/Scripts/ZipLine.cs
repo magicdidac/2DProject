@@ -16,8 +16,8 @@ public class ZipLine : MonoBehaviour
     private void OnDrawGizmos()
     {
         float lenght = (endPoint.position - startPoint.position).magnitude;
-        spr.size = new Vector2(lenght, .5f);
-        col.size = new Vector2(lenght - .1f, .2f);
+        spr.size = new Vector2(lenght, spr.size.y);
+        col.size = new Vector2(lenght - .1f, spr.size.y);
         col.offset = new Vector2(lenght/2, 0);
         startPoint.position = new Vector3(startPoint.position.x, startPoint.position.y, 0);
         endPoint.position = new Vector3(endPoint.position.x, endPoint.position.y, 0);

@@ -8,8 +8,10 @@ public class PlayerController : AMoveController
 
     [SerializeField] public LayerMask groundMask;   
     [SerializeField] public LayerMask trampolineMask;
+    [SerializeField] private GameObject explosion = null;
 
     [HideInInspector] private GameObject downObject;
+    [HideInInspector] private bool isExploded = false;
 
     private void Awake()
     {
@@ -20,11 +22,26 @@ public class PlayerController : AMoveController
     // Update is called once per frame
     private void FixedUpdate()
     {
+        if (isDead)
+            return;
+
         currentState.FixedUpdate(this);
     }
 
     private void Update()
     {
+        if (isDead)
+        {
+            if (!isExploded)
+            {
+                Instantiate(explosion, transform.position, Quaternion.identity);
+                spr.enabled = false;
+                isExploded = true;
+            }
+            return;
+
+        }
+
         if(anim != null)
             anim.SetBool("B-Ground",isGrounded);
         currentState.Update(this);
@@ -33,6 +50,9 @@ public class PlayerController : AMoveController
 
     private void LateUpdate()
     {
+        if (isDead)
+            return;
+
         currentState.CheckTransition(this);
     }
 
@@ -91,8 +111,8 @@ public class PlayerController : AMoveController
         }
         else if (col.CompareTag("Shoot"))
             gc.enemy.attack();
-        /*else if (col.CompareTag("Kill"))
-            gc.GameWin(false);*/
+        else if (col.CompareTag("Kill"))
+            gc.GameWin(false);
     }
 
 

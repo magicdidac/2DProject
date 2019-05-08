@@ -24,7 +24,7 @@ public class AudioController : MonoBehaviour
             return;
         }
 
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
 
         foreach (Sound m in music)
         {

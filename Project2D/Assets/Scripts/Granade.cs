@@ -101,7 +101,7 @@ public class Granade : MonoBehaviour
     private void increaseCol()
     {
 
-        col.radius += .25f;
+        col.radius += .5f;
 
         if (col.radius > 1.5f)
         {

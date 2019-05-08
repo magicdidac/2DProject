@@ -14,6 +14,10 @@ public class MapController : MonoBehaviour
     private float offset = 0;
     private float transitionProbability = .0f;
     private Queue<GameObject> chunksQueue = new Queue<GameObject>();
+    private Queue<GameObject> backgroundQueue = new Queue<GameObject>();
+
+    [SerializeField] private GameObject background;
+    private float xOffset = 0;
 
     [SerializeField] private float _perIncrease = .05f;
 
@@ -23,10 +27,13 @@ public class MapController : MonoBehaviour
     {
         gc = GameController.instance;
         offset = Mathf.Abs(gc.player.transform.position.x) / 2;
+        NewBackground();
     }
 
     private void Update()
     {
+        if (gc.player.transform.position.x >= xOffset-19.2f)
+            NewBackground();
 
         if (gc.player.transform.position.x > _lastPos - offset)
             changeChunk();
@@ -87,6 +94,15 @@ public class MapController : MonoBehaviour
         }
 
         _currentChunk = _nextChunk;
+    }
+
+
+    private void NewBackground()
+    {
+        xOffset += 19.2f;
+        backgroundQueue.Enqueue(Instantiate(background,new Vector3(xOffset,0),Quaternion.identity));
+        if (backgroundQueue.Count > 3)
+            GameObject.Destroy(backgroundQueue.Dequeue());
     }
 
 }

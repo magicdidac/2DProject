@@ -63,6 +63,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 451440769
+    locked: 0
+  - name: Railing
+    uniqueID: 2333930579
+    locked: 0
   - name: Platform
     uniqueID: 1212693793
     locked: 0

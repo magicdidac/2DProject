@@ -12,8 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af6b6e0c191a15849ac109fefe5837a8, type: 3}
   m_Name: EnemyAttack
   m_EditorClassIdentifier: 
-  enemyChunk: {fileID: 0}
-  topTChunks: []
-  midTChunks: []
-  botTChunks: []
-  continueChunks: []
+  enemyChunk: {fileID: 11400000, guid: ba2365216170d3d4b94c287827c8e1df, type: 2}
+  topTChunks:
+  - {fileID: 11400000, guid: 0c56e8795fed26f42b20f64e01f6153b, type: 2}
+  midTChunks:
+  - {fileID: 11400000, guid: 6c009f74363241542a135f2c475df063, type: 2}
+  botTChunks:
+  - {fileID: 11400000, guid: 19ec048d543837f4dafde2ddc70afd5c, type: 2}
+  - {fileID: 11400000, guid: 8250163112069464182a59363e8291c3, type: 2}
+  continueChunks:
+  - {fileID: 11400000, guid: 2e588cdd390d1854099738ab129ee92e, type: 2}
+  - {fileID: 11400000, guid: 093d51333d52d0a4ab0d3199fc318372, type: 2}
+  - {fileID: 11400000, guid: 093d51333d52d0a4ab0d3199fc318372, type: 2}
+  - {fileID: 11400000, guid: 093d51333d52d0a4ab0d3199fc318372, type: 2}
+  - {fileID: 11400000, guid: 093d51333d52d0a4ab0d3199fc318372, type: 2}

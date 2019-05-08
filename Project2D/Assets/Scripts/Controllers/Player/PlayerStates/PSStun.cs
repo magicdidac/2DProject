@@ -9,6 +9,7 @@ public class PSStun : AState
     public PSStun(AMoveController pc)
     {
         pc.rb.gravityScale = 2.7f;
+        pc.anim.SetTrigger("T-Impact");
         pc.anim.SetBool("B-Slide", false);
     }
 
