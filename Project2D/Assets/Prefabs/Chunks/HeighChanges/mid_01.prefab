@@ -807,6 +807,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DownHit (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3832191602077836474, guid: ef16c75580a266c4197ad13531ffd17e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3832191602077836472, guid: ef16c75580a266c4197ad13531ffd17e,
         type: 3}
       propertyPath: m_LocalPosition.x

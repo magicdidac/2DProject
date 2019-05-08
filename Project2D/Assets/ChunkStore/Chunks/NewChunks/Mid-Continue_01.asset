@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9a62e60c482a1d498522a452f3eed1f, type: 3}
-  m_Name: MidContinue0
+  m_Name: Mid-Continue_01
   m_EditorClassIdentifier: 
   lenght: 81
   prefab: {fileID: 8908201166589754588, guid: fa78ea0480a62564b82e000219c25273, type: 3}

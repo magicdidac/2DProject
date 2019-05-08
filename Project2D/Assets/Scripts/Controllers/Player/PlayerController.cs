@@ -13,6 +13,8 @@ public class PlayerController : AMoveController
     [HideInInspector] private GameObject downObject;
     [HideInInspector] private bool isExploded = false;
 
+    [HideInInspector] private GameObject lastTriggerObject = null;
+
     private void Awake()
     {
         
@@ -58,6 +60,11 @@ public class PlayerController : AMoveController
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        if (col.gameObject == lastTriggerObject)
+            return;
+
+        lastTriggerObject = col.gameObject;
+
         if (col.CompareTag("Box"))
         {
             if (isGrounded && !anim.GetBool("B-Slide"))

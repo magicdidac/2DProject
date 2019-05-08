@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9a62e60c482a1d498522a452f3eed1f, type: 3}
-  m_Name: mid_01
+  m_Name: Top-Transition_01
   m_EditorClassIdentifier: 
-  lenght: 32
-  prefab: {fileID: 1422411347217393345, guid: b4d0304cde9f68349812c6c38dace5e5, type: 3}
+  lenght: 68
+  prefab: {fileID: 1506663225021958323, guid: 2365cf4c81778c047b189a7e6c7b21e2, type: 3}

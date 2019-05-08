@@ -1067,7 +1067,7 @@ MonoBehaviour:
   background: {fileID: 8713774238281902902, guid: c2f539d0681ef5e4da2e5b9ea77053b2,
     type: 3}
   _perIncrease: 0.5
-  _chunkStore: {fileID: 11400000, guid: bce972fc8a067e741b250bc2f01b4201, type: 2}
+  _chunkStore: {fileID: 11400000, guid: 106a2cdca2f887742a2ed1ef9ad9909a, type: 2}
 --- !u!4 &150279554
 Transform:
   m_ObjectHideFlags: 0
@@ -6639,6 +6639,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2826388980391514964, guid: f3f0e1e9e82b64d4eb73fa6eb13a2048,
+        type: 3}
+      propertyPath: RadiusDetection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7688831546595525793, guid: f3f0e1e9e82b64d4eb73fa6eb13a2048,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6693,11 +6698,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2826388980391514964, guid: f3f0e1e9e82b64d4eb73fa6eb13a2048,
-        type: 3}
-      propertyPath: RadiusDetection
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3f0e1e9e82b64d4eb73fa6eb13a2048, type: 3}
