@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 public abstract class AMoveController : MonoBehaviour
 {
@@ -11,8 +10,8 @@ public abstract class AMoveController : MonoBehaviour
     [HideInInspector] public GameController gc;
 
     //Components
-    [HideInInspector] public Rigidbody2D rb;
-    [HideInInspector] public SpriteRenderer spr;
+    [SerializeField] public Rigidbody2D rb;
+    [SerializeField] public SpriteRenderer spr;
     [HideInInspector] public Animator anim;
     [HideInInspector] public float combustible;
 
@@ -20,7 +19,7 @@ public abstract class AMoveController : MonoBehaviour
     [HideInInspector] public AState currentState;
 
     //Model
-    [SerializeField] public PlayerModel _playerModel;
+    [SerializeField] public PlayerModel model;
 
     //Control
     [HideInInspector] public bool isGrounded = false;
@@ -32,14 +31,15 @@ public abstract class AMoveController : MonoBehaviour
     [HideInInspector] public bool isTirolinaD = false;
     [HideInInspector] public bool isDead = false;
 
+    //Others
+    [HideInInspector] public ZipLine zipLine = null;
+
     private void Start()
     {
         gc = GameController.instance;
-        spr = GetComponent<SpriteRenderer>();
-        rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        _playerModel = Instantiate(_playerModel);
-        combustible = _playerModel.maxCombustible;
+        model = Instantiate(model);
+        combustible = model.maxCombustible;
     }
 
     public void ChangeState(AState ps) { currentState = ps; }
@@ -48,9 +48,9 @@ public abstract class AMoveController : MonoBehaviour
     {
         List<RaycastHit2D> hits = new List<RaycastHit2D>();
 
-        float distanceBetweenRays = (spr.bounds.size.x - p_offset) / _playerModel.precisionDown;
+        float distanceBetweenRays = (spr.bounds.size.x - p_offset) / model.precisionDown;
 
-        for (int i = 0; i <= _playerModel.precisionDown; i++)
+        for (int i = 0; i <= model.precisionDown; i++)
         {
             Vector3 startPoint = new Vector3((spr.bounds.min.x + (p_offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
             hits.Add(Physics2D.Raycast(startPoint, Vector2.down, .1f, p_lm));

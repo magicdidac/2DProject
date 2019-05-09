@@ -1,0 +1,534 @@
+fileFormatVersion: 2
+guid: 72b58e763ea72124bbd0353dc9ede172
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: 00-Run_0
+    21300002: 01-Run_1
+    21300004: 02-Run_2
+    21300006: 03-Run_3
+    21300008: 04-Run_4
+    21300010: RN_5
+    21300012: RN_6
+    21300014: RN_7
+    21300016: 05-Jump_0
+    21300018: 06-Jump_1
+    21300020: 07-Jump_2
+    21300022: 08-Jump_3
+    21300024: Enemy_SpriteSheet_12
+    21300026: Enemy_SpriteSheet_13
+    21300028: Enemy_SpriteSheet_14
+    21300030: Enemy_SpriteSheet_15
+    21300032: 09-MidleShoot_0
+    21300034: 10-MidleShoot_1
+    21300036: 11-MidleShoot_2
+    21300038: Enemy_SpriteSheet_19
+    21300040: Enemy_SpriteSheet_20
+    21300042: Enemy_SpriteSheet_21
+    21300044: Enemy_SpriteSheet_22
+    21300046: Enemy_SpriteSheet_23
+    21300048: 12-GranadeShoot_0
+    21300050: 13-GranadeShoot_1
+    21300052: 14-GranadeShoot_2
+    21300054: Enemy_SpriteSheet_27
+    21300056: Enemy_SpriteSheet_28
+    21300058: Enemy_SpriteSheet_29
+    21300060: Enemy_SpriteSheet_30
+    21300062: Enemy_SpriteSheet_31
+    21300064: Enemy_SpriteSheet_32
+    21300066: Enemy_SpriteSheet_33
+    21300068: Enemy_SpriteSheet_34
+    21300070: Enemy_SpriteSheet_35
+    21300072: Enemy_SpriteSheet_36
+    21300074: Enemy_SpriteSheet_37
+    21300076: Enemy_SpriteSheet_38
+    21300078: Enemy_SpriteSheet_39
+    21300080: 15-Crouch_0
+    21300082: 16-Crouch_1
+    21300084: 17-Crouch_2
+    21300086: Enemy_SpriteSheet_43
+    21300088: Enemy_SpriteSheet_44
+    21300090: Enemy_SpriteSheet_45
+    21300092: Enemy_SpriteSheet_46
+    21300094: Enemy_SpriteSheet_47
+    21300096: Enemy_SpriteSheet_48
+    21300098: Enemy_SpriteSheet_49
+    21300100: Enemy_SpriteSheet_50
+    21300102: Enemy_SpriteSheet_51
+    21300104: Enemy_SpriteSheet_52
+    21300106: Enemy_SpriteSheet_53
+    21300108: Enemy_SpriteSheet_54
+    21300110: Enemy_SpriteSheet_55
+    21300112: Enemy_SpriteSheet_56
+    21300114: Enemy_SpriteSheet_57
+    21300116: Enemy_SpriteSheet_58
+    21300118: Enemy_SpriteSheet_59
+    21300120: Enemy_SpriteSheet_60
+    21300122: Enemy_SpriteSheet_61
+    21300124: Enemy_SpriteSheet_62
+    21300126: Enemy_SpriteSheet_63
+  externalObjects: {}
+  serializedVersion: 9
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 00-Run_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1792
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac02962c4d27f1b45a22717e6874d41d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 01-Run_1
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1792
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ad2aba7c43ce2c45b7bcd52faf247cd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 02-Run_2
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1792
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72d0ad29de5c75843b01b6cd6d81b443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 03-Run_3
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1792
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e057fa5399f6894b83b9f7fef0635a4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 04-Run_4
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1792
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b86b9482bb80ca044b2223825267a9db
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 05-Jump_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1536
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9853f9c6bb4b9e4dbe9928f3b954d40
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 06-Jump_1
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1536
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0146150cf8cce8448bd49d3813d7a15
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 07-Jump_2
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1536
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 263152f5b6cbffc498f2744523d9f062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 08-Jump_3
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1536
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf4c80c4b0de6ca4085f0e9941de6ec6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09-MidleShoot_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37f2ffff906284849be1001af61bcf56
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 10-MidleShoot_1
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6df7c2100eec4d04fbb25cb81304f9de
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 11-MidleShoot_2
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1280
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d4fd88693220d74c82dd59d4f2036d0
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 12-GranadeShoot_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 235edb76c1271844792c909abbef731d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 13-GranadeShoot_1
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c70d6405fc1e1044280501fc11b6a839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 14-GranadeShoot_2
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e25e7f8364560b946b9b151e86d3f9a3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 15-Crouch_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af5bb8f73aa2af7429979b1cef32a368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16-Crouch_1
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c81aa3c127e4bc348a265f3cb53efc49
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 17-Crouch_2
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e074831eefcbc34f939b07855050f19
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: ccd285f92d735714986d4a3358b00e33
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

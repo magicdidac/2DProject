@@ -6,15 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: be7d3e957809a3a479bb3de240a9e470
+    path: Assets/Sandbox/Didac/MainMenu.unity
+    guid: 7376ebf81231a26498ac5db5b804b533
   - enabled: 1
     path: Assets/Sandbox/Didac/Didac.unity
     guid: 1752e80abe6b89c4282f815e9009f9ba
-  - enabled: 1
-    path: Assets/Sandbox/Javi/Javi.unity
-    guid: 64963873cef236d4f81d8e26a28cc90d
-  - enabled: 1
+  - enabled: 0
+    path: Assets/Sandbox/Pol/MainMenu.unity
+    guid: 29be38b603f2c8945a780c69fe9e134e
+  - enabled: 0
     path: Assets/Sandbox/Pol/Pol.unity
     guid: e848d420ed427f64a9c9807ebd92d47e
+  - enabled: 0
+    path: Assets/Sandbox/Javi/Main Menu.unity
+    guid: c9667f19336a4f541bc03022c6c287da
+  - enabled: 0
+    path: Assets/Scenes/SampleScene.unity
+    guid: be7d3e957809a3a479bb3de240a9e470
+  - enabled: 0
+    path: Assets/Sandbox/Javi/Javi.unity
+    guid: 64963873cef236d4f81d8e26a28cc90d
   m_configObjects: {}

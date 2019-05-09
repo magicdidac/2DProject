@@ -13,7 +13,8 @@ public class ChunkGizmos : MonoBehaviour
 
 	private void OnDrawGizmos()
     {
-        Debug.DrawLine(transform.position, transform.position + endPoint, _color);
+        Gizmos.color = _color;
+        Gizmos.DrawLine(transform.position, transform.position + endPoint);
     }
 
 }

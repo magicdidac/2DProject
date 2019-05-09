@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: CombustibleModel
   m_EditorClassIdentifier: 
   duration: 0
-  quantity: 5
+  quantity: 2
   amplitude: 0.05
   speed: 2

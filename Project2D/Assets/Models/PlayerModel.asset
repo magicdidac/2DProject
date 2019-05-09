@@ -16,14 +16,14 @@ MonoBehaviour:
   speed: 7.5
   jumpForce: 14
   precisionDown: 6
-  offset: -0.35
-  trampolineOffset: 0.1
+  offset: 1.25
+  trampolineOffset: 1.8
   slideSpeed: 8.5
   normalSpeed: 7.5
-  plusJumpSpeedX: 10
-  stunSpeed: 3
+  plusJumpSpeedX: 8.5
+  stunSpeed: 5
   groundRangeX: 0
   groundRangeY: 0
-  stunTime: 1
+  stunTime: 0.5
   exitRopeForce: 7
-  maxCombustible: 10
+  maxCombustible: 2
