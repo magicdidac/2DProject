@@ -22,6 +22,8 @@ public class EndGame : MonoBehaviour
     public GameObject coinImage;
     public GameObject fuelBar;
 
+    private int maxScore;
+
     private void Start()
     {
         panel = GetComponent<Image>();
@@ -83,7 +85,9 @@ public class EndGame : MonoBehaviour
     {
         while(score < f_score)
         {
-            score++;
+            score+=5;
+            if (score > f_score)
+                score = f_score;
             t_score.text = score.ToString();
             yield return new WaitForSeconds(.02f);
         }
@@ -93,7 +97,9 @@ public class EndGame : MonoBehaviour
     {
         while (f_score > 0)
         {
-            f_score--;
+            f_score-=5;
+            if (f_score < 0)
+                f_score = 0;
             t_score.text = f_score.ToString();
             yield return new WaitForSeconds(.02f);
         }
