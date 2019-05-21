@@ -28,7 +28,7 @@ public class FPSOFFButton : MonoBehaviour
             on.GetComponent<FPSONButton>().isClicked = false;
             GetComponent<Image>().color = pressed;
             on.GetComponent<Image>().color = nonPressed;
-            GameController.instance.ShowFPS(false);
+            GameController.instance.uiController.SwitchFPS(false);
         }
     }
 }

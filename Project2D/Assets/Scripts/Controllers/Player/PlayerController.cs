@@ -6,48 +6,42 @@ using UnityEngine;
 public class PlayerController : AMoveController
 {   
 
-    [SerializeField] public LayerMask groundMask;   
+    //Layers
+    [Header("Layers")]
+    [SerializeField] public LayerMask groundMask;
     [SerializeField] public LayerMask trampolineMask;
-    [SerializeField] private GameObject explosion = null;
+    
 
     [HideInInspector] private GameObject downObject;
-    [HideInInspector] private bool isExploded = false;
+    
 
     [HideInInspector] private GameObject lastTriggerObject = null;
 
-    private void Awake()
+    [HideInInspector] public float fuel;
+
+    private void Start()
     {
-        
+        gc.player = this;
+        fuel = model.maxFuel;
         ChangeState(new PSGrounded(this));
     }
-
-    // Update is called once per frame
+    
     private void FixedUpdate()
     {
         if (isDead)
             return;
 
-        currentState.FixedUpdate(this);
+        currentState.FixedUpdate();
     }
 
     private void Update()
     {
         if (isDead)
-        {
-            if (!isExploded)
-            {
-                Instantiate(explosion, transform.position, Quaternion.identity);
-                spr.enabled = false;
-                isExploded = true;
-            }
             return;
 
-        }
-
-        if(anim != null)
-            anim.SetBool("B-Ground",isGrounded);
-        currentState.Update(this);
         isGrounded = detectCollision(groundMask, model.offset);
+        anim.SetBool("B-Ground",isGrounded);
+        currentState.Update();
     }
 
     private void LateUpdate()
@@ -55,65 +49,98 @@ public class PlayerController : AMoveController
         if (isDead)
             return;
 
-        currentState.CheckTransition(this);
+        currentState.CheckTransition();
     }
 
+
+    public void Kill()
+    {
+        if (isDead)
+            return;
+
+        ChangeState(new PSDead(this));
+        
+        isDead = true;
+
+        Debug.LogWarning("Add Animation Trigger");
+    }
+
+    public bool HaveFuel()
+    {
+        return fuel > 0;
+    }
+
+    public void ConsumeFuel()
+    {
+        fuel -= Time.deltaTime;
+        gc.uiController.UpdateFuelBar();
+    }
+
+    private void ReloadFuel()
+    {
+        fuel = model.maxFuel;
+        gc.uiController.UpdateFuelBar();
+    }
+
+    //Detect collisions
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject == lastTriggerObject)
+        if (col.gameObject == lastTriggerObject) //Detectar si el collaider que ha entrado no entra otra vez por los dos colliders del player
             return;
 
         lastTriggerObject = col.gameObject;
 
-        if (col.CompareTag("Box"))
+        if (col.CompareTag("Box")) //Si colisiona con una Box
         {
-            if (isGrounded && !anim.GetBool("B-Slide"))
-            {
+            if (isGrounded && !anim.GetBool("B-Slide")) //si no está deslizandose entonces se relantiza
                 isStuned = true;
-                col.gameObject.SetActive(false);
-            }
-            else col.gameObject.SetActive(false);
+
+            col.gameObject.SetActive(false); //elimina el obstaculo
         }
-        else if (col.CompareTag("Rope") && !isRope)
+
+        else if (col.CompareTag("Rope") && !isRope) //Si colisiona con una Rope
         {
-            transform.SetParent(col.gameObject.transform);
-            rb.velocity = Vector2.zero;
-            rb.bodyType = RigidbodyType2D.Kinematic;
-            gc.setFloor(gc.getFloor() + 1);
+            transform.SetParent(col.gameObject.transform); //Se hace hijo de la Rope
+            rb.velocity = Vector2.zero; //Detenemos al Player
+            rb.bodyType = RigidbodyType2D.Kinematic; //Le cambiamos el tipo de rb
+            gc.AddFloor();
             isRope = true;
-            col.GetComponent<Rope>().startMovement();
+            col.GetComponent<Rope>().StartMovement(transform);
         }
         else if (col.CompareTag("Down") && col.gameObject != downObject)
         {
             downObject = col.gameObject;
-            gc.setFloor(gc.getFloor() - 1);
+            gc.SubtractFloor();
         }
         else if (col.CompareTag("Trampoline"))
         {
             isTrampoline = detectCollision(trampolineMask, model.trampolineOffset);
             if (isTrampoline)
-                gc.setFloor(gc.getFloor() + 1);
+                gc.AddFloor();
         }
         else if (col.tag.Contains("Tirolina"))
         {
             zipLine = col.gameObject.transform.parent.GetComponent<ZipLine>();
             isTirolina = true;
-            gc.setFloor(gc.getFloor() + zipLine.floorDiference);
+            if (zipLine.floorDiference < 0)
+                gc.SubtractFloor();
+            else if(zipLine.floorDiference > 0)
+                gc.AddFloor();
         }
         else if (col.CompareTag("Coin"))
         {
-            gc.AddCoins(1);
+            gc.scoreController.AddCoins(1);
             col.gameObject.SetActive(false);
         }
 
         else if (col.CompareTag("SuperCoin"))
         {
-            gc.AddCoins(5);
+            gc.scoreController.AddCoins(5);
             col.gameObject.SetActive(false);
         }
         else if (col.CompareTag("Combustible"))
         {
-            gc.GetCombustible(col.gameObject.GetComponent<Combustible>()._combustibleModel.quantity);
+            ReloadFuel();
             col.gameObject.SetActive(false);
         }
         else if (col.CompareTag("Shoot"))
@@ -121,7 +148,6 @@ public class PlayerController : AMoveController
         else if (col.CompareTag("Kill"))
             gc.GameWin(false);
     }
-
 
     #region Gizmos
 

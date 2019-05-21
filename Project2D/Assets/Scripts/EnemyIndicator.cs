@@ -4,11 +4,14 @@ using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
+
+//Esto deberia hacerlo el enemy; crear child en el prefab del enemy
+
 public class EnemyIndicator : MonoBehaviour
 {
 
-    private GameController gc;
-    private SpriteRenderer spr;
+    [HideInInspector] private GameController gc;
+    [HideInInspector] private SpriteRenderer spr;
     [HideInInspector] public Animator anim;
 
     private void Start()

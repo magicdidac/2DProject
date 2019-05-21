@@ -17,19 +17,20 @@ public class EnemyController : AMoveController
 
     [SerializeField] public Collider2D col = null;
 
-    private void Awake()
+    private void Start()
     {
+        gc.enemy = this;
         shield.Stop();
         ChangeState(new ESGrounded(this));
     }
 
     private void FixedUpdate()
     {
-        currentState.FixedUpdate(this);
+        currentState.FixedUpdate();
 
         if (!isDead)
         {
-            if (!gc.player.isRope && (gc.getFloor() == 0 || (gc.getFloor() != 0 && gc.getEnemyDistance() > gc.minEnemyDistance + 1)))
+            if (!gc.player.isRope && (gc.GetFloor() == 0 || (gc.GetFloor() != 0 && gc.getEnemyDistance() > gc.minEnemyDistance + 1)))
                 rb.velocity = new Vector2((gc.player.isSliding) ? model.slideSpeed : model.normalSpeed, rb.velocity.y);
             else if (gc.player.isRope)
                 rb.velocity = new Vector2(1, rb.velocity.y);
@@ -41,20 +42,20 @@ public class EnemyController : AMoveController
 
     private void Update()
     {
-        currentState.Update(this);
+        currentState.Update();
         isGrounded = detectCollision(groundMask, model.offset);
     }
 
     private void LateUpdate()
     {
-        currentState.CheckTransition(this);
+        currentState.CheckTransition();
     }
 
     public  void attack()
     {
-        switch (gc.getFloor()) {
+        switch (gc.GetFloor()) {
             case 1:
-                gc.enemyIndicator.LoadShoot();
+                //gc.enemyIndicator.LoadShoot();
                 break;
             case 0:
                 if (gc.getEnemyDistance() > 3 && Random.Range(0, 2) == 1)
@@ -63,7 +64,7 @@ public class EnemyController : AMoveController
                     anim.SetTrigger("T-MidGranadeShoot");
                 break;
             case -1:
-                gc.enemyIndicator.LoadShoot();
+                //gc.enemyIndicator.LoadShoot();
                 break;
         }
     }
@@ -122,6 +123,12 @@ public class EnemyController : AMoveController
         if (hit.collider == null) return false;
 
         return hit.collider.CompareTag("Kill") || hit.collider.CompareTag("Box");
+    }
+
+    private void OnBecameInvisible()
+    {
+        if (gc.player.isDead)
+            gameObject.SetActive(false);
     }
 
     #region Gizmos

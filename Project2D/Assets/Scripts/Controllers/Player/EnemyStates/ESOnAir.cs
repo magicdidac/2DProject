@@ -4,35 +4,35 @@ using UnityEngine;
 
 public class ESOnAir : AState
 {
-    public ESOnAir(AMoveController pc)
+    [HideInInspector] private EnemyController ec;
+
+    public ESOnAir(EnemyController _ec)
     {
+        ec = _ec;
     }
 
-    public override void CheckTransition(AMoveController pc)
+    public override void CheckTransition()
     {
-
-        EnemyController ec = (EnemyController)pc;
-        if (pc.isGrounded)
+        
+        if (ec.isGrounded)
         {
-            pc.anim.SetBool("B-Ground", true);
-            pc.ChangeState(new ESGrounded(pc));
+            ec.anim.SetBool("B-Ground", true);
+            ec.ChangeState(new ESGrounded(ec));
         }
 
-        if (pc.transform.position.y < -1)
-            pc.ChangeState(new ESFloatingUp(pc));
+        if (ec.transform.position.y < -1)
+            ec.ChangeState(new ESFloatingUp(ec));
 
         if (ec.DetectGroundToLand("Down"))
-            pc.ChangeState(new ESFloatingUp(pc));
+            ec.ChangeState(new ESFloatingUp(ec));
 
     }
 
-    public override void FixedUpdate(AMoveController pc)
+    public override void FixedUpdate()
     {
-        return;
     }
 
-    public override void Update(AMoveController pc)
+    public override void Update()
     {
-        return;
     }
 }

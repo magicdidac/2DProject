@@ -105,7 +105,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7.9, y: 0.2}
+  m_Size: {x: 7.9, y: 0.1}
   m_EdgeRadius: 0
 --- !u!50 &2242248316211358521
 Rigidbody2D:
@@ -178,8 +178,8 @@ MonoBehaviour:
   spr: {fileID: 3489379765145581498}
   startPoint: {fileID: 3094700840840023705}
   endPoint: {fileID: 2081544639030599771}
-  percentage: 0
   floorDiference: 0
+  distanceTraveled: 0
 --- !u!1 &3856364012594719578
 GameObject:
   m_ObjectHideFlags: 0

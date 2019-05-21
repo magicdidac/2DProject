@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New ChunkStore", menuName = "Chunks/ChunkStore")]
-
 public class ChunkStore : ScriptableObject
 {
 

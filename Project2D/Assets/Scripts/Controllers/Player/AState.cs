@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class AState
 {
-    public abstract void Update(AMoveController pc);
-    public abstract void FixedUpdate(AMoveController pc);
-    public abstract void CheckTransition(AMoveController pc);
+    public abstract void Update();
+    public abstract void FixedUpdate();
+    public abstract void CheckTransition();
 }

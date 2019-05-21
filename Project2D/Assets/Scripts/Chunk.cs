@@ -6,8 +6,8 @@ using UnityEditor;
 [CreateAssetMenu(fileName = "New Chunk", menuName = "Chunks/Chunk")]
 public class Chunk : ScriptableObject
 {
-    public float lenght;
+    [SerializeField] public float lenght;
 
-    public GameObject prefab;
+    [SerializeField] public GameObject prefab;
     
 }

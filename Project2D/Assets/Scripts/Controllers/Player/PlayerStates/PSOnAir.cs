@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class PSOnAir : AState
 {
-    public PSOnAir(AMoveController pc)
+    [HideInInspector] private PlayerController pc;
+
+    public PSOnAir(PlayerController _pc)
     {
+        pc = _pc;
         pc.rb.gravityScale = 2.7f;
     }
 
-    public override void CheckTransition(AMoveController pc)
+    public override void CheckTransition()
     {
         if (Input.GetKey(KeyCode.S) && pc.rb.velocity.y <= 0)
-        {
             pc.ChangeState(new PSSliding(pc));
-        }
 
         if (pc.isGrounded)
         {
@@ -25,23 +26,25 @@ public class PSOnAir : AState
             pc.ChangeState(new PSGrounded(pc));
         }
 
-        if (pc.isTrampoline) pc.ChangeState(new PSTrampoline());
+        if (pc.isTrampoline)
+            pc.ChangeState(new PSTrampoline(pc));
 
         if (pc.isRope)
             pc.ChangeState(new PSRope(pc));
 
-        if (pc.isTirolina) pc.ChangeState(new PSZipLine(pc));
+        if (pc.isTirolina)
+            pc.ChangeState(new PSZipLine(pc));
     }
 
-    public override void FixedUpdate(AMoveController pc)
+    public override void FixedUpdate()
     {
-        if(pc.rb.velocity.x < pc.model.speed)
+        if (pc.rb.velocity.x < pc.model.speed)
             pc.rb.velocity = new Vector2(pc.model.speed, pc.rb.velocity.y);
         else
             pc.rb.velocity = new Vector2(pc.rb.velocity.x, pc.rb.velocity.y);
     }
 
-    public override void Update(AMoveController pc)
+    public override void Update()
     {
         return;
     }

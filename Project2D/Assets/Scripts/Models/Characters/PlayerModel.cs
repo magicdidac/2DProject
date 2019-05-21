@@ -17,5 +17,5 @@ public class PlayerModel : CharacterModel
     public float groundRangeY;
     public float stunTime;
     public float exitRopeForce;
-    public float maxCombustible;
+    public float maxFuel;
 }

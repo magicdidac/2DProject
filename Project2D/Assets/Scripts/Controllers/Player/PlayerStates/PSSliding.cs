@@ -7,11 +7,11 @@ public class PSSliding : AState
     float time;
     bool goingDown;
 
-    private AMoveController moveController;
+    private PlayerController pc;
 
-    public PSSliding(AMoveController pc)
+    public PSSliding(PlayerController _pc)
     {
-        moveController = pc;
+        pc = _pc;
         if (!pc.isGrounded)
         {
             pc.rb.gravityScale = 7;
@@ -26,8 +26,9 @@ public class PSSliding : AState
         
     }
 
-    public override void CheckTransition(AMoveController pc)
+    public override void CheckTransition()
     {
+
         if (Input.GetKeyUp(KeyCode.S))
             ChangeToState(new PSGrounded(pc));
 
@@ -35,9 +36,9 @@ public class PSSliding : AState
             ChangeToState(new PSRope(pc));
 
         if (pc.isTrampoline)
-            ChangeToState(new PSTrampoline());
+            ChangeToState(new PSTrampoline(pc));
 
-        if (pc.combustible <= 0 && pc.isGrounded)
+        if (!pc.HaveFuel() && pc.isGrounded)
             ChangeToState(new PSGrounded(pc));
 
         if (!pc.isGrounded && !goingDown)
@@ -46,24 +47,24 @@ public class PSSliding : AState
 
     private void ChangeToState(AState state)
     {
-        moveController.anim.SetTrigger("T-SlideUp");
-        moveController.anim.SetBool("B-Slide", false);
-        moveController.ChangeState(state);
+        pc.anim.SetTrigger("T-SlideUp");
+        pc.anim.SetBool("B-Slide", false);
+        pc.ChangeState(state);
     }
 
-    public override void FixedUpdate(AMoveController pc)
+    public override void FixedUpdate()
     {
         pc.rb.velocity = new Vector2(pc.model.slideSpeed, pc.rb.velocity.y);
     }
 
-    public override void Update(AMoveController pc)
+    public override void Update()
     {
         if (pc.isGrounded) goingDown = false;
-        Jump(pc);
-        pc.gc.ConsumeCombustible();
+        Jump();
+        pc.ConsumeFuel();
     }
 
-    private void Jump(AMoveController pc)
+    private void Jump()
     {
         if (pc.isGrounded && Input.GetButtonDown("Jump"))
         {

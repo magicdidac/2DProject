@@ -29,28 +29,16 @@ public class Granade : MonoBehaviour
         spr = transform.GetChild(0).gameObject;
         ps = transform.GetChild(1).GetComponent<ParticleSystem>();
 
-        xPos = (gc.getFloor() == 0) ? gc.player.transform.position.x+8 : gc.player.transform.position.x+10;
+        xPos = (gc.GetFloor() == 0) ? gc.player.transform.position.x+8 : gc.player.transform.position.x+10;
         
     }
 
     private void Update()
     {
-        /*if (!isFalling)
-        {
-            if((gc.getFloor() > -1 && transform.position.y > (gc.getFloor() * 8)+1.5f) || (gc.getFloor() == -1 && transform.position.y < (gc.getFloor() * 8) + 1.5f))
-            {
-                isFalling = true;
-                box.enabled = true;
-                rb.velocity = (gc.getFloor() == -1) ? new Vector2(4, -7) : new Vector2(4, 7);
-                return;
-            }
-            rb.velocity = (gc.getFloor() == -1) ? new Vector2(7.5f, -15) : new Vector2(7.5f, 15);
-            return;
-        }*/
 
         if (!isFalling)
         {
-            switch (gc.getFloor())
+            switch (gc.GetFloor())
             {
                 case 1:
                     if(transform.position.y >= 9.5f)

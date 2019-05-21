@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class PSStun : AState
 {
+
+    [HideInInspector] private PlayerController pc;
     float duration = 0f;
 
-    public PSStun(AMoveController pc)
+    public PSStun(PlayerController _pc)
     {
+        pc = _pc;
         pc.rb.gravityScale = 2.7f;
         pc.anim.SetTrigger("T-Impact");
         pc.anim.SetBool("B-Slide", false);
     }
 
-    public override void CheckTransition(AMoveController pc)
+    public override void CheckTransition()
     {
         if (duration >= pc.model.stunTime)
         {
@@ -22,12 +25,12 @@ public class PSStun : AState
         } 
     }
 
-    public override void FixedUpdate(AMoveController pc)
+    public override void FixedUpdate()
     {
         pc.rb.velocity = new Vector2(pc.model.stunSpeed, pc.rb.velocity.y);
     }
 
-    public override void Update(AMoveController pc)
+    public override void Update()
     {
         duration += Time.deltaTime;
     }

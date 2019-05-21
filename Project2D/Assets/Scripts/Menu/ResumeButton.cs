@@ -18,7 +18,7 @@ public class ResumeButton : MonoBehaviour
 
     public void Resume()
     {
-        GameController.instance.pauseActive = false;
+        //GameController.instance.pauseActive = false;
         GameObject.FindWithTag("Pause").SetActive(false);
         //GameManager._gameManager.isPaused = active;
         Time.timeScale = 1;

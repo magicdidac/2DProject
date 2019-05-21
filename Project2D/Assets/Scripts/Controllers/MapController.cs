@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class MapController : MonoBehaviour
 {
-    private GameController gc;
 
-    private Chunk _lastChunk;
-    private int _oldChunk = -1;
-    private int _currentChunk = -1;
-    private int _nextChunk = -1;
-    private float _lastPos = 0;
-    private float offset = 0;
-    private float transitionProbability = .0f;
-    private Queue<GameObject> chunksQueue = new Queue<GameObject>();
-    private Queue<GameObject> backgroundQueue = new Queue<GameObject>();
+    //GameController instance
+   [HideInInspector] private GameController gc;
 
-    [SerializeField] private GameObject background;
-    private float xOffset = 0;
+    [HideInInspector] private Chunk _lastChunk;
+    [HideInInspector] private int _oldChunk = -1;
+    [HideInInspector] private int _currentChunk = -1;
+    [HideInInspector] private int _nextChunk = -1;
+    [HideInInspector] private float _lastPos = 0;
+    [HideInInspector] private float offset = 0;
+    [HideInInspector] private float transitionProbability = .0f;
+    [HideInInspector] private Queue<GameObject> chunksQueue = new Queue<GameObject>();
+    [HideInInspector] private Queue<GameObject> backgroundQueue = new Queue<GameObject>();
+
+    [SerializeField] private GameObject background = null;
+    [HideInInspector] private float xOffset = 0;
 
     [SerializeField] private float _perIncrease = .05f;
 
@@ -26,6 +28,8 @@ public class MapController : MonoBehaviour
     private void Start()
     {
         gc = GameController.instance;
+        gc.mapController = this;
+
         offset = Mathf.Abs(gc.player.transform.position.x) / 2;
         NewBackground();
     }
@@ -45,7 +49,7 @@ public class MapController : MonoBehaviour
 
         if (Random.value < transitionProbability)
         {
-            switch (gc.getFloor())
+            switch (gc.GetFloor())
             {
                 case 1: //Top Transitions
                     _nextChunk = Random.Range(0, _chunkStore.topTChunks.Length);
@@ -86,7 +90,7 @@ public class MapController : MonoBehaviour
         _lastPos += p_chunk.lenght / 2;
         _lastChunk = p_chunk;
 
-        GameObject chunkCreated = Instantiate(p_chunk.prefab, new Vector3(_lastPos, 8*gc.getFloor()), Quaternion.identity, transform);
+        GameObject chunkCreated = Instantiate(p_chunk.prefab, new Vector3(_lastPos, 8*gc.GetFloor()), Quaternion.identity, transform);
         chunksQueue.Enqueue(chunkCreated);
         if (chunksQueue.Count >= 3)
         {

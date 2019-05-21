@@ -4,30 +4,32 @@ using UnityEngine;
 
 public class ESOtherFloor : AState
 {
-    public ESOtherFloor(AMoveController pc)
+    [HideInInspector] private EnemyController ec;
+
+    public ESOtherFloor(EnemyController _ec)
     {
-        pc.rb.bodyType = RigidbodyType2D.Kinematic;
+        ec = _ec;
+        ec.rb.bodyType = RigidbodyType2D.Kinematic;
     }
 
-    public override void CheckTransition(AMoveController pc)
+    public override void CheckTransition()
     {
-        EnemyController ec = (EnemyController)pc;
-        if(pc.gc.getFloor() == 0 && ec.DetectGroundToLand())
+        if(ec.gc.GetFloor() == 0 && ec.DetectGroundToLand())
         {
-            pc.rb.bodyType = RigidbodyType2D.Dynamic;
+            ec.rb.bodyType = RigidbodyType2D.Dynamic;
             ec.shield.gameObject.SetActive(false);
-            pc.ChangeState(new ESOnAir(pc));
+            ec.ChangeState(new ESOnAir(ec));
         }
     }
 
-    public override void FixedUpdate(AMoveController pc)
+    public override void FixedUpdate()
     {
         
     }
 
-    public override void Update(AMoveController pc)
+    public override void Update()
     {
-        pc.rb.velocity = new Vector2(pc.rb.velocity.x, 0);
-        pc.transform.position = Vector3.Lerp(pc.transform.position, new Vector3(pc.transform.position.x, 1), .1f);
+        ec.rb.velocity = new Vector2(ec.rb.velocity.x, 0);
+        ec.transform.position = Vector3.Lerp(ec.transform.position, new Vector3(ec.transform.position.x, 1), .1f);
     }
 }

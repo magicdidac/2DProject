@@ -43,20 +43,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a7fb62144ff3f949aa5e51b09efe0c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateInfoPosition: {x: -6.4, y: 2.3, z: 0}
-  fontSize: 20
-  HUD: {fileID: 0}
-  pauseMenu: {fileID: 0}
-  optionsMenu: {fileID: 0}
   mapController: {fileID: 0}
+  audioController: {fileID: 0}
+  scoreController: {fileID: 0}
+  uiController: {fileID: 0}
   player: {fileID: 0}
   enemy: {fileID: 0}
   minEnemyDistance: 0.75
   maxEnemydistance: 10.5
-  pauseActive: 0
-  fpsShowed: 0
   activeScene:
     m_Handle: 0
-  scoreManager: {fileID: 0}
-  endGame: {fileID: 0}
   highScore: 0
+  stateInfoPosition: {x: -6.4, y: 0, z: 0}
+  fontSize: 20

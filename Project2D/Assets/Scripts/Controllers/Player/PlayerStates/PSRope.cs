@@ -5,13 +5,16 @@ using UnityEngine;
 public class PSRope : AState
 {
 
-    public PSRope(AMoveController pc)
+    [HideInInspector] private PlayerController pc;
+
+    public PSRope(PlayerController _pc)
     {
+        pc = _pc;
         pc.anim.SetTrigger("T-Rope");
         pc.anim.SetBool("B-Rope", true);
     }
 
-    public override void CheckTransition(AMoveController pc)
+    public override void CheckTransition()
     {
         if (pc.transform.parent == null)
         {
@@ -24,11 +27,11 @@ public class PSRope : AState
             
     }
 
-    public override void FixedUpdate(AMoveController pc)
+    public override void FixedUpdate()
     {
         pc.transform.position = Vector3.Lerp(pc.transform.position, new Vector3(pc.transform.parent.position.x-.3f, pc.transform.position.y, 0), .5f);
         pc.rb.velocity = new Vector2(0, pc.rb.velocity.y);
     }
 
-    public override void Update(AMoveController pc) { }
+    public override void Update() { }
 }

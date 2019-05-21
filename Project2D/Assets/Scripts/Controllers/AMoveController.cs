@@ -6,19 +6,21 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public abstract class AMoveController : MonoBehaviour
 {
-
+    //GameController reference
     [HideInInspector] public GameController gc;
 
     //Components
+    [Header("Components")]
     [SerializeField] public Rigidbody2D rb;
     [SerializeField] public SpriteRenderer spr;
-    [HideInInspector] public Animator anim;
-    [HideInInspector] public float combustible;
+    [SerializeField] public Animator anim;
+    
 
     //State
     [HideInInspector] public AState currentState;
 
     //Model
+    [Header("Model")]
     [SerializeField] public PlayerModel model;
 
     //Control
@@ -34,16 +36,17 @@ public abstract class AMoveController : MonoBehaviour
     //Others
     [HideInInspector] public ZipLine zipLine = null;
 
-    private void Start()
+    private void Awake()
     {
         gc = GameController.instance;
-        anim = GetComponent<Animator>();
         model = Instantiate(model);
-        combustible = model.maxCombustible;
     }
 
     public void ChangeState(AState ps) { currentState = ps; }
 
+    //p_lm: la layer que quieres detectar como suelo
+    //p_offset: el offset que deja por cada lado del sprite
+    //Función para detectar las colisiones con el suelo siedo este con la layer que se pase por  parametro
     public bool detectCollision(LayerMask p_lm, float p_offset)
     {
         List<RaycastHit2D> hits = new List<RaycastHit2D>();
