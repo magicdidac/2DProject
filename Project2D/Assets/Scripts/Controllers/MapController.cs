@@ -39,12 +39,12 @@ public class MapController : MonoBehaviour
         if (gc.player.transform.position.x >= xOffset-19.2f)
             NewBackground();
 
-        if (gc.player.transform.position.x > _lastPos - offset)
-            changeChunk();
+        //Si el Jugador ha sobrepasado la distancia maxima con respecto al ultimo chunk
+            //NextChunk();
         
     }
 
-    private void changeChunk()
+    /*private void changeChunk()
     {
 
         if (Random.value < transitionProbability)
@@ -98,7 +98,7 @@ public class MapController : MonoBehaviour
         }
 
         _currentChunk = _nextChunk;
-    }
+    }*/
 
 
     private void NewBackground()
@@ -107,6 +107,65 @@ public class MapController : MonoBehaviour
         backgroundQueue.Enqueue(Instantiate(background,new Vector3(xOffset,0),Quaternion.identity));
         if (backgroundQueue.Count > 3)
             GameObject.Destroy(backgroundQueue.Dequeue());
+    }
+
+
+
+
+    private void NextChunk()
+    {
+        //Si el challenge counter es menor a 3
+            //Si Random.value es menor que la probabilidad de transicion
+                //GetTransitionChunk();
+                //probabilidad = 0
+            //Si no
+                //GetChallengeChunk();
+                //Se incrementará el counter challenge en 1
+
+        //Si no
+            //GetRewardChunk()
+            //Subir el nivel del Jugador +10
+            //si la velocidad no es mayor a la velocidad inicial de la run *1.75
+                //sumar a la velocidad actual .1
+            //el counter de chunks settearlo a 0
+        
+        //Eliminar ultimo chunk
+        //Transform chunkTransform = SpawnChunk(c);
+        //Setear la distancia de spawneo a = chunkObject.position.x+(c.lenght/2);
+    }
+
+    private Chunk GetChallengeChunk()
+    {
+        //Depende del nivel del Jugador se elegirá un chunk que no haya salido previamente
+        //Si no queda ningun chunk que no haya salido
+            //El store con los chunks anteriormente spawneados se limpiará
+            //return GetChallengeChunk();
+        
+
+        //añadir chunk a la lista de elegidos
+        //return chunk elegido
+        return null;
+    }
+
+    private Chunk GetTransitionChunk()
+    {
+        //Depende del piso donde se encuentre el jugador elegir chunk de transicion
+
+        return null;
+    }
+
+    private Chunk GetRewardChunk()
+    {
+        //Elegir un chunk de Reward
+
+        return null;
+    }
+
+    private GameObject SpawnChunk(Chunk c)
+    {
+        //Spawnear el Chunk en la posición correcta
+        //return gameObject chunk
+        return null;
     }
 
 }
