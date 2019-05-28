@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: PlayerModel
   m_EditorClassIdentifier: 
   health: 0
-  speed: 7.5
+  speed: 0
   jumpForce: 14
   precisionDown: 6
   offset: 1.25
   trampolineOffset: 1.8
   slideSpeed: 8.5
-  normalSpeed: 7.5
+  normalSpeed: 0
   plusJumpSpeedX: 8.5
   stunSpeed: 5
   groundRangeX: 0
