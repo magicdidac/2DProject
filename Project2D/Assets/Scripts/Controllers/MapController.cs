@@ -21,6 +21,7 @@ public class MapController : MonoBehaviour
     [HideInInspector] private float transitionChunkProbability = 0;
     [HideInInspector] private float xOffset = 0;
     [HideInInspector] private float nextSpawnPosition = 0;
+    [HideInInspector] private float lastChunkLenght = 0;
     [HideInInspector] private List<Chunk> chunksSpawned = null;
     [HideInInspector] private Queue<GameObject> chunksQueue = null;
     [HideInInspector] private Queue<GameObject> backgroundQueue = null;
@@ -40,6 +41,9 @@ public class MapController : MonoBehaviour
 
     private void Update()
     {
+        if (gc.player.isDead)
+            return;
+
         if (gc.player.transform.position.x >= xOffset-19.2f)
             NewBackground();
         
@@ -91,8 +95,11 @@ public class MapController : MonoBehaviour
             challengeCounter = 0;
         }
 
-        GameObject.Destroy(chunksQueue.Dequeue());
+        if(chunksQueue.Count != 0)
+            Destroy(chunksQueue.Dequeue());
+
         GameObject chunkObject = SpawnChunk(newChunk);
+        lastChunkLenght = newChunk.lenght;
         nextSpawnPosition = chunkObject.transform.position.x - (newChunk.lenght / 2);
     }
 
@@ -112,44 +119,32 @@ public class MapController : MonoBehaviour
 
     private Chunk GetEasyChunk()
     {
-        List<Chunk> allChunks = new List<Chunk>(store.easy);
-        Chunk chunk;
-        do
-        {
-            chunk = allChunks[Random.Range(0, allChunks.Count)];
-
-            if (chunksSpawned.Contains(chunk))
-                allChunks.Remove(chunk);
-
-        } while (chunksSpawned.Contains(chunk));
-
-        chunksSpawned.Add(chunk);
-        return chunk;
+        return GetChunkByArray(store.easy);
     }
 
     private Chunk GetNormalChunk()
     {
-        List<Chunk> allChunks = new List<Chunk>(store.normal);
-        Chunk chunk;
-        do
-        {
-            chunk = allChunks[Random.Range(0, allChunks.Count)];
-
-            if (chunksSpawned.Contains(chunk))
-                allChunks.Remove(chunk);
-
-        } while (chunksSpawned.Contains(chunk));
-
-        chunksSpawned.Add(chunk);
-        return chunk;
+        return GetChunkByArray(store.normal);
     }
 
     private Chunk GetHardChunk()
     {
-        List<Chunk> allChunks = new List<Chunk>(store.hard);
+        return GetChunkByArray(store.hard);
+    }
+
+    private Chunk GetChunkByArray(Chunk[] array)
+    {
+        List<Chunk> allChunks = new List<Chunk>(array);
         Chunk chunk;
         do
         {
+
+            if (allChunks.Count == 0)
+            {
+                chunksSpawned.Clear();
+                allChunks = new List<Chunk>(array);
+            }
+
             chunk = allChunks[Random.Range(0, allChunks.Count)];
 
             if (chunksSpawned.Contains(chunk))
@@ -177,9 +172,7 @@ public class MapController : MonoBehaviour
 
     private GameObject SpawnChunk(Chunk c)
     {
-        //Spawnear el Chunk en la posición correcta
-        //return gameObject chunk
-        return null;
+        return Instantiate(c.prefab, new Vector3(lastChunkLenght+nextSpawnPosition + (c.lenght / 2), gc.GetFloor() * 8, 0), Quaternion.identity);
     }
 
 }

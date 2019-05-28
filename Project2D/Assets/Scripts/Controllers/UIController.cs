@@ -14,6 +14,7 @@ public class UIController : MonoBehaviour
     [SerializeField] public GameObject pauseMenu;
     [SerializeField] public GameObject optionsMenu;
     [SerializeField] public EndGame endGameMenu;
+    [SerializeField] public GameObject debugMenu;
 
     //Score Objects
     [Header("Score Objects")]
@@ -66,6 +67,9 @@ public class UIController : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F3))
+            debugMenu.SetActive(!debugMenu.activeSelf);
+
         UpdateFPS();
         if (gc.GetFloor() != 0)
             enemyIndicator.gameObject.SetActive(true);
