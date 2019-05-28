@@ -1121,8 +1121,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   background: {fileID: 8713774238281902902, guid: c2f539d0681ef5e4da2e5b9ea77053b2,
     type: 3}
-  _perIncrease: 0.1
-  _chunkStore: {fileID: 11400000, guid: 106a2cdca2f887742a2ed1ef9ad9909a, type: 2}
+  _perIncrease: 0
+  _chunkStore: {fileID: 11400000, guid: e1389ae6b77541b4e80be111d79d405f, type: 2}
 --- !u!4 &150279554
 Transform:
   m_ObjectHideFlags: 0
