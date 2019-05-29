@@ -15,8 +15,8 @@ public class EnemyIndicator : MonoBehaviour
     [HideInInspector] public Animator anim;
 
     [Header("Sprites")]
-    [SerializeField] private Sprite spriteTop;
-    [SerializeField] private Sprite spriteBottom;
+    [SerializeField] private Sprite spriteTop = null;
+    [SerializeField] private Sprite spriteBottom = null;
 
     private void Start()
     {

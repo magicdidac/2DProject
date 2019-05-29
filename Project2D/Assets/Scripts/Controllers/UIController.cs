@@ -18,10 +18,10 @@ public class UIController : MonoBehaviour
 
     //Score Objects
     [Header("Score Objects")]
-    [SerializeField] private TextMeshProUGUI scoreText = null;
-    [SerializeField] private TextMeshProUGUI coinsText = null;
-    [SerializeField] private TextMeshProUGUI highScoreText = null;
-    [SerializeField] private Image coinsIcon = null;
+    [SerializeField] private Text scoreText = null;
+    [SerializeField] private Text coinsText = null;
+    [SerializeField] private Text highScoreText = null;
+    [SerializeField] private GameObject scorePanel = null;
 
     //Object references
     [Header("Objects References")]
@@ -57,13 +57,11 @@ public class UIController : MonoBehaviour
 
     public void StopGame()
     {
-        scoreText.gameObject.SetActive(false);
-        coinsText.gameObject.SetActive(false);
-        highScoreText.gameObject.SetActive(false);
-        fuelPanel.gameObject.SetActive(false);
+        
+        scorePanel.SetActive(false);
+        fuelPanel.SetActive(false);
         fpsText.gameObject.SetActive(false);
         enemyIndicator.gameObject.SetActive(false);
-        coinsIcon.gameObject.SetActive(false);
     }
 
     private void Update()
