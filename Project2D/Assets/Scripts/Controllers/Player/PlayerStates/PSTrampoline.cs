@@ -23,7 +23,7 @@ public class PSTrampoline : AState
 
     public override void FixedUpdate()
     {
-        pc.rb.velocity = new Vector2(pc.model.speed, pc.model.jumpForce);
+        pc.rb.velocity = new Vector2(pc.gc.CalculateVelocity(pc.model.speed), pc.model.jumpForce);
     }
 
     public override void Update() { }

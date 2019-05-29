@@ -6,98 +6,51 @@ public class MapController : MonoBehaviour
 {
 
     //GameController instance
-   [HideInInspector] private GameController gc;
+    [HideInInspector] private GameController gc;
+    
 
-    [HideInInspector] private Chunk _lastChunk;
-    [HideInInspector] private int _oldChunk = -1;
-    [HideInInspector] private int _currentChunk = -1;
-    [HideInInspector] private int _nextChunk = -1;
-    [HideInInspector] private float _lastPos = 0;
-    [HideInInspector] private float offset = 0;
-    [HideInInspector] private float transitionProbability = .0f;
-    [HideInInspector] private Queue<GameObject> chunksQueue = new Queue<GameObject>();
-    [HideInInspector] private Queue<GameObject> backgroundQueue = new Queue<GameObject>();
 
+    //New Variables
+
+    [SerializeField] private ChunkStore store = null;
+    [Range(0,.9f)]
+    [SerializeField] private float increaseAmmountProbability = .1f;
     [SerializeField] private GameObject background = null;
+
+    [HideInInspector] private int challengeCounter = 3;
+    [HideInInspector] public int chunksCounter = 0;
+    [HideInInspector] private float transitionChunkProbability = 0;
     [HideInInspector] private float xOffset = 0;
-
-    [SerializeField] private float _perIncrease = .05f;
-
-    [SerializeField] private ChunkStore _chunkStore = null;
+    [HideInInspector] private float nextSpawnPosition = 0;
+    [HideInInspector] private float lastChunkLenght = 0;
+    [HideInInspector] private List<Chunk> chunksSpawned = null;
+    [HideInInspector] private Queue<GameObject> chunksQueue = null;
+    [HideInInspector] private Queue<GameObject> backgroundQueue = null;
 
     private void Start()
     {
         gc = GameController.instance;
         gc.mapController = this;
 
-        offset = Mathf.Abs(gc.player.transform.position.x) / 2;
+        chunksSpawned = new List<Chunk>();
+        chunksQueue = new Queue<GameObject>();
+        backgroundQueue = new Queue<GameObject>();
+
+        NextChunk();
         NewBackground();
     }
 
     private void Update()
     {
+        if (gc.player.isDead)
+            return;
+
         if (gc.player.transform.position.x >= xOffset-19.2f)
             NewBackground();
-
-        if (gc.player.transform.position.x > _lastPos - offset)
-            changeChunk();
         
-    }
-
-    private void changeChunk()
-    {
-
-        if (Random.value < transitionProbability)
-        {
-            switch (gc.GetFloor())
-            {
-                case 1: //Top Transitions
-                    _nextChunk = Random.Range(0, _chunkStore.topTChunks.Length);
-                    instantiateChunk(_chunkStore.topTChunks[_nextChunk]);
-                    break;
-                case 0: //Mid Transitions
-                    _nextChunk = Random.Range(0, _chunkStore.midTChunks.Length);
-                    instantiateChunk(_chunkStore.midTChunks[_nextChunk]);
-                    break;
-                case -1: //Bot Transitions
-                    _nextChunk = Random.Range(0, _chunkStore.botTChunks.Length);
-                    instantiateChunk(_chunkStore.botTChunks[_nextChunk]);
-                    break;
-            }
-            transitionProbability = .0f;
-            _nextChunk = -1;
-            return;
-        }
-
-        do
-        {
-            _nextChunk = Random.Range(0, _chunkStore.continueChunks.Length);
-        } while (_nextChunk == _currentChunk || _nextChunk == _oldChunk);
+        if (gc.player.transform.position.x > nextSpawnPosition)
+            NextChunk();
         
-        instantiateChunk(_chunkStore.continueChunks[_nextChunk]);
-
-        transitionProbability += _perIncrease;
-    }
-    
-    private void instantiateChunk(Chunk p_chunk)
-    {
-        _oldChunk = _currentChunk;
-        if (_currentChunk != -1)
-            _lastPos += _lastChunk.lenght / 2;
-        else
-            _lastPos += 9;
-
-        _lastPos += p_chunk.lenght / 2;
-        _lastChunk = p_chunk;
-
-        GameObject chunkCreated = Instantiate(p_chunk.prefab, new Vector3(_lastPos, 8*gc.GetFloor()), Quaternion.identity, transform);
-        chunksQueue.Enqueue(chunkCreated);
-        if (chunksQueue.Count >= 3)
-        {
-            GameObject.Destroy(chunksQueue.Dequeue());
-        }
-
-        _currentChunk = _nextChunk;
     }
 
 
@@ -107,6 +60,131 @@ public class MapController : MonoBehaviour
         backgroundQueue.Enqueue(Instantiate(background,new Vector3(xOffset,0),Quaternion.identity));
         if (backgroundQueue.Count > 3)
             GameObject.Destroy(backgroundQueue.Dequeue());
+    }
+
+
+
+
+    private void NextChunk()
+    {
+        Chunk newChunk = null;
+
+
+        if (challengeCounter > 0)
+        {
+            if (Random.value < transitionChunkProbability)
+            {
+                newChunk = GetTransitionChunk();
+                transitionChunkProbability = 0;
+            }
+            else
+            {
+                newChunk = GetChallengeChunk();
+                challengeCounter--;
+                transitionChunkProbability += increaseAmmountProbability;
+                chunksCounter++;
+                gc.IncreasePlayerSkill();
+            }
+        }
+        else
+        {
+            newChunk = GetRewardChunk();
+
+            gc.IncreaseVelocityMultiplier();
+
+            challengeCounter = Random.Range(3,6);
+        }
+
+        if(chunksQueue.Count > 1)
+            Destroy(chunksQueue.Dequeue());
+
+        GameObject chunkObject = SpawnChunk(newChunk);
+        lastChunkLenght = newChunk.lenght;
+        nextSpawnPosition = chunkObject.transform.position.x;
+        chunksQueue.Enqueue(chunkObject);
+    }
+
+    private Chunk GetChallengeChunk()
+    {
+        Chunk resultChunk = null;
+
+        if (PlayerPrefs.GetInt("PlayerSkill", 30) <= 40)
+            resultChunk = GetEasyChunk();
+        else if (PlayerPrefs.GetInt("PlayerSkill", 30) <= 80)
+            resultChunk = GetNormalChunk();
+        else
+            resultChunk = GetHardChunk();
+
+        return resultChunk;
+    }
+
+    private Chunk GetEasyChunk()
+    {
+        return GetChunkByArrayWithoutRepeating(store.easy);
+    }
+
+    private Chunk GetNormalChunk()
+    {
+        return GetChunkByArrayWithoutRepeating(store.normal);
+    }
+
+    private Chunk GetHardChunk()
+    {
+        return GetChunkByArrayWithoutRepeating(store.hard);
+    }
+
+    private Chunk GetChunkByArrayWithoutRepeating(Chunk[] array)
+    {
+        List<Chunk> allChunks = new List<Chunk>(array);
+        Chunk chunk;
+        do
+        {
+
+            if (allChunks.Count == 0)
+            {
+                chunksSpawned.Clear();
+                allChunks = new List<Chunk>(array);
+            }
+
+            chunk = allChunks[Random.Range(0, allChunks.Count)];
+
+            if (chunksSpawned.Contains(chunk))
+                allChunks.Remove(chunk);
+
+        } while (chunksSpawned.Contains(chunk));
+
+        chunksSpawned.Add(chunk);
+        return chunk;
+    }
+
+    private Chunk GetChunkByArray(Chunk[] array)
+    {
+        return array[Random.Range(0, array.Length)];
+    }
+
+    private Chunk GetTransitionChunk()
+    {
+        switch (gc.GetFloor())
+        {
+            case 1:
+                return GetChunkByArray(store.top);
+            case 0:
+                return GetChunkByArray(store.middle);
+            case -1:
+                return GetChunkByArray(store.bottom);
+        }
+
+        throw new System.Exception("Floor isn't valid");
+    }
+
+    private Chunk GetRewardChunk()
+    {
+        return GetChunkByArray(store.reward);
+    }
+
+    private GameObject SpawnChunk(Chunk c)
+    {
+        return Instantiate(c.prefab, new Vector3(nextSpawnPosition + (lastChunkLenght/2) + (c.lenght / 2), gc.GetFloor() * 8, 0), Quaternion.identity);
     }
 
 }
