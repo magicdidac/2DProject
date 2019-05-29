@@ -18,16 +18,17 @@ public class UIController : MonoBehaviour
 
     //Score Objects
     [Header("Score Objects")]
-    [SerializeField] private TextMeshProUGUI scoreText = null;
-    [SerializeField] private TextMeshProUGUI coinsText = null;
-    [SerializeField] private TextMeshProUGUI highScoreText = null;
-    [SerializeField] private Image coinsIcon = null;
+    [SerializeField] private Text scoreText = null;
+    [SerializeField] private Text coinsText = null;
+    [SerializeField] private Text highScoreText = null;
+    [SerializeField] private GameObject scorePanel = null;
 
     //Object references
     [Header("Objects References")]
     [SerializeField] public EnemyIndicator enemyIndicator;
     [SerializeField] private Text fpsText = null;
-    [SerializeField] private Image fuelBar = null;
+    [SerializeField] private GameObject fuelPanel = null;
+    [SerializeField] private Image fuelArrow = null;
 
     //Controll Vars
     [HideInInspector] public bool pauseIsActive = false;
@@ -56,13 +57,11 @@ public class UIController : MonoBehaviour
 
     public void StopGame()
     {
-        scoreText.gameObject.SetActive(false);
-        coinsText.gameObject.SetActive(false);
-        highScoreText.gameObject.SetActive(false);
-        fuelBar.gameObject.SetActive(false);
+        
+        scorePanel.SetActive(false);
+        fuelPanel.SetActive(false);
         fpsText.gameObject.SetActive(false);
         enemyIndicator.gameObject.SetActive(false);
-        coinsIcon.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -89,7 +88,11 @@ public class UIController : MonoBehaviour
 
     public void UpdateFuelBar()
     {
-        fuelBar.fillAmount = gc.player.fuel / gc.player.model.maxFuel;
+        //fuelBar.fillAmount = gc.player.fuel / gc.player.model.maxFuel;
+        
+        float rotationZ = (gc.player.fuel / gc.player.model.maxFuel * 120) -60;
+
+        fuelArrow.rectTransform.rotation = Quaternion.Euler(0,0,-rotationZ);
     }
 
     public void UpdateScore()
