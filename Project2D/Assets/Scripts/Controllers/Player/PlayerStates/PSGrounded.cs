@@ -8,7 +8,6 @@ public class PSGrounded : AState
 
     public PSGrounded(PlayerController _pc)
     {
-        AudioController._audioManager.PlaySound("dropping");
         pc = _pc;
 
         if(pc.rb != null)

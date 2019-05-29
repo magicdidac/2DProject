@@ -29,6 +29,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private Text fpsText = null;
     [SerializeField] private GameObject fuelPanel = null;
     [SerializeField] private Image fuelArrow = null;
+    [SerializeField] private GameObject startMessage = null;
 
     //Controll Vars
     [HideInInspector] public bool pauseIsActive = false;
@@ -40,6 +41,13 @@ public class UIController : MonoBehaviour
         gc = GameController.instance;
         gc.uiController = this;
         highScoreText.text = Format(gc.scoreController.highScore);
+    }
+
+    public void StartGame()
+    {
+        fuelPanel.SetActive(true);
+        scorePanel.SetActive(true);
+        startMessage.SetActive(false);
     }
 
     public void SwitchPause()

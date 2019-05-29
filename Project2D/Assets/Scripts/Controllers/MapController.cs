@@ -21,7 +21,7 @@ public class MapController : MonoBehaviour
     [HideInInspector] public int chunksCounter = 0;
     [HideInInspector] private float transitionChunkProbability = 0;
     [HideInInspector] private float xOffset = 0;
-    [HideInInspector] private float nextSpawnPosition = 0;
+    [HideInInspector] private float nextSpawnPosition = 9;
     [HideInInspector] private float lastChunkLenght = 0;
     [HideInInspector] private List<Chunk> chunksSpawned = null;
     [HideInInspector] private Queue<GameObject> chunksQueue = null;

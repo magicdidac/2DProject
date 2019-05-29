@@ -8,19 +8,21 @@ public class CameraController: MonoBehaviour
     [HideInInspector] private GameController gc;
     
 
-    [HideInInspector] private float _offset = 0;
+    [HideInInspector] private float _offset = 4;
 
     [HideInInspector] private int myFloor = 0;
 
     private void Start()
     {
         gc = GameController.instance;
-        _offset = Mathf.Abs(gc.player.transform.position.x);
     }
 
     void FixedUpdate()
     {
         if (gc.player.isDead)
+            return;
+
+        if (gc.player.transform.position.x < transform.position.x - _offset - .1f)
             return;
 
         if(gc.GetFloor() != myFloor && gc.player.isGrounded && !gc.player.isTrampoline)

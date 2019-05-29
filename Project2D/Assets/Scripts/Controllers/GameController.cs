@@ -23,13 +23,16 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [Header("Control Vars")]
     [HideInInspector] private int floor = 0;
     [HideInInspector] private float velocityMultiplier = .9f;
-    [SerializeField] public readonly float minEnemyDistance;
-    [SerializeField] public readonly float maxEnemydistance;
+    [SerializeField] public readonly float minEnemyDistance = 1;
+    [SerializeField] public readonly float maxEnemydistance = 9;
+    [HideInInspector] private bool isGameRunning = false;
     
 
     public void restartVariables()
     {
         floor = 0;
+        velocityMultiplier = .9f;
+        isGameRunning = false;
     }
 
     private void Awake()
@@ -48,8 +51,22 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         if (Time.timeScale == 0) Time.timeScale = 1;
     }
 
+    public void StartGame()
+    {
+        if (isGameRunning)
+            return;
+
+        isGameRunning = true;
+        uiController.StartGame();
+        player.gameObject.SetActive(true);
+        enemy.gameObject.SetActive(true);
+    }
+
     private void Update()
     {
+        if (!isGameRunning && Input.GetKeyDown(KeyCode.Space))
+            StartGame();
+
         if(SceneManager.GetActiveScene().buildIndex != 0)
         {
             if (getEnemyDistance() < minEnemyDistance && floor == 0 && !player.isDead)
