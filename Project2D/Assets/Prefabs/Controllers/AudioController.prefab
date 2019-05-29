@@ -43,6 +43,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7b314dcbcfbeaf4d8916541625f5a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  music: []
-  sounds: []
+  music:
+  - name: playGame
+    clip: {fileID: 8300000, guid: f0adc9c102c06184791518f433473179, type: 3}
+    loop: 1
+    playOnAwake: 1
+    volume: 0.388
+    source: {fileID: 0}
+  - name: softSound
+    clip: {fileID: 8300000, guid: f673051a32f71434da53755e1e1444f9, type: 3}
+    loop: 1
+    playOnAwake: 0
+    volume: 0.388
+    source: {fileID: 0}
+  sounds:
+  - name: playerMove
+    clip: {fileID: 8300000, guid: f50e018631b8eff45b36cd3357b6c0fc, type: 3}
+    loop: 1
+    playOnAwake: 1
+    volume: 0.131
+    source: {fileID: 0}
+  - name: rope
+    clip: {fileID: 8300000, guid: 3bd26baf1c671074987d25c2ad46da70, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 0.146
+    source: {fileID: 0}
+  - name: dropping
+    clip: {fileID: 8300000, guid: 49503bfe63fe99445ba92b2137e512cf, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 0.131
+    source: {fileID: 0}
+  - name: shot
+    clip: {fileID: 8300000, guid: 8719c100c67d4be429346888e57c9576, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 0.169
+    source: {fileID: 0}
+  - name: grenade
+    clip: {fileID: 8300000, guid: f6bf89870f39fce4eaaccbfb2b86e242, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 0.176
+    source: {fileID: 0}
+  - name: coin
+    clip: {fileID: 8300000, guid: 5ab7ec609ffd2b94d858973736c9ae7d, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 0.176
+    source: {fileID: 0}
   playingMusic: []

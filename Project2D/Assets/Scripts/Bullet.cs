@@ -18,6 +18,7 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
+        AudioController._audioManager.PlaySound("shot");
         gc = GameController.instance;
         rb.velocity = Vector2.left * speed;
         GameObject.Destroy(gameObject,2);

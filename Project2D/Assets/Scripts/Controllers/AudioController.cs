@@ -32,6 +32,7 @@ public class AudioController : MonoBehaviour
             m.source.clip = m.clip;
             m.source.volume = m.volume;
             m.source.loop = m.loop;
+            m.source.playOnAwake = m.playOnAwake;
         }
 
         foreach (Sound s in sounds)
@@ -40,6 +41,7 @@ public class AudioController : MonoBehaviour
             s.source.clip = s.clip;
             s.source.volume = s.volume;
             s.source.loop = s.loop;
+            s.source.playOnAwake = s.playOnAwake;
         }
 
     }
@@ -70,6 +72,15 @@ public class AudioController : MonoBehaviour
         {
             s.source.Play();
         }
+    }
+
+    public void PlayNestedSound(string name)
+    {
+        //quan es pot reproduir el mateix so multiples cops
+        //per exemple amb les coins
+        Sound s = sounds.Find(sound => sound.name == name);
+        if (s == null) return;
+        s.source.Play();
     }
 
     public void PlayNewMusic(string name)

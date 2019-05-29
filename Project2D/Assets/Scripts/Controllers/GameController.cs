@@ -38,7 +38,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-        
+
+        //AudioController._audioManager.PlayMusic("playGame"); no cal si ja es un PlayOnAwake
         DontDestroyOnLoad(gameObject);
     }
 
@@ -69,6 +70,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         if (player.isDead)
             return;
         uiController.ShowEndPanel(win);
+        AudioController._audioManager.StopAllMusic();
 
         player.Kill();
         if (win)
