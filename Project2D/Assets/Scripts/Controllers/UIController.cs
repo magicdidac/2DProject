@@ -27,7 +27,8 @@ public class UIController : MonoBehaviour
     [Header("Objects References")]
     [SerializeField] public EnemyIndicator enemyIndicator;
     [SerializeField] private Text fpsText = null;
-    [SerializeField] private Image fuelBar = null;
+    [SerializeField] private GameObject fuelPanel = null;
+    [SerializeField] private Image fuelArrow = null;
 
     //Controll Vars
     [HideInInspector] public bool pauseIsActive = false;
@@ -59,7 +60,7 @@ public class UIController : MonoBehaviour
         scoreText.gameObject.SetActive(false);
         coinsText.gameObject.SetActive(false);
         highScoreText.gameObject.SetActive(false);
-        fuelBar.gameObject.SetActive(false);
+        fuelPanel.gameObject.SetActive(false);
         fpsText.gameObject.SetActive(false);
         enemyIndicator.gameObject.SetActive(false);
         coinsIcon.gameObject.SetActive(false);
@@ -89,7 +90,11 @@ public class UIController : MonoBehaviour
 
     public void UpdateFuelBar()
     {
-        fuelBar.fillAmount = gc.player.fuel / gc.player.model.maxFuel;
+        //fuelBar.fillAmount = gc.player.fuel / gc.player.model.maxFuel;
+        
+        float rotationZ = (gc.player.fuel / gc.player.model.maxFuel * 120) -60;
+
+        fuelArrow.rectTransform.rotation = Quaternion.Euler(0,0,-rotationZ);
     }
 
     public void UpdateScore()
