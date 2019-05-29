@@ -39,9 +39,9 @@ public class PSOnAir : AState
     public override void FixedUpdate()
     {
         if (pc.rb.velocity.x < pc.model.speed)
-            pc.rb.velocity = new Vector2(pc.model.speed, pc.rb.velocity.y);
+            pc.rb.velocity = new Vector2(pc.gc.CalculateVelocity(pc.model.speed), pc.rb.velocity.y);
         else
-            pc.rb.velocity = new Vector2(pc.rb.velocity.x, pc.rb.velocity.y);
+            pc.rb.velocity = new Vector2(pc.gc.CalculateVelocity(pc.rb.velocity.x), pc.rb.velocity.y);
     }
 
     public override void Update()

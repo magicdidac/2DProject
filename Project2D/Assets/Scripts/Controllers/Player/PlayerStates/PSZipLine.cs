@@ -53,7 +53,7 @@ public class PSZipLine : AState
 
     public override void FixedUpdate()
     {
-        pc.rb.velocity = new Vector2(pc.model.normalSpeed, 0);
+        pc.rb.velocity = new Vector2(pc.gc.CalculateVelocity(pc.model.normalSpeed), 0);
         pc.transform.position = new Vector3(pc.transform.position.x, GetVerticalPosition());
     }
 

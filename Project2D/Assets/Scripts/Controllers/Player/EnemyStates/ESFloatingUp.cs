@@ -42,10 +42,10 @@ public class ESFloatingUp : AState
     public override void Update()
     {
         if (ec.transform.position.y < 1)
-            ec.rb.velocity = new Vector2(ec.rb.velocity.x, plusOffset);
+            ec.rb.velocity = new Vector2(ec.gc.CalculateVelocity(ec.rb.velocity.x), plusOffset);
         else
         {
-            ec.rb.velocity = new Vector2(ec.rb.velocity.x, 0);
+            ec.rb.velocity = new Vector2(ec.gc.CalculateVelocity(ec.rb.velocity.x), 0);
             ec.transform.position = new Vector3(ec.transform.position.x, 1);
         }
     }

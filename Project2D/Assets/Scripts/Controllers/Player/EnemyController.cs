@@ -31,7 +31,7 @@ public class EnemyController : AMoveController
         if (!isDead)
         {
             if (!gc.player.isRope && (gc.GetFloor() == 0 || (gc.GetFloor() != 0 && gc.getEnemyDistance() > gc.minEnemyDistance + 1)))
-                rb.velocity = new Vector2((gc.player.isSliding) ? model.slideSpeed : model.normalSpeed, rb.velocity.y);
+                rb.velocity = new Vector2((gc.player.isSliding) ? gc.CalculateVelocity(model.slideSpeed) : gc.CalculateVelocity(model.normalSpeed), rb.velocity.y);
             else if (gc.player.isRope)
                 rb.velocity = new Vector2(1, rb.velocity.y);
             else if (gc.getEnemyDistance() <= gc.minEnemyDistance + 1)

@@ -25,11 +25,6 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [HideInInspector] private float velocityMultiplier = .9f;
     [SerializeField] public readonly float minEnemyDistance;
     [SerializeField] public readonly float maxEnemydistance;
-
-    //Gizmos Settings
-    [Header("Gizmos Settings")]
-    [SerializeField] private Vector3 stateInfoPosition = Vector3.zero;
-    [SerializeField] private int fontSize = 20;
     
 
     public void restartVariables()
@@ -115,7 +110,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void IncreasePlayerSkill()
     {
-        int r = (int) Mathf.Floor(Mathf.Log((mapController.chunksCounter*.25f),1.5f));
+        int r = (int) Mathf.Floor(Mathf.Log((mapController.chunksCounter*.5f),1.5f));
         if (r < 0) r = 0;
         r += PlayerPrefs.GetInt("PlayerSkill", 30);
         if (r <= 100)
@@ -136,6 +131,29 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     }
 
+    public float CalculateVelocity(float vo)
+    {
+        vo *= GetSkillMultiplier();
+
+        return vo * velocityMultiplier;
+    }
+
+    public float GetSkillMultiplier()
+    {
+        int playerSkill = PlayerPrefs.GetInt("PlayerSkill", 30);
+
+        if (playerSkill <= 35)
+            return .8f;
+        else if (playerSkill <= 60)
+            return 1;
+        else if (playerSkill <= 75)
+            return 1.2f;
+        else if (playerSkill <= 95)
+            return 1.3f;
+        else
+            return 1.5f;
+    }
+
     //pospuesto
     public float getEnemyDistance()
     {
@@ -145,26 +163,6 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     public void Exit()
     {
         Application.Quit();
-    }
-
-    private void OnDrawGizmos()
-    {
-        try
-        {
-            player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-            enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
-            drawState();
-        }
-        catch { }
-    }
-
-    private void drawState()
-    {
-            GUIStyle style = new GUIStyle();
-            style.normal.textColor = Color.red;
-            style.fontSize = fontSize;
-            style.alignment = TextAnchor.MiddleLeft;
-            //Handles.Label(stateInfoPosition+Camera.main.transform.position, "Player state: " + player.currentState + "\nEnemy state: " + enemy.currentState + "\nFloor: " + floor+ "\nEnemy: "+getEnemyDistance(), style);
     }
     
 

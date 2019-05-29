@@ -14,6 +14,10 @@ public class EnemyIndicator : MonoBehaviour
     [HideInInspector] private SpriteRenderer spr;
     [HideInInspector] public Animator anim;
 
+    [Header("Sprites")]
+    [SerializeField] private Sprite spriteTop;
+    [SerializeField] private Sprite spriteBottom;
+
     private void Start()
     {
         gc = GameController.instance;
@@ -31,13 +35,13 @@ public class EnemyIndicator : MonoBehaviour
     {
         if (transform.parent.position.y < gc.enemy.transform.position.y)
         {
-            spr.flipY = true;
+            spr.sprite = spriteBottom;
             transform.position = new Vector3(transform.position.x, transform.parent.position.y + 2, transform.position.z);
         }
         else
         {
+            spr.sprite = spriteTop;
             transform.position = new Vector3(transform.position.x, transform.parent.position.y - 3, transform.position.z);
-            spr.flipY = false;
         }
     }
 
