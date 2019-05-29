@@ -1121,9 +1121,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   store: {fileID: 11400000, guid: e1389ae6b77541b4e80be111d79d405f, type: 2}
-  increaseAmmountProbability: 0
+  increaseAmmountProbability: 0.1
   background: {fileID: 8713774238281902902, guid: c2f539d0681ef5e4da2e5b9ea77053b2,
     type: 3}
+  chunksCounter: 0
 --- !u!4 &150279554
 Transform:
   m_ObjectHideFlags: 0
@@ -7005,7 +7006,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.60200006, y: 0.12333333}
   m_AnchorMax: {x: 1, y: 0.8601482}
-  m_AnchoredPosition: {x: -2.119995, y: 3.600006}
+  m_AnchoredPosition: {x: -2.119995, y: 3.5999756}
   m_SizeDelta: {x: -25.5, y: -25.600006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1668870045

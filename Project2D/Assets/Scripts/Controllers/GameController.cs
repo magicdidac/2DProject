@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     //Control Vars
     [Header("Control Vars")]
     [HideInInspector] private int floor = 0;
+    [HideInInspector] private float velocityMultiplier = .9f;
     [SerializeField] public readonly float minEnemyDistance;
     [SerializeField] public readonly float maxEnemydistance;
 
@@ -98,7 +99,42 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     {
         return floor;
     }
-    
+
+    public float GetVelocityMultiplier()
+    {
+        return velocityMultiplier;
+    }    
+
+    public void IncreaseVelocityMultiplier()
+    {
+        if (velocityMultiplier < 1.75f)
+            velocityMultiplier += .1f;
+        else
+            velocityMultiplier = 1.75f;
+    }
+
+    public void IncreasePlayerSkill()
+    {
+        int r = (int) Mathf.Floor(Mathf.Log((mapController.chunksCounter*.25f),1.5f));
+        if (r < 0) r = 0;
+        r += PlayerPrefs.GetInt("PlayerSkill", 30);
+        if (r <= 100)
+            PlayerPrefs.SetInt("PlayerSkill", r);
+        else
+            PlayerPrefs.SetInt("PlayerSkill", 100);
+    }
+
+    public void DecreasePlayerSkill()
+    {
+        int r = 30 - mapController.chunksCounter;
+        r += PlayerPrefs.GetInt("PlayerSkill", 30);
+
+        if (r > 0)
+            PlayerPrefs.SetInt("PlayerSkill", r);
+        else
+            PlayerPrefs.SetInt("PlayerSkill", 0);
+
+    }
 
     //pospuesto
     public float getEnemyDistance()

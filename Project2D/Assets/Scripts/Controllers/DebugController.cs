@@ -31,7 +31,7 @@ public class DebugController : MonoBehaviour
             PlayerPrefs.GetInt("PlayerSkill", 30),
             new Vector2(gc.enemy.transform.position.x, gc.enemy.transform.position.y),
             gc.enemy.currentState.ToString(),
-            "WIP",
+            gc.GetVelocityMultiplier(),
             "WIP",
             GetDificulty(),
             gc.GetFloor(),
