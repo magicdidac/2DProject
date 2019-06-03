@@ -28,7 +28,7 @@ public class AudioController : MonoBehaviour
 
         foreach (Sound m in music)
         {
-            m.source = gameObject.AddComponent<AudioSource>();
+            m.source =  gameObject.AddComponent<AudioSource>();
             m.source.clip = m.clip;
             m.source.volume = m.volume;
             m.source.loop = m.loop;
@@ -142,11 +142,11 @@ public class AudioController : MonoBehaviour
     {
         foreach (Sound m in music)
         {
-            m.source.volume = volume;
+            m.source.volume = 1;
         }
         foreach (Sound s in sounds)
         {
-            s.source.volume = volume;
+            s.source.volume = 1;
         }
     }
 
