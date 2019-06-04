@@ -5,7 +5,7 @@ using UnityEngine;
 public class Box : MonoBehaviour
 {
 
-    [SerializeField] private Sprite[] sprites;
+    [SerializeField] private Sprite[] sprites = null;
 
 
     private void Start()
