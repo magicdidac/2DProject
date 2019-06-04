@@ -27,7 +27,7 @@ public class PSStun : AState
 
     public override void FixedUpdate()
     {
-        pc.rb.velocity = new Vector2(pc.gc.CalculateVelocity(pc.model.stunSpeed), pc.rb.velocity.y);
+        pc.rb.velocity = new Vector2(pc.gc.GetVelocity(pc.model.stunSpeed), pc.rb.velocity.y);
     }
 
     public override void Update()

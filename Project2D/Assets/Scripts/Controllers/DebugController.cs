@@ -34,10 +34,10 @@ public class DebugController : MonoBehaviour
             gc.enemy.currentState.ToString(),
             gc.GetVelocityMultiplier(),
             gc.GetSkillMultiplier(),
-            gc.CalculateVelocity(7.5f),
+            gc.GetVelocity(7.5f),
             GetDificulty(),
             gc.GetFloor(),
-            gc.getEnemyDistance());
+            gc.GetEnemyDistance());
     }
 
     private string GetDificulty()

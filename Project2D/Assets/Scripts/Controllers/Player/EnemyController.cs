@@ -30,12 +30,12 @@ public class EnemyController : AMoveController
 
         if (!isDead)
         {
-            if (!gc.player.isRope && (gc.GetFloor() == 0 || (gc.GetFloor() != 0 && gc.getEnemyDistance() > gc.minEnemyDistance + 1)))
-                rb.velocity = new Vector2((gc.player.isSliding) ? gc.CalculateVelocity(model.slideSpeed) : gc.CalculateVelocity(model.normalSpeed), rb.velocity.y);
+            if (!gc.player.isRope && (gc.GetFloor() == 0 || (gc.GetFloor() != 0 && gc.GetEnemyDistance() > gc.GetMinimumEnemyDistance() + 1)))
+                rb.velocity = new Vector2((gc.player.isSliding) ? gc.GetVelocity(model.slideSpeed) : gc.GetVelocity(model.normalSpeed), rb.velocity.y);
             else if (gc.player.isRope)
                 rb.velocity = new Vector2(1, rb.velocity.y);
-            else if (gc.getEnemyDistance() <= gc.minEnemyDistance + 1)
-                transform.position = new Vector2(gc.player.transform.position.x + (gc.minEnemyDistance + 1), transform.position.y);
+            else if (gc.GetEnemyDistance() <= gc.GetMinimumEnemyDistance() + 1)
+                transform.position = new Vector2(gc.player.transform.position.x + (gc.GetMinimumEnemyDistance() + 1), transform.position.y);
         }
 
     }
@@ -58,7 +58,7 @@ public class EnemyController : AMoveController
                 //gc.enemyIndicator.LoadShoot();
                 break;
             case 0:
-                if (gc.getEnemyDistance() > 3 && Random.Range(0, 2) == 1)
+                if (gc.GetEnemyDistance() > 3 && Random.Range(0, 2) == 1)
                     anim.SetTrigger("T-MidLaserShoot");
                 else
                     anim.SetTrigger("T-MidGranadeShoot");

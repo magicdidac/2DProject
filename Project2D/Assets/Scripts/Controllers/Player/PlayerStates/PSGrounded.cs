@@ -30,7 +30,7 @@ public class PSGrounded : AState
 
     public override void FixedUpdate()
     {
-        pc.rb.velocity = new Vector2(pc.gc.CalculateVelocity(pc.model.speed), pc.rb.velocity.y);
+        pc.rb.velocity = new Vector2(pc.gc.GetVelocity(pc.model.speed), pc.rb.velocity.y);
     }
 
     public override void Update()
