@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [HideInInspector] private int floor = 0;
     [HideInInspector] private float velocityMultiplier = .9f;
     [SerializeField] private float minEnemyDistance = 1;
-    [SerializeField] private float maxEnemydistance = 9;
+    [SerializeField] private float maxEnemyDistance = 9;
 
     #endregion
 
@@ -55,7 +55,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         InitializePlayerPrefs();
 
         //TODO: Play chill Music
-
+        //AudioController._audioManager.PlayMusic("softSound"); //PETA en el Awake
     }
 
     public void StartGame()
@@ -71,6 +71,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         playerSpawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
         player = Instantiate(playerObj, playerSpawnPoint.position, Quaternion.identity).GetComponent<PlayerController>();
         enemy = Instantiate(enemyObj, GetEnemySpawnPosition(), Quaternion.identity).GetComponent<EnemyController>();
+
+        AudioController._audioManager.PlayNewMusic("playGame");
     }
 
     public void restartVariables()
@@ -201,7 +203,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             if (GetEnemyDistance() < minEnemyDistance && floor == 0 && !player.isDead) //Check
                 GameWin(true);
 
-            if (GetEnemyDistance() > maxEnemydistance && player.isDead)
+            if (GetEnemyDistance() > maxEnemyDistance && player.isDead)
                 GameWin(false);
         }
     }

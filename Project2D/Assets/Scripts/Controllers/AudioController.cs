@@ -24,7 +24,7 @@ public class AudioController : AController
             return;
         }
 
-        //DontDestroyOnLoad(this);
+        DontDestroyOnLoad(this);  //<-- yo creo que se necesita descomentar
 
         foreach (Sound m in music)
         {
@@ -48,7 +48,8 @@ public class AudioController : AController
 
     public void Start()
     {
-        setAllVolumes(PlayerPrefs.GetFloat("MasterVolume"));
+        //esta linea da problemas de audio
+        //setAllVolumes(PlayerPrefs.GetFloat("MasterVolume"));
     }
 
     public void PlayMusic(string name)
@@ -89,12 +90,39 @@ public class AudioController : AController
         if (m == null) return;
         foreach (Sound music in music)
         {
-            if (music != m) music.source.Stop();
+            //if (music != m) music.source.Stop();
+            if (music != m)
+            {
+                StartCoroutine(FadeIn(m));
+                StartCoroutine(FadeOut(music));
+            }
         }
-        if (!m.source.isPlaying)
+        /*if (!m.source.isPlaying)
         {
             m.source.Play();
+        }*/
+    }
+
+    private IEnumerator FadeIn(Sound s)
+    {
+        float t = 0f;
+        s.source.Play();
+        while (t < s.volume)
+        {
+            s.volume += Time.deltaTime;
+            yield return new WaitForSeconds(1f);
         }
+    }
+
+    private IEnumerator FadeOut(Sound s)
+    {
+        float t = s.volume;
+        while (t > 0f)
+        {
+            s.volume -= Time.deltaTime;
+            yield return new WaitForSeconds(1f);
+        }
+        s.source.Stop();
     }
 
     public void StopSound(string name)

@@ -13,14 +13,14 @@ public class EnemyController : AMoveController
     [Range(0,5)][SerializeField] public float verticalDetectionXOffset = .5f;
     [SerializeField] public LayerMask groundMask;
 
-    [SerializeField] public ParticleSystem shield;
+    [SerializeField] public SpriteRenderer shield;
 
     [SerializeField] public Collider2D col = null;
 
     private void Start()
     {
         gc.enemy = this;
-        shield.Stop();
+        shield.gameObject.SetActive(false);
         ChangeState(new ESGrounded(this));
     }
 
