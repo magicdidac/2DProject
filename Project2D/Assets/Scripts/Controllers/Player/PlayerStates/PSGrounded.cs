@@ -25,7 +25,8 @@ public class PSGrounded : AState
 
         if (pc.isTrampoline) pc.ChangeState(new PSTrampoline(pc));
 
-        if (Input.GetKey(KeyCode.S) && pc.HaveFuel()) pc.ChangeState(new PSSliding(pc));
+        if (Input.GetKey(KeyCode.S) && pc.HaveFuel())
+            pc.ChangeState(new PSSliding(pc));
     }
 
     public override void FixedUpdate()

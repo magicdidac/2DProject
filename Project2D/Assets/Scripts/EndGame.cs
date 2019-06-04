@@ -7,20 +7,23 @@ using UnityEngine.UI;
 
 public class EndGame : MonoBehaviour
 {
-    private GameController gc;
+    [HideInInspector] private GameController gc;
 
-    [SerializeField] private Image panel = null;
-    [SerializeField] private TextMeshProUGUI title = null;
-    [SerializeField] public TextMeshProUGUI score = null;
-    [SerializeField] public TextMeshProUGUI coins = null;
+    [SerializeField] private Text scoreText = null;
+    [SerializeField] private Text coinsText = null;
 
 
     private int maxScore;
     
 
-    private void Start()
+    private void OnEnable()
     {
         gc = GameController.instance;
+
+        coinsText.text = "" + gc.scoreController.GetCoinsScore();
+        scoreText.text = "" + gc.scoreController.GetScore();
+
+        Invoke("InvokeIncreaseScore", 1f);
     }
 
     private void Update()
@@ -29,35 +32,38 @@ public class EndGame : MonoBehaviour
 
     public void WinSetUp()
     {
-        title.text = "WIN";
-
+        Debug.Log("Win");
     }
 
     public void LoseSetUp()
     {
-        title.text = "LOSE";
-        panel.color = new Color(r: 255, g: 0, b: 0, a: .100f);
+        Debug.Log("Lose");
     }
 
     private void InvokeIncreaseScore()
     {
-        //StartCoroutine(DicreaseCoins(coinsText, coins));
-        //StartCoroutine(IncreaseScore(scoreText, highScore));
+        
+
+        StartCoroutine(DicreaseCoins(coinsText, gc.scoreController.GetCoinsScore()));
+        StartCoroutine(IncreaseScore(scoreText, gc.scoreController.GetScore()+gc.scoreController.GetCoinsScore()));
     }
 
-    /*IEnumerator IncreaseScore(TextMeshProUGUI t_score, float f_score)
+    IEnumerator IncreaseScore(Text t_score, int f_score)
     {
-        while(score < f_score)
+        int initialScore = gc.scoreController.GetScore();
+
+        while(initialScore < f_score)
         {
-            score+=5;
-            if (score > f_score)
-                score = f_score;
-            t_score.text = score.ToString();
+            initialScore += 5;
+            if (initialScore > f_score)
+                initialScore = f_score;
+
+            t_score.text = initialScore+"";
             yield return new WaitForSeconds(.02f);
         }
     }
 
-    IEnumerator DicreaseCoins(TextMeshProUGUI t_score, float f_score)
+    IEnumerator DicreaseCoins(Text t_score, float f_score)
     {
         while (f_score > 0)
         {
@@ -67,7 +73,7 @@ public class EndGame : MonoBehaviour
             t_score.text = f_score.ToString();
             yield return new WaitForSeconds(.02f);
         }
-    }*/
+    }
 
     public void Retry()
     {
