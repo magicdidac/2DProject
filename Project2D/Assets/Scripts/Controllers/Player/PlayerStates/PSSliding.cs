@@ -23,7 +23,8 @@ public class PSSliding : AState
         pc.animator.SetBool("B-ZipLine", false);
         pc.animator.SetBool("B-Slide", true);
         pc.animator.SetTrigger("T-Slide");
-        
+        gc.uiController.SetOnTurboText();
+
     }
 
     public override void CheckTransition()
@@ -49,6 +50,7 @@ public class PSSliding : AState
     {
         pc.animator.SetTrigger("T-SlideUp");
         pc.animator.SetBool("B-Slide", false);
+        gc.uiController.SetOffTurboText();
         pc.ChangeState(state);
     }
 

@@ -31,11 +31,14 @@ public class UIController : AController
 
     //Object references
     [Header("Objects References")]
-    [SerializeField] private EnemyIndicator enemyIndicator = null;
     [SerializeField] private Text fpsText = null;
     [SerializeField] private GameObject fuelPanel = null;
     [SerializeField] private Image fuelArrow = null;
     [SerializeField] private GameObject startMessage = null;
+    [SerializeField] private Text turboText = null;
+    [SerializeField] private Color turboOffColor = Color.black;
+    [SerializeField] private Color turboOnColor = Color.black;
+    [SerializeField] private Text enemyDistanceText = null;
 
     //Controll Vars
     [HideInInspector] private bool pauseIsActive = false;
@@ -74,10 +77,6 @@ public class UIController : AController
             SwitchPause();
 
         UpdateFPS();
-        if (gc.GetFloor() != 0)
-            enemyIndicator.gameObject.SetActive(true);
-        else
-            enemyIndicator.gameObject.SetActive(false);
     }
 
 
@@ -93,17 +92,27 @@ public class UIController : AController
         fpsText.text = "FPS: " + Mathf.Ceil(fps);
     }
 
+    public void SetOnTurboText()
+    {
+        turboText.color = turboOnColor;
+    }
+
+    public void SetOffTurboText()
+    {
+        turboText.color = turboOffColor;
+    }
+
     public void UpdateFuel()
     {
 
-        float rotationZ = (gc.player.fuel / gc.player.model.maxFuel * 120) - 60;
+        float rotationZ = (gc.player.fuel / gc.player.model.maxFuel * 180) - 90;
 
         fuelArrow.rectTransform.rotation = Quaternion.Euler(0, 0, -rotationZ);
     }
 
     public void UpdateScore()
     {
-        scoreText.text = Format(gc.scoreController.GetScore())+"m";
+        scoreText.text = Format(gc.scoreController.GetScore());
     }
 
     public void UpdateCoins()
@@ -115,6 +124,8 @@ public class UIController : AController
     {
         highScoreText.text = "record:"+Format(gc.scoreController.GetHighScore());
     }
+
+    
 
     public void SwitchFPS(bool _fpsAreShowing)
     {
@@ -143,7 +154,6 @@ public class UIController : AController
         scorePanel.SetActive(false);
         fuelPanel.SetActive(false);
         fpsText.gameObject.SetActive(false);
-        enemyIndicator.gameObject.SetActive(false);
     }
 
     public void ActiveEndMenu(bool win)
