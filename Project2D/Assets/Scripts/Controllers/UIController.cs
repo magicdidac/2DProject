@@ -39,6 +39,7 @@ public class UIController : AController
     [SerializeField] private Color turboOffColor = Color.black;
     [SerializeField] private Color turboOnColor = Color.black;
     [SerializeField] private Text enemyDistanceText = null;
+    [SerializeField] private GameObject enemyDistancePanel = null;
 
     //Controll Vars
     [HideInInspector] private bool pauseIsActive = false;
@@ -61,7 +62,11 @@ public class UIController : AController
     {
         fuelPanel.SetActive(true);
         scorePanel.SetActive(true);
+        enemyDistancePanel.SetActive(true);
         startMessage.SetActive(false);
+
+        UpdateHighScore();
+
     }
 
     #endregion
@@ -77,6 +82,8 @@ public class UIController : AController
             SwitchPause();
 
         UpdateFPS();
+        UpdateEnemyDistance();
+        UpdateFuel();
     }
 
 
@@ -104,11 +111,19 @@ public class UIController : AController
 
     public void UpdateFuel()
     {
+        if (gc == null)
+            gc = GameController.instance;
 
-        float rotationZ = (gc.player.fuel / gc.player.model.maxFuel * 180) - 90;
+        if (gc.player == null || gc.enemy == null)
+            return;
 
-        fuelArrow.rectTransform.rotation = Quaternion.Euler(0, 0, -rotationZ);
+        float rotationZ = (gc.player.fuel / gc.player.model.maxFuel * 170) - 85;
+
+        fuelArrow.rectTransform.rotation = Quaternion.Lerp(fuelArrow.rectTransform.rotation, Quaternion.Euler(0, 0, -rotationZ), .1f);
+
+
     }
+
 
     public void UpdateScore()
     {
@@ -122,10 +137,13 @@ public class UIController : AController
 
     public void UpdateHighScore()
     {
-        highScoreText.text = "record:"+Format(gc.scoreController.GetHighScore());
+        highScoreText.text = Format(gc.scoreController.GetHighScore());
     }
 
-    
+    public void UpdateEnemyDistance()
+    {
+        enemyDistanceText.text = Format2(gc.GetEnemyDistance());
+    }
 
     public void SwitchFPS(bool _fpsAreShowing)
     {
@@ -148,11 +166,16 @@ public class UIController : AController
         return string.Format("000{0}", ammount);
     }
 
+    private string Format2(float ammount)
+    {
+        return string.Format("{0}m", Mathf.Round(ammount*10)/10);
+    }
+
     private void StopGame()
     {
-
         scorePanel.SetActive(false);
         fuelPanel.SetActive(false);
+        enemyDistancePanel.SetActive(false);
         fpsText.gameObject.SetActive(false);
     }
 
@@ -160,17 +183,10 @@ public class UIController : AController
     {
         StopGame();
         if (win)
-        {
-            gc.scoreController.MultiplyScore();
             endGameMenu.WinSetUp();
-        }
         else
             endGameMenu.LoseSetUp();
 
-
-        gc.scoreController.UpdateHighScore();
-        endGameMenu.score.text = Format(gc.scoreController.GetScore());
-        endGameMenu.coins.text = Format(gc.scoreController.GetCoinsScore());
         endGameMenu.gameObject.SetActive(true);
     }
 
