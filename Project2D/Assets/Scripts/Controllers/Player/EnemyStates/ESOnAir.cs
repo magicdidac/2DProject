@@ -6,7 +6,7 @@ public class ESOnAir : AState
 {
     [HideInInspector] private EnemyController ec;
 
-    public ESOnAir(EnemyController _ec)
+    public ESOnAir(EnemyController _ec) : base()
     {
         ec = _ec;
     }
@@ -16,7 +16,7 @@ public class ESOnAir : AState
         
         if (ec.isGrounded)
         {
-            ec.anim.SetBool("B-Ground", true);
+            ec.animator.SetBool("B-Ground", true);
             ec.ChangeState(new ESGrounded(ec));
         }
 

@@ -9,10 +9,10 @@ public class ESFloatingUp : AState
 
     [HideInInspector] private EnemyController ec;
 
-    public ESFloatingUp(EnemyController _ec)
+    public ESFloatingUp(EnemyController _ec) : base()
     {
         ec = _ec;
-        ec.rb.bodyType = RigidbodyType2D.Kinematic;
+        ec.rigidbody2d.bodyType = RigidbodyType2D.Kinematic;
         ec.col.isTrigger = true;
         ec.shield.gameObject.SetActive(true);
     }
@@ -21,14 +21,14 @@ public class ESFloatingUp : AState
     {
         if (ec.DetectGroundToLand())
         {
-            ec.rb.bodyType = RigidbodyType2D.Dynamic;
+            ec.rigidbody2d.bodyType = RigidbodyType2D.Dynamic;
             ec.col.isTrigger = false;
             ec.shield.gameObject.SetActive(false);
             ec.ChangeState(new ESOnAir(ec));
         }
-        if (ec.gc.GetFloor() != 0)
+        if (gc.GetFloor() != 0)
         {
-            ec.rb.bodyType = RigidbodyType2D.Dynamic;
+            ec.rigidbody2d.bodyType = RigidbodyType2D.Dynamic;
             ec.col.isTrigger = false;
             ec.ChangeState(new ESOtherFloor(ec));
         }
@@ -42,10 +42,10 @@ public class ESFloatingUp : AState
     public override void Update()
     {
         if (ec.transform.position.y < 1)
-            ec.rb.velocity = new Vector2(ec.gc.GetVelocity(ec.rb.velocity.x), plusOffset);
+            ec.rigidbody2d.velocity = new Vector2(gc.GetVelocity(ec.rigidbody2d.velocity.x), plusOffset);
         else
         {
-            ec.rb.velocity = new Vector2(ec.gc.GetVelocity(ec.rb.velocity.x), 0);
+            ec.rigidbody2d.velocity = new Vector2(gc.GetVelocity(ec.rigidbody2d.velocity.x), 0);
             ec.transform.position = new Vector3(ec.transform.position.x, 1);
         }
     }

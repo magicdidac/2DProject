@@ -4,74 +4,53 @@ using UnityEngine;
 
 public class MapController : AController
 {
+    /*
+     LAWS:
+        - All variables will be private if you need access to it, plese do it by Getter and/or Setter
+        - All the functions should be used somewhere, except controllers (only on GameController class)
+        - Just put the regions that the class will use
+        - All variables, regardless of whether they are public or private, you should put [HideInInspector] or [SerializeField]
+     */
 
-    
+    #region Variables
 
-    
+    [SerializeField] private ChunkStore store = null;
+    [Range(0, .9f)]
+    [SerializeField] private float increaseAmmountProbability = .1f;
+    [SerializeField] private GameObject background = null;
 
-    private void Update()
+    [HideInInspector] private int challengeCounter = 3;
+    [HideInInspector] private int chunksCounter = 0;
+    [HideInInspector] private float transitionChunkProbability = 0;
+    [HideInInspector] private float xOffset = 0;
+    [HideInInspector] private float nextSpawnPosition = 9;
+    [HideInInspector] private float lastChunkLenght = 0;
+    [HideInInspector] private List<Chunk> chunksSpawned = null;
+    [HideInInspector] private Queue<GameObject> chunksQueue = null;
+    [HideInInspector] private Queue<GameObject> backgroundQueue = null;
+
+    #endregion
+
+
+    #region Initializers
+
+    //Start
+    private void Start()
     {
-        if (!gc.IsGameRunning() || gc.player.isDead)
-            return;
+        chunksSpawned = new List<Chunk>();
+        chunksQueue = new Queue<GameObject>();
+        backgroundQueue = new Queue<GameObject>();
 
-        if (gc.player.transform.position.x >= xOffset-19.2f)
-            NewBackground();
-        
-        if (gc.player.transform.position.x > nextSpawnPosition)
-            NextChunk();
-        
+        NextChunk();
+        NewBackground();
     }
 
-
-    private void NewBackground()
-    {
-        xOffset += 19.2f;
-        backgroundQueue.Enqueue(Instantiate(background,new Vector3(xOffset,0),Quaternion.identity));
-        if (backgroundQueue.Count > 3)
-            GameObject.Destroy(backgroundQueue.Dequeue());
-    }
+    #endregion
 
 
+    #region Getters
 
-
-    private void NextChunk()
-    {
-        Chunk newChunk = null;
-
-
-        if (challengeCounter > 0)
-        {
-            if (Random.value < transitionChunkProbability)
-            {
-                newChunk = GetTransitionChunk();
-                transitionChunkProbability = 0;
-            }
-            else
-            {
-                newChunk = GetChallengeChunk();
-                challengeCounter--;
-                transitionChunkProbability += increaseAmmountProbability;
-                chunksCounter++;
-                gc.IncreasePlayerSkill();
-            }
-        }
-        else
-        {
-            newChunk = GetRewardChunk();
-
-            gc.IncreaseVelocityMultiplier();
-
-            challengeCounter = Random.Range(3,6);
-        }
-
-        if(chunksQueue.Count > 1)
-            Destroy(chunksQueue.Dequeue());
-
-        GameObject chunkObject = SpawnChunk(newChunk);
-        lastChunkLenght = newChunk.lenght;
-        nextSpawnPosition = chunkObject.transform.position.x;
-        chunksQueue.Enqueue(chunkObject);
-    }
+    public int GetChunksCounter() { return chunksCounter; }
 
     private Chunk GetChallengeChunk()
     {
@@ -151,104 +130,79 @@ public class MapController : AController
         return GetChunkByArray(store.reward);
     }
 
-    private GameObject SpawnChunk(Chunk c)
-    {
-        return Instantiate(c.prefab, new Vector3(nextSpawnPosition + (lastChunkLenght/2) + (c.lenght / 2), gc.GetFloor() * 8, 0), Quaternion.identity);
-    }
-
-
-
-
-
-    /*
-     LAWS:
-        - All variables will be private if you need access to it, plese do it by Getter and/or Setter
-        - All the functions should be used somewhere, except controllers (only on GameController class)
-        - Just put the regions that the class will use
-        - All variables, regardless of whether they are public or private, you should put [HideInInspector] or [SerializeField]
-     */
-
-    #region Variables
-
-
-
-    [SerializeField] private ChunkStore store = null;
-    [Range(0, .9f)]
-    [SerializeField] private float increaseAmmountProbability = .1f;
-    [SerializeField] private GameObject background = null;
-
-    [HideInInspector] private int challengeCounter = 3;
-    [HideInInspector] private int chunksCounter = 0;
-    [HideInInspector] private float transitionChunkProbability = 0;
-    [HideInInspector] private float xOffset = 0;
-    [HideInInspector] private float nextSpawnPosition = 9;
-    [HideInInspector] private float lastChunkLenght = 0;
-    [HideInInspector] private List<Chunk> chunksSpawned = null;
-    [HideInInspector] private Queue<GameObject> chunksQueue = null;
-    [HideInInspector] private Queue<GameObject> backgroundQueue = null;
-
     #endregion
-
-
-    #region Initializers
-
-    //Awake
-
-    //OnEnable
-
-    //Start
-    private void Start()
-    {
-        chunksSpawned = new List<Chunk>();
-        chunksQueue = new Queue<GameObject>();
-        backgroundQueue = new Queue<GameObject>();
-
-        NextChunk();
-        NewBackground();
-    }
-
-    //Constructor
-
-    //Other functions that helps to initialize
-
-    #endregion
-
-
-    #region Getters
-
-    public int GetChunksCounter() { return chunksCounter; }
-
-    #endregion
-
-
-    #region Setters or Variable Modifiers
-
-
-
-    #endregion
-
+    
 
     //Update
+    private void Update()
+    {
+        if (!gc.IsGameRunning() || gc.player.isDead)
+            return;
 
-    //FixedUpdate
+        if (gc.player.transform.position.x >= xOffset - 19.2f)
+            NewBackground();
 
-    #region Triggers or Collisions
+        if (gc.player.transform.position.x > nextSpawnPosition)
+            NextChunk();
 
-
-
-    #endregion
+    }
 
 
     #region Other
 
-    //Others functions...
+    private void NewBackground()
+    {
+        xOffset += 19.2f;
+        backgroundQueue.Enqueue(Instantiate(background, new Vector3(xOffset, 0), Quaternion.identity));
+        if (backgroundQueue.Count > 3)
+            GameObject.Destroy(backgroundQueue.Dequeue());
+    }
 
-    #endregion
+    private void NextChunk()
+    {
+        Chunk newChunk = null;
 
 
-    #region Gizmos
+        if (challengeCounter > 0)
+        {
+            if (Random.value < transitionChunkProbability)
+            {
+                newChunk = GetTransitionChunk();
+                transitionChunkProbability = 0;
+            }
+            else
+            {
+                newChunk = GetChallengeChunk();
+                challengeCounter--;
+                transitionChunkProbability += increaseAmmountProbability;
+                chunksCounter++;
+                gc.IncreasePlayerSkill();
+            }
+        }
+        else
+        {
+            newChunk = GetRewardChunk();
+
+            gc.IncreaseVelocityMultiplier();
+
+            challengeCounter = Random.Range(3, 6);
+        }
+
+        if (chunksQueue.Count > 1)
+            Destroy(chunksQueue.Dequeue());
+
+        GameObject chunkObject = SpawnChunk(newChunk);
+        lastChunkLenght = newChunk.lenght;
+        nextSpawnPosition = chunkObject.transform.position.x;
+        chunksQueue.Enqueue(chunkObject);
+    }
 
 
+
+    private GameObject SpawnChunk(Chunk c)
+    {
+        return Instantiate(c.prefab, new Vector3(nextSpawnPosition + (lastChunkLenght / 2) + (c.lenght / 2), gc.GetFloor() * 8, 0), Quaternion.identity);
+    }
 
     #endregion
 

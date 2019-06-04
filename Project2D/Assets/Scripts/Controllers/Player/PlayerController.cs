@@ -41,7 +41,7 @@ public class PlayerController : AMoveController
             return;
 
         isGrounded = detectCollision(groundMask, model.offset);
-        anim.SetBool("B-Ground",isGrounded);
+        animator.SetBool("B-Ground",isGrounded);
         currentState.Update();
     }
 
@@ -74,13 +74,13 @@ public class PlayerController : AMoveController
     public void ConsumeFuel()
     {
         fuel -= Time.deltaTime;
-        gc.uiController.UpdateFuelBar();
+        gc.uiController.UpdateFuel();
     }
 
     private void ReloadFuel()
     {
         fuel = model.maxFuel;
-        gc.uiController.UpdateFuelBar();
+        gc.uiController.UpdateFuel();
     }
 
     //Detect collisions
@@ -93,7 +93,7 @@ public class PlayerController : AMoveController
 
         if (col.CompareTag("Box")) //Si colisiona con una Box
         {
-            if (isGrounded && !anim.GetBool("B-Slide")) //si no está deslizandose entonces se relantiza
+            if (isGrounded && !animator.GetBool("B-Slide")) //si no está deslizandose entonces se relantiza
                 isStuned = true;
 
             col.gameObject.SetActive(false); //elimina el obstaculo
@@ -102,8 +102,8 @@ public class PlayerController : AMoveController
         else if (col.CompareTag("Rope") && !isRope) //Si colisiona con una Rope
         {
             transform.SetParent(col.gameObject.transform); //Se hace hijo de la Rope
-            rb.velocity = Vector2.zero; //Detenemos al Player
-            rb.bodyType = RigidbodyType2D.Kinematic; //Le cambiamos el tipo de rb
+            rigidbody2d.velocity = Vector2.zero; //Detenemos al Player
+            rigidbody2d.bodyType = RigidbodyType2D.Kinematic; //Le cambiamos el tipo de rb
             gc.AddFloor();
             isRope = true;
             col.GetComponent<Rope>().StartMovement(transform);
@@ -156,7 +156,7 @@ public class PlayerController : AMoveController
 
     private void OnDrawGizmos()
     {
-        spr = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        sprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
 
         drawGroundRayCast();
         drawTrampolineRayCast();
@@ -164,22 +164,22 @@ public class PlayerController : AMoveController
 
     private void drawGroundRayCast()
     {
-        float distanceBetweenRays = (spr.bounds.size.x - model.offset) / model.precisionDown;
+        float distanceBetweenRays = (sprite.bounds.size.x - model.offset) / model.precisionDown;
 
         for (int i = 0; i <= model.precisionDown; i++)
         {
-            Vector3 startPoint = new Vector3((spr.bounds.min.x + (model.offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
+            Vector3 startPoint = new Vector3((sprite.bounds.min.x + (model.offset / 2)) + distanceBetweenRays * i, sprite.bounds.min.y, 0);
             Debug.DrawLine(startPoint, startPoint + (Vector3.down * .1f), Color.red);
         }
     }
 
     private void drawTrampolineRayCast()
     {
-        float distanceBetweenRays = (spr.bounds.size.x - model.trampolineOffset) / model.precisionDown;
+        float distanceBetweenRays = (sprite.bounds.size.x - model.trampolineOffset) / model.precisionDown;
 
         for (int i = 0; i <= model.precisionDown; i++)
         {
-            Vector3 startPoint = new Vector3((spr.bounds.min.x + (model.trampolineOffset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
+            Vector3 startPoint = new Vector3((sprite.bounds.min.x + (model.trampolineOffset / 2)) + distanceBetweenRays * i, sprite.bounds.min.y, 0);
             Debug.DrawLine(startPoint, startPoint + (Vector3.down * .1f), Color.magenta);
         }
     }

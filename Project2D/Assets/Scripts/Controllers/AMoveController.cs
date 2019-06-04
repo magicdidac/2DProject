@@ -7,21 +7,21 @@ using UnityEngine;
 public abstract class AMoveController : MonoBehaviour
 {
     //GameController reference
-    [HideInInspector] public GameController gc;
+    [HideInInspector] protected GameController gc;
 
     //Components
     [Header("Components")]
-    [SerializeField] public Rigidbody2D rb;
-    [SerializeField] public SpriteRenderer spr;
-    [SerializeField] public Animator anim;
+    [SerializeField] public Rigidbody2D rigidbody2d = null;
+    [SerializeField] public SpriteRenderer sprite = null;
+    [SerializeField] public Animator animator = null;
     
 
     //State
-    [HideInInspector] public AState currentState;
+    [HideInInspector] public AState currentState = null;
 
     //Model
     [Header("Model")]
-    [SerializeField] public PlayerModel model;
+    [SerializeField] public PlayerModel model = null;
 
     //Control
     [HideInInspector] public bool isGrounded = false;
@@ -51,11 +51,11 @@ public abstract class AMoveController : MonoBehaviour
     {
         List<RaycastHit2D> hits = new List<RaycastHit2D>();
 
-        float distanceBetweenRays = (spr.bounds.size.x - p_offset) / model.precisionDown;
+        float distanceBetweenRays = (sprite.bounds.size.x - p_offset) / model.precisionDown;
 
         for (int i = 0; i <= model.precisionDown; i++)
         {
-            Vector3 startPoint = new Vector3((spr.bounds.min.x + (p_offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
+            Vector3 startPoint = new Vector3((sprite.bounds.min.x + (p_offset / 2)) + distanceBetweenRays * i, sprite.bounds.min.y, 0);
             hits.Add(Physics2D.Raycast(startPoint, Vector2.down, .1f, p_lm));
         }
 

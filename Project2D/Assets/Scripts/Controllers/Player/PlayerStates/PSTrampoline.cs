@@ -7,14 +7,14 @@ public class PSTrampoline : AState
 
     [HideInInspector] private PlayerController pc;
 
-    public PSTrampoline(PlayerController _pc)
+    public PSTrampoline(PlayerController _pc) : base()
     {
         pc = _pc;
     }
 
     public override void CheckTransition()
     {
-        if (pc.transform.position.y > 8 * pc.gc.GetFloor())
+        if (pc.transform.position.y > 8 * gc.GetFloor())
         {
             pc.isTrampoline = false;
             pc.ChangeState(new PSOnAir(pc));
@@ -23,7 +23,7 @@ public class PSTrampoline : AState
 
     public override void FixedUpdate()
     {
-        pc.rb.velocity = new Vector2(pc.gc.GetVelocity(pc.model.speed), pc.model.jumpForce);
+        pc.rigidbody2d.velocity = new Vector2(gc.GetVelocity(pc.model.speed), pc.model.jumpForce);
     }
 
     public override void Update() { }

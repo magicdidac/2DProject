@@ -31,9 +31,9 @@ public class EnemyController : AMoveController
         if (!isDead)
         {
             if (!gc.player.isRope && (gc.GetFloor() == 0 || (gc.GetFloor() != 0 && gc.GetEnemyDistance() > gc.GetMinimumEnemyDistance() + 1)))
-                rb.velocity = new Vector2((gc.player.isSliding) ? gc.GetVelocity(model.slideSpeed) : gc.GetVelocity(model.normalSpeed), rb.velocity.y);
+                rigidbody2d.velocity = new Vector2((gc.player.isSliding) ? gc.GetVelocity(model.slideSpeed) : gc.GetVelocity(model.normalSpeed), rigidbody2d.velocity.y);
             else if (gc.player.isRope)
-                rb.velocity = new Vector2(1, rb.velocity.y);
+                rigidbody2d.velocity = new Vector2(1, rigidbody2d.velocity.y);
             else if (gc.GetEnemyDistance() <= gc.GetMinimumEnemyDistance() + 1)
                 transform.position = new Vector2(gc.player.transform.position.x + (gc.GetMinimumEnemyDistance() + 1), transform.position.y);
         }
@@ -59,9 +59,9 @@ public class EnemyController : AMoveController
                 break;
             case 0:
                 if (gc.GetEnemyDistance() > 3 && Random.Range(0, 2) == 1)
-                    anim.SetTrigger("T-MidLaserShoot");
+                    animator.SetTrigger("T-MidLaserShoot");
                 else
-                    anim.SetTrigger("T-MidGranadeShoot");
+                    animator.SetTrigger("T-MidGranadeShoot");
                 break;
             case -1:
                 //gc.enemyIndicator.LoadShoot();

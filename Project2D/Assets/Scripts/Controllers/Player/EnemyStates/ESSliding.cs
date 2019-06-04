@@ -9,10 +9,10 @@ public class ESSliding : AState
 
     private bool enterSlideZone = false;
 
-    public ESSliding(EnemyController _ec)
+    public ESSliding(EnemyController _ec) : base()
     {
         ec = _ec;
-        ec.anim.SetTrigger("T-Slide");
+        ec.animator.SetTrigger("T-Slide");
     }
 
     public override void CheckTransition()
@@ -22,7 +22,7 @@ public class ESSliding : AState
             enterSlideZone = true;
         if (enterSlideZone && !ec.DetectObstacleUp())
         {
-            ec.anim.SetTrigger("T-SlideOut");
+            ec.animator.SetTrigger("T-SlideOut");
             ec.ChangeState(new ESGrounded(ec));
         }
                 

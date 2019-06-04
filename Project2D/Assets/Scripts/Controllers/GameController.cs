@@ -218,7 +218,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         if (player.isDead)
             return;
 
-        uiController.ShowEndPanel(win);
+        uiController.ActiveEndMenu(win);
         AudioController._audioManager.StopAllMusic();
 
         player.Kill();
