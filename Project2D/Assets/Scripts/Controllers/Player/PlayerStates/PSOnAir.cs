@@ -6,23 +6,23 @@ public class PSOnAir : AState
 {
     [HideInInspector] private PlayerController pc;
 
-    public PSOnAir(PlayerController _pc)
+    public PSOnAir(PlayerController _pc) : base()
     {
         pc = _pc;
-        pc.rb.gravityScale = 2.7f;
+        pc.rigidbody2d.gravityScale = 2.7f;
     }
 
     public override void CheckTransition()
     {
-        if (Input.GetKey(KeyCode.S) && pc.rb.velocity.y <= 0)
+        if (Input.GetKey(KeyCode.S) && pc.rigidbody2d.velocity.y <= 0)
             pc.ChangeState(new PSSliding(pc));
 
         if (pc.isGrounded)
         {
-            if (pc.anim.GetBool("B-Rope"))
-                pc.anim.SetBool("B-Rope", false);
-            if (pc.anim.GetBool("B-ZipLine"))
-                pc.anim.SetBool("B-ZipLine", false);
+            if (pc.animator.GetBool("B-Rope"))
+                pc.animator.SetBool("B-Rope", false);
+            if (pc.animator.GetBool("B-ZipLine"))
+                pc.animator.SetBool("B-ZipLine", false);
             AudioController._audioManager.PlaySound("dropping");
             pc.ChangeState(new PSGrounded(pc));
         }
@@ -39,10 +39,10 @@ public class PSOnAir : AState
 
     public override void FixedUpdate()
     {
-        if (pc.rb.velocity.x < pc.model.speed)
-            pc.rb.velocity = new Vector2(pc.gc.CalculateVelocity(pc.model.speed), pc.rb.velocity.y);
+        if (pc.rigidbody2d.velocity.x < pc.model.speed)
+            pc.rigidbody2d.velocity = new Vector2(gc.GetVelocity(pc.model.speed), pc.rigidbody2d.velocity.y);
         else
-            pc.rb.velocity = new Vector2(pc.gc.CalculateVelocity(pc.rb.velocity.x), pc.rb.velocity.y);
+            pc.rigidbody2d.velocity = new Vector2(gc.GetVelocity(pc.rigidbody2d.velocity.x), pc.rigidbody2d.velocity.y);
     }
 
     public override void Update()

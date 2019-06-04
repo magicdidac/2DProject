@@ -4,17 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UIController : MonoBehaviour
+public class UIController : AController
 {
-    //GameController
-    [HideInInspector] private GameController gc;
+    /*
+     LAWS:
+        - All variables will be private if you need access to it, plese do it by Getter and/or Setter
+        - All the functions should be used somewhere, except controllers (only on GameController class)
+        - Just put the regions that the class will use
+        - All variables, regardless of whether they are public or private, you should put [HideInInspector] or [SerializeField]
+     */
+
+    #region Variables
 
     //Menus
     [Header("Menus")]
-    [SerializeField] public GameObject pauseMenu;
-    [SerializeField] public GameObject optionsMenu;
-    [SerializeField] public EndGame endGameMenu;
-    [SerializeField] public GameObject debugMenu;
+    [SerializeField] private GameObject pauseMenu = null;
+    [SerializeField] private EndGame endGameMenu = null;
+    [SerializeField] private GameObject debugMenu = null;
 
     //Score Objects
     [Header("Score Objects")]
@@ -25,24 +31,29 @@ public class UIController : MonoBehaviour
 
     //Object references
     [Header("Objects References")]
-    [SerializeField] public EnemyIndicator enemyIndicator;
+    [SerializeField] private EnemyIndicator enemyIndicator = null;
     [SerializeField] private Text fpsText = null;
     [SerializeField] private GameObject fuelPanel = null;
     [SerializeField] private Image fuelArrow = null;
     [SerializeField] private GameObject startMessage = null;
 
     //Controll Vars
-    [HideInInspector] public bool pauseIsActive = false;
-    [HideInInspector] public bool fpsAreShowing = false;
-    [HideInInspector] private float deltaTime;
+    [HideInInspector] private bool pauseIsActive = false;
+    [HideInInspector] private bool fpsAreShowing = false;
+    [HideInInspector] private float deltaTime = 0;
 
+    #endregion
+
+
+    #region Initializers
+
+    //Start
     private void Start()
     {
-        gc = GameController.instance;
-        gc.uiController = this;
-        highScoreText.text = Format(gc.scoreController.highScore);
+        highScoreText.text = Format(gc.scoreController.GetHighScore());
     }
 
+    //Other functions that helps to initialize
     public void StartGame()
     {
         fuelPanel.SetActive(true);
@@ -50,32 +61,17 @@ public class UIController : MonoBehaviour
         startMessage.SetActive(false);
     }
 
-    public void SwitchPause()
-    {
-        pauseIsActive = !pauseIsActive;
-        pauseMenu.SetActive(pauseIsActive);
-        Time.timeScale = (pauseIsActive) ? 0 : 1;
-    }
+    #endregion
+    
 
-    public void SwitchFPS(bool _fpsAreShowing)
-    {
-        fpsAreShowing = _fpsAreShowing;
-        fpsText.gameObject.SetActive(fpsAreShowing);
-    }
-
-    public void StopGame()
-    {
-        
-        scorePanel.SetActive(false);
-        fuelPanel.SetActive(false);
-        fpsText.gameObject.SetActive(false);
-        enemyIndicator.gameObject.SetActive(false);
-    }
-
+    //Update
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F3))
             debugMenu.SetActive(!debugMenu.activeSelf);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            SwitchPause();
 
         UpdateFPS();
         if (gc.GetFloor() != 0)
@@ -83,6 +79,9 @@ public class UIController : MonoBehaviour
         else
             enemyIndicator.gameObject.SetActive(false);
     }
+
+
+    #region Other
 
     private void UpdateFPS()
     {
@@ -94,28 +93,40 @@ public class UIController : MonoBehaviour
         fpsText.text = "FPS: " + Mathf.Ceil(fps);
     }
 
-    public void UpdateFuelBar()
+    public void UpdateFuel()
     {
-        //fuelBar.fillAmount = gc.player.fuel / gc.player.model.maxFuel;
-        
-        float rotationZ = (gc.player.fuel / gc.player.model.maxFuel * 120) -60;
 
-        fuelArrow.rectTransform.rotation = Quaternion.Euler(0,0,-rotationZ);
+        float rotationZ = (gc.player.fuel / gc.player.model.maxFuel * 120) - 60;
+
+        fuelArrow.rectTransform.rotation = Quaternion.Euler(0, 0, -rotationZ);
     }
 
     public void UpdateScore()
     {
-        scoreText.text = Format(gc.scoreController.score);
+        scoreText.text = Format(gc.scoreController.GetScore())+"m";
     }
 
     public void UpdateCoins()
     {
-        coinsText.text = Format(gc.scoreController.coins);
+        coinsText.text = Format(gc.scoreController.GetCoinsScore());
     }
 
     public void UpdateHighScore()
     {
-        highScoreText.text = Format(gc.scoreController.highScore);
+        highScoreText.text = "record:"+Format(gc.scoreController.GetHighScore());
+    }
+
+    public void SwitchFPS(bool _fpsAreShowing)
+    {
+        fpsAreShowing = _fpsAreShowing;
+        fpsText.gameObject.SetActive(fpsAreShowing);
+    }
+
+    public void SwitchPause()
+    {
+        pauseIsActive = !pauseIsActive;
+        pauseMenu.SetActive(pauseIsActive);
+        Time.timeScale = (pauseIsActive) ? 0 : 1;
     }
 
     private string Format(int ammount)
@@ -126,8 +137,16 @@ public class UIController : MonoBehaviour
         return string.Format("000{0}", ammount);
     }
 
+    private void StopGame()
+    {
 
-    public void ShowEndPanel(bool win)
+        scorePanel.SetActive(false);
+        fuelPanel.SetActive(false);
+        fpsText.gameObject.SetActive(false);
+        enemyIndicator.gameObject.SetActive(false);
+    }
+
+    public void ActiveEndMenu(bool win)
     {
         StopGame();
         if (win)
@@ -140,9 +159,14 @@ public class UIController : MonoBehaviour
 
 
         gc.scoreController.UpdateHighScore();
-        endGameMenu.score.text = Format(gc.scoreController.score);
-        endGameMenu.coins.text = Format(gc.scoreController.coins);
+        endGameMenu.score.text = Format(gc.scoreController.GetScore());
+        endGameMenu.coins.text = Format(gc.scoreController.GetCoinsScore());
         endGameMenu.gameObject.SetActive(true);
     }
+
+    
+
+    #endregion
+
 
 }

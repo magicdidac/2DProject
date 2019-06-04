@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PSDead : AState
 {
-    public PSDead(PlayerController pc)
+    public PSDead(PlayerController pc) : base()
     {
         
-        pc.rb.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+        pc.rigidbody2d.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
 
         /*pc.rb.sharedMaterial.bounciness = 3f;
         pc.rb.sharedMaterial.friction = .2f;*/

@@ -8,12 +8,12 @@ public class PSStun : AState
     [HideInInspector] private PlayerController pc;
     float duration = 0f;
 
-    public PSStun(PlayerController _pc)
+    public PSStun(PlayerController _pc) : base()
     {
         pc = _pc;
-        pc.rb.gravityScale = 2.7f;
-        pc.anim.SetTrigger("T-Impact");
-        pc.anim.SetBool("B-Slide", false);
+        pc.rigidbody2d.gravityScale = 2.7f;
+        pc.animator.SetTrigger("T-Impact");
+        pc.animator.SetBool("B-Slide", false);
     }
 
     public override void CheckTransition()
@@ -27,7 +27,7 @@ public class PSStun : AState
 
     public override void FixedUpdate()
     {
-        pc.rb.velocity = new Vector2(pc.gc.CalculateVelocity(pc.model.stunSpeed), pc.rb.velocity.y);
+        pc.rigidbody2d.velocity = new Vector2(gc.GetVelocity(pc.model.stunSpeed), pc.rigidbody2d.velocity.y);
     }
 
     public override void Update()

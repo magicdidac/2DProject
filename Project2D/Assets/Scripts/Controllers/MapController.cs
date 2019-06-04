@@ -2,23 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapController : MonoBehaviour
+public class MapController : AController
 {
+    /*
+     LAWS:
+        - All variables will be private if you need access to it, plese do it by Getter and/or Setter
+        - All the functions should be used somewhere, except controllers (only on GameController class)
+        - Just put the regions that the class will use
+        - All variables, regardless of whether they are public or private, you should put [HideInInspector] or [SerializeField]
+     */
 
-    //GameController instance
-    [HideInInspector] private GameController gc;
-    
-
-
-    //New Variables
+    #region Variables
 
     [SerializeField] private ChunkStore store = null;
-    [Range(0,.9f)]
+    [Range(0, .9f)]
     [SerializeField] private float increaseAmmountProbability = .1f;
     [SerializeField] private GameObject background = null;
 
     [HideInInspector] private int challengeCounter = 3;
-    [HideInInspector] public int chunksCounter = 0;
+    [HideInInspector] private int chunksCounter = 0;
     [HideInInspector] private float transitionChunkProbability = 0;
     [HideInInspector] private float xOffset = 0;
     [HideInInspector] private float nextSpawnPosition = 9;
@@ -27,11 +29,14 @@ public class MapController : MonoBehaviour
     [HideInInspector] private Queue<GameObject> chunksQueue = null;
     [HideInInspector] private Queue<GameObject> backgroundQueue = null;
 
+    #endregion
+
+
+    #region Initializers
+
+    //Start
     private void Start()
     {
-        gc = GameController.instance;
-        gc.mapController = this;
-
         chunksSpawned = new List<Chunk>();
         chunksQueue = new Queue<GameObject>();
         backgroundQueue = new Queue<GameObject>();
@@ -40,69 +45,12 @@ public class MapController : MonoBehaviour
         NewBackground();
     }
 
-    private void Update()
-    {
-        if (gc.player.isDead)
-            return;
-
-        if (gc.player.transform.position.x >= xOffset-19.2f)
-            NewBackground();
-        
-        if (gc.player.transform.position.x > nextSpawnPosition)
-            NextChunk();
-        
-    }
+    #endregion
 
 
-    private void NewBackground()
-    {
-        xOffset += 19.2f;
-        backgroundQueue.Enqueue(Instantiate(background,new Vector3(xOffset,0),Quaternion.identity));
-        if (backgroundQueue.Count > 3)
-            GameObject.Destroy(backgroundQueue.Dequeue());
-    }
+    #region Getters
 
-
-
-
-    private void NextChunk()
-    {
-        Chunk newChunk = null;
-
-
-        if (challengeCounter > 0)
-        {
-            if (Random.value < transitionChunkProbability)
-            {
-                newChunk = GetTransitionChunk();
-                transitionChunkProbability = 0;
-            }
-            else
-            {
-                newChunk = GetChallengeChunk();
-                challengeCounter--;
-                transitionChunkProbability += increaseAmmountProbability;
-                chunksCounter++;
-                gc.IncreasePlayerSkill();
-            }
-        }
-        else
-        {
-            newChunk = GetRewardChunk();
-
-            gc.IncreaseVelocityMultiplier();
-
-            challengeCounter = Random.Range(3,6);
-        }
-
-        if(chunksQueue.Count > 1)
-            Destroy(chunksQueue.Dequeue());
-
-        GameObject chunkObject = SpawnChunk(newChunk);
-        lastChunkLenght = newChunk.lenght;
-        nextSpawnPosition = chunkObject.transform.position.x;
-        chunksQueue.Enqueue(chunkObject);
-    }
+    public int GetChunksCounter() { return chunksCounter; }
 
     private Chunk GetChallengeChunk()
     {
@@ -182,9 +130,81 @@ public class MapController : MonoBehaviour
         return GetChunkByArray(store.reward);
     }
 
+    #endregion
+    
+
+    //Update
+    private void Update()
+    {
+        if (!gc.IsGameRunning() || gc.player.isDead)
+            return;
+
+        if (gc.player.transform.position.x >= xOffset - 19.2f)
+            NewBackground();
+
+        if (gc.player.transform.position.x > nextSpawnPosition)
+            NextChunk();
+
+    }
+
+
+    #region Other
+
+    private void NewBackground()
+    {
+        xOffset += 19.2f;
+        backgroundQueue.Enqueue(Instantiate(background, new Vector3(xOffset, 0), Quaternion.identity));
+        if (backgroundQueue.Count > 3)
+            GameObject.Destroy(backgroundQueue.Dequeue());
+    }
+
+    private void NextChunk()
+    {
+        Chunk newChunk = null;
+
+
+        if (challengeCounter > 0)
+        {
+            if (Random.value < transitionChunkProbability)
+            {
+                newChunk = GetTransitionChunk();
+                transitionChunkProbability = 0;
+            }
+            else
+            {
+                newChunk = GetChallengeChunk();
+                challengeCounter--;
+                transitionChunkProbability += increaseAmmountProbability;
+                chunksCounter++;
+                gc.IncreasePlayerSkill();
+            }
+        }
+        else
+        {
+            newChunk = GetRewardChunk();
+
+            gc.IncreaseVelocityMultiplier();
+
+            challengeCounter = Random.Range(3, 6);
+        }
+
+        if (chunksQueue.Count > 1)
+            Destroy(chunksQueue.Dequeue());
+
+        GameObject chunkObject = SpawnChunk(newChunk);
+        lastChunkLenght = newChunk.lenght;
+        nextSpawnPosition = chunkObject.transform.position.x;
+        chunksQueue.Enqueue(chunkObject);
+    }
+
+
+
     private GameObject SpawnChunk(Chunk c)
     {
-        return Instantiate(c.prefab, new Vector3(nextSpawnPosition + (lastChunkLenght/2) + (c.lenght / 2), gc.GetFloor() * 8, 0), Quaternion.identity);
+        return Instantiate(c.prefab, new Vector3(nextSpawnPosition + (lastChunkLenght / 2) + (c.lenght / 2), gc.GetFloor() * 8, 0), Quaternion.identity);
     }
+
+    #endregion
+
 
 }

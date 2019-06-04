@@ -4893,10 +4893,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baaa6b2ddecb6e14787b56d112110b55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gc: {fileID: 0}
-  rb: {fileID: 7688831546595525798}
-  spr: {fileID: 524120342760411193}
-  anim: {fileID: 1567120741061893845}
+  rigidbody2d: {fileID: 7688831546595525798}
+  sprite: {fileID: 524120342760411193}
+  animator: {fileID: 1567120741061893845}
   model: {fileID: 11400000, guid: b1f0c58016d99b648972af57dd490c45, type: 2}
   isGrounded: 0
   isTrampoline: 0

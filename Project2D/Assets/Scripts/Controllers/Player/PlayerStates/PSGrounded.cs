@@ -6,12 +6,12 @@ public class PSGrounded : AState
 {
     [HideInInspector] private PlayerController pc;
 
-    public PSGrounded(PlayerController _pc)
+    public PSGrounded(PlayerController _pc) : base()
     {
         pc = _pc;
 
-        if(pc.rb != null)
-            pc.rb.gravityScale = 2.7f;
+        if(pc.rigidbody2d != null)
+            pc.rigidbody2d.gravityScale = 2.7f;
 
         pc.model.speed = pc.model.normalSpeed;
     }
@@ -30,7 +30,7 @@ public class PSGrounded : AState
 
     public override void FixedUpdate()
     {
-        pc.rb.velocity = new Vector2(pc.gc.CalculateVelocity(pc.model.speed), pc.rb.velocity.y);
+        pc.rigidbody2d.velocity = new Vector2(gc.GetVelocity(pc.model.speed), pc.rigidbody2d.velocity.y);
     }
 
     public override void Update()
@@ -42,8 +42,8 @@ public class PSGrounded : AState
     {
         if (Input.GetButtonDown("Jump"))
         {
-            pc.anim.SetTrigger("T-Jump");
-            pc.rb.velocity = Vector2.up * pc.model.jumpForce;
+            pc.animator.SetTrigger("T-Jump");
+            pc.rigidbody2d.velocity = Vector2.up * pc.model.jumpForce;
         }
     }
 }

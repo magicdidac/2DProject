@@ -9,20 +9,20 @@ public class PSSliding : AState
 
     private PlayerController pc;
 
-    public PSSliding(PlayerController _pc)
+    public PSSliding(PlayerController _pc) : base()
     {
         pc = _pc;
         if (!pc.isGrounded)
         {
-            pc.rb.gravityScale = 7;
+            pc.rigidbody2d.gravityScale = 7;
             goingDown = true;
         }
         else goingDown = false;
 
-        pc.anim.SetBool("B-Rope", false);
-        pc.anim.SetBool("B-ZipLine", false);
-        pc.anim.SetBool("B-Slide", true);
-        pc.anim.SetTrigger("T-Slide");
+        pc.animator.SetBool("B-Rope", false);
+        pc.animator.SetBool("B-ZipLine", false);
+        pc.animator.SetBool("B-Slide", true);
+        pc.animator.SetTrigger("T-Slide");
         
     }
 
@@ -47,14 +47,14 @@ public class PSSliding : AState
 
     private void ChangeToState(AState state)
     {
-        pc.anim.SetTrigger("T-SlideUp");
-        pc.anim.SetBool("B-Slide", false);
+        pc.animator.SetTrigger("T-SlideUp");
+        pc.animator.SetBool("B-Slide", false);
         pc.ChangeState(state);
     }
 
     public override void FixedUpdate()
     {
-        pc.rb.velocity = new Vector2(pc.gc.CalculateVelocity(pc.model.slideSpeed), pc.rb.velocity.y);
+        pc.rigidbody2d.velocity = new Vector2(gc.GetVelocity(pc.model.slideSpeed), pc.rigidbody2d.velocity.y);
     }
 
     public override void Update()
@@ -69,7 +69,7 @@ public class PSSliding : AState
         if (pc.isGrounded && Input.GetButtonDown("Jump"))
         {
             pc.model.speed = pc.model.plusJumpSpeedX;
-            pc.rb.velocity = Vector2.up * pc.model.jumpForce;
+            pc.rigidbody2d.velocity = Vector2.up * pc.model.jumpForce;
         }
     }
 }

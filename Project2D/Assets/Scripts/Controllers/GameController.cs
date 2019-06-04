@@ -6,9 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour //This class follows the Singleton Pattern
 {
+
+    #region Variables
+
     //Instance
     [HideInInspector] public static GameController instance = null;
-    
+
+
+    //Prefabs
+    [Header("Prefabs")]
+    [HideInInspector] private Transform playerSpawnPoint = null;
+    [SerializeField] private GameObject playerObj = null;
+    [SerializeField] private GameObject enemyObj = null;
+    [SerializeField] private float enemyPositionOfset = 0;
 
     //Controllers
     [HideInInspector] public MapController mapController;
@@ -21,34 +31,31 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     //Control Vars
     [Header("Control Vars")]
+    [HideInInspector] private bool isGameRunning = false;
     [HideInInspector] private int floor = 0;
     [HideInInspector] private float velocityMultiplier = .9f;
-    [SerializeField] public readonly float minEnemyDistance = 1;
-    [SerializeField] public readonly float maxEnemydistance = 9;
-    [HideInInspector] private bool isGameRunning = false;
-    
+    [SerializeField] private float minEnemyDistance = 1;
+    [SerializeField] private float maxEnemydistance = 9;
 
-    public void restartVariables()
-    {
-        floor = 0;
-        velocityMultiplier = .9f;
-        isGameRunning = false;
-    }
+    #endregion
+
+
+    #region Initializers
 
     private void Awake()
     {
+        //Singleton Pattern
         if (instance == null)
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
+        
+        DontDestroyOnLoad(gameObject); //Dont destroy when change the scene
 
-        //AudioController._audioManager.PlayMusic("playGame"); no cal si ja es un PlayOnAwake
-        DontDestroyOnLoad(gameObject);
-    }
+        InitializePlayerPrefs();
 
-    private void Start()
-    {
-        if (Time.timeScale == 0) Time.timeScale = 1;
+        //TODO: Play chill Music
+
     }
 
     public void StartGame()
@@ -57,104 +64,33 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             return;
 
         isGameRunning = true;
+
         uiController.StartGame();
-        player.gameObject.SetActive(true);
-        enemy.gameObject.SetActive(true);
+
+        //Spawn player and enemy
+        playerSpawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
+        player = Instantiate(playerObj, playerSpawnPoint.position, Quaternion.identity).GetComponent<PlayerController>();
+        enemy = Instantiate(enemyObj, GetEnemySpawnPosition(), Quaternion.identity).GetComponent<EnemyController>();
     }
 
-    private void Update()
+    public void restartVariables()
     {
-        if (!isGameRunning && Input.GetKeyDown(KeyCode.Space))
-            StartGame();
-
-        if(SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            if (getEnemyDistance() < minEnemyDistance && floor == 0 && !player.isDead)
-                GameWin(true);
-
-            if (getEnemyDistance() > maxEnemydistance && player.isDead)
-                GameWin(false);
-        }
+        floor = 0;
+        velocityMultiplier = .9f;
+        isGameRunning = false;
     }
 
-    public void LoadScene(int index)
+
+    #endregion
+
+
+    #region Getters
+
+    public int GetFloor() { return floor; }
+
+    public float GetEnemyDistance()
     {
-        SceneManager.LoadScene(index);
-    }
-
-    public void GameWin(bool win)
-    {
-        if (player.isDead)
-            return;
-        uiController.ShowEndPanel(win);
-        AudioController._audioManager.StopAllMusic();
-
-        player.Kill();
-        if (win)
-            scoreController.MultiplyScore();
-
-
-        scoreController.UpdateHighScore();
-    }
-
-    public void AddFloor()
-    {
-        if (floor < 1)
-            floor++;
-    }
-
-    public void SubtractFloor()
-    {
-        if (floor > -1)
-            floor--;
-    }
-
-    public int GetFloor()
-    {
-        return floor;
-    }
-
-    public float GetVelocityMultiplier()
-    {
-        return velocityMultiplier;
-    }    
-
-    public void IncreaseVelocityMultiplier()
-    {
-        if (velocityMultiplier < 1.75f)
-            velocityMultiplier += .1f;
-        else
-            velocityMultiplier = 1.75f;
-    }
-
-    public void IncreasePlayerSkill()
-    {
-        int r = (int) Mathf.Floor(Mathf.Log((mapController.chunksCounter*.5f),1.5f));
-        if (r < 0) r = 0;
-        r += PlayerPrefs.GetInt("PlayerSkill", 30);
-        if (r <= 100)
-            PlayerPrefs.SetInt("PlayerSkill", r);
-        else
-            PlayerPrefs.SetInt("PlayerSkill", 100);
-    }
-
-    public void DecreasePlayerSkill()
-    {
-        int r = 30 - mapController.chunksCounter;
-        r += PlayerPrefs.GetInt("PlayerSkill", 30);
-
-        if (r > 0)
-            PlayerPrefs.SetInt("PlayerSkill", r);
-        else
-            PlayerPrefs.SetInt("PlayerSkill", 0);
-
-    }
-
-    public float CalculateVelocity(float vo)
-    {
-        vo *= GetSkillMultiplier();
-
-        return vo * velocityMultiplier;
+        return (Mathf.Round((enemy.transform.position.x - player.transform.position.x) * 100) / 100);
     }
 
     public float GetSkillMultiplier()
@@ -173,34 +109,181 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             return 1.5f;
     }
 
-    //pospuesto
-    public float getEnemyDistance()
+    public float GetVelocityMultiplier() { return velocityMultiplier; }
+
+    public float GetVelocity(float vo)
     {
-        return (Mathf.Round((enemy.transform.position.x - player.transform.position.x)*100)/100);
+        vo *= GetSkillMultiplier();
+
+        return vo * velocityMultiplier;
     }
 
-    public void Exit()
+    private Vector3 GetEnemySpawnPosition()
     {
-        Application.Quit();
-    }
-    
-
-    private void DeletePlayerPrefs()
-    {
-        PlayerPrefs.DeleteAll();
+        return playerSpawnPoint.position + (Vector3.right * enemyPositionOfset);
     }
 
-    /*private void InitializePlayerPrefs()
+    public float GetMinimumEnemyDistance() { return minEnemyDistance; }
+
+    public bool IsGameRunning() { return isGameRunning; }
+
+    #endregion
+
+
+    #region Setters or Variable Modifiers
+
+    public void AddController(AController c)
     {
-        PlayerPrefs.SetFloat("MasterVolume", 0.6f);
-        PlayerPrefs.SetInt("MusicActive", 1); //0 = OFF, 1 = ON
-        PlayerPrefs.SetInt("ShowFPS", 0); //0 = OFF, 1 = ON
-        PlayerPrefs.SetFloat("Brightness", 0.0f);
-        PlayerPrefs.SetInt("HighScore", 0);
-    }*/
+        if (c is MapController)
+            mapController = (MapController)c;
+        else if (c is AudioController)
+            audioController = (AudioController)c;
+        else if (c is ScoreController)
+            scoreController = (ScoreController)c;
+        else if (c is UIController)
+            uiController = (UIController)c;
+
+    }
+
+    public void AddFloor()
+    {
+        if (floor < 1)
+            floor++;
+    }
+
+    public void SubtractFloor()
+    {
+        if (floor > -1)
+            floor--;
+    }
+
+    public void IncreaseVelocityMultiplier()
+    {
+        if (velocityMultiplier < 1.75f)
+            velocityMultiplier += .1f;
+        else
+            velocityMultiplier = 1.75f;
+    }
+
+    public void IncreasePlayerSkill()
+    {
+        int r = (int)Mathf.Floor(Mathf.Log((mapController.GetChunksCounter() * .5f), 1.5f));
+        if (r < 0) r = 0;
+        r += PlayerPrefs.GetInt("PlayerSkill", 30);
+        if (r <= 100)
+            PlayerPrefs.SetInt("PlayerSkill", r);
+        else
+            PlayerPrefs.SetInt("PlayerSkill", 100);
+    }
+
+    public void DecreasePlayerSkill()
+    {
+        int r = 30 - mapController.GetChunksCounter();
+        r += PlayerPrefs.GetInt("PlayerSkill", 30);
+
+        if (r > 0)
+            PlayerPrefs.SetInt("PlayerSkill", r);
+        else
+            PlayerPrefs.SetInt("PlayerSkill", 0);
+
+    }
+
+    #endregion
 
 
-    //DATABASE
+    private void Update()
+    {
+        if (!isGameRunning && Input.GetKeyDown(KeyCode.Space)) //Start Game
+            StartGame();
+
+        if (isGameRunning)
+        {
+            if (GetEnemyDistance() < minEnemyDistance && floor == 0 && !player.isDead) //Check
+                GameWin(true);
+
+            if (GetEnemyDistance() > maxEnemydistance && player.isDead)
+                GameWin(false);
+        }
+    }
+
+
+    #region Other
+
+    public void LoadScene(int index) { SceneManager.LoadScene(index); }
+
+    public void Exit() { Application.Quit(); }
+
+    public void GameWin(bool win)
+    {
+        if (player.isDead)
+            return;
+
+        uiController.ActiveEndMenu(win);
+        AudioController._audioManager.StopAllMusic();
+
+        player.Kill();
+        if (win)
+            scoreController.MultiplyScore();
+
+
+        scoreController.UpdateHighScore();
+    }
+
+    #endregion
+
+
+    #region PlayerPrefs
+
+    private void DeletePlayerPrefs() { PlayerPrefs.DeleteAll(); }
+
+    private void InitializePlayerPrefs()
+    {
+        PlayerPrefs.GetFloat("MasterVolume", .6f);
+        PlayerPrefs.GetInt("MusicActive", 1); //0 = OFF - 1 = ON
+        PlayerPrefs.GetInt("ShowFPS", 0); //0 = OFF - 1 = ON
+        PlayerPrefs.GetFloat("Brightness", .5f);
+        PlayerPrefs.GetInt("HighScore", 0);
+        PlayerPrefs.GetInt("PlayerSkill", 30);
+    }
+
+    #endregion
+
+
+    #region Gizmos
+
+    private void OnDrawGizmos()
+    {
+        DrawEnemySpawnPoint();
+        DrawMinimalDistance();
+    }
+
+    private void DrawEnemySpawnPoint()
+    {
+        if (playerSpawnPoint != null)
+        {
+            Gizmos.color = Color.white;
+            Gizmos.DrawSphere(GetEnemySpawnPosition(), .25f);
+        }
+        else
+            playerSpawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
+    }
+
+    private void DrawMinimalDistance()
+    {
+        if (player == null) //Exit if player doesn't exists on current scene
+            return;
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawLine(new Vector3(player.transform.position.x + minEnemyDistance, -.5f), new Vector3(player.transform.position.x + minEnemyDistance, 1));
+               
+    }
+
+    #endregion
+
+
+
+    #region Database
+
     /*
     public void UploadScore()
     {
@@ -217,4 +300,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         yield return www;
         Debug.Log(www.text);
     }*/
+
+    #endregion
+
 }
