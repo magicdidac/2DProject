@@ -73,6 +73,7 @@ public class PlayerController : AMoveController
 
     public void ConsumeFuel()
     {
+        if (!isGrounded) return; 
         fuel -= Time.deltaTime;
         gc.uiController.UpdateFuel();
     }
