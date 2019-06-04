@@ -228,4 +228,7 @@ MonoBehaviour:
   trampolineMask:
     serializedVersion: 2
     m_Bits: 512
+  boxMask:
+    serializedVersion: 2
+    m_Bits: 1024
   fuel: 0

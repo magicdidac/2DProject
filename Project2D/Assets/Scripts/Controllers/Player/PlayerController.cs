@@ -4,13 +4,15 @@ using UnityEditor;
 using UnityEngine;
 
 public class PlayerController : AMoveController
-{   
+{
 
-    //Layers
+    #region Variables
+
     [Header("Layers")]
     [SerializeField] public LayerMask groundMask;
     [SerializeField] public LayerMask trampolineMask;
-    
+    [SerializeField] public LayerMask boxMask;
+
 
     [HideInInspector] private GameObject downObject;
     
@@ -19,14 +21,24 @@ public class PlayerController : AMoveController
 
     [HideInInspector] public float fuel;
 
+    [HideInInspector] private BoxCollider2D boxCollider;
+
+    #endregion
+
+
+    #region Initializers
+
     private void Start()
     {
         gc.player = this;
         fuel = model.maxFuel;
+        boxCollider = GetComponent<BoxCollider2D>();
         ChangeState(new PSGrounded(this));
         AudioController._audioManager.PlaySound("playerMove"); // <- cal si ja esta en playOnAwake
     }
-    
+
+    #endregion
+
     private void FixedUpdate()
     {
         if (isDead)
@@ -41,10 +53,13 @@ public class PlayerController : AMoveController
             return;
 
         isGrounded = detectCollision(groundMask, model.offset);
+        detectObstacleCollision(boxMask);
         animator.SetBool("B-Ground",isGrounded);
         currentState.Update();
     }
 
+
+    #region Other
     private void LateUpdate()
     {
         if (isDead)
@@ -84,7 +99,30 @@ public class PlayerController : AMoveController
         gc.uiController.UpdateFuel();
     }
 
-    //Detect collisions
+    #endregion
+
+
+    #region Triggers or Collisions
+
+    private void detectObstacleCollision(LayerMask p_lm)
+    {
+        /*
+         * - Quitar el tag Kill al prefab InstaKill, dejarlo en default
+         * - Recalcular el enemy la detección del Instakill usando el layer, no el tag (Raycast)
+         * - Una vez acabado suprimir la detección del tag Kill en el metodo OnTriggerEnter2D
+         */
+        var startPoint = new Vector3(boxCollider.bounds.max.x, boxCollider.bounds.min.y);
+        var hit = Physics2D.Raycast(startPoint, Vector3.right, 0.25f, p_lm);
+
+        if (hit.collider == null) return;
+        if (hit.collider.CompareTag("Box"))
+        {
+            isStuned = true;
+            Destroy(hit.collider.gameObject);
+        }
+        else gc.GameWin(false);
+    }
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject == lastTriggerObject) //Detectar si el collaider que ha entrado no entra otra vez por los dos colliders del player
@@ -92,15 +130,15 @@ public class PlayerController : AMoveController
 
         lastTriggerObject = col.gameObject;
 
-        if (col.CompareTag("Box")) //Si colisiona con una Box
+        /*if (col.CompareTag("Box")) //Si colisiona con una Box
         {
             if (isGrounded && !animator.GetBool("B-Slide")) //si no está deslizandose entonces se relantiza
                 isStuned = true;
 
             col.gameObject.SetActive(false); //elimina el obstaculo
-        }
+        }*/
 
-        else if (col.CompareTag("Rope") && !isRope) //Si colisiona con una Rope
+        if (col.CompareTag("Rope") && !isRope) //Si colisiona con una Rope
         {
             transform.SetParent(col.gameObject.transform); //Se hace hijo de la Rope
             rigidbody2d.velocity = Vector2.zero; //Detenemos al Player
@@ -153,6 +191,9 @@ public class PlayerController : AMoveController
             gc.GameWin(false);
     }
 
+    #endregion
+
+
     #region Gizmos
 
     private void OnDrawGizmos()
@@ -161,6 +202,7 @@ public class PlayerController : AMoveController
 
         drawGroundRayCast();
         drawTrampolineRayCast();
+        drawBoxDetectRayCast();
     }
 
     private void drawGroundRayCast()
@@ -170,7 +212,7 @@ public class PlayerController : AMoveController
         for (int i = 0; i <= model.precisionDown; i++)
         {
             Vector3 startPoint = new Vector3((sprite.bounds.min.x + (model.offset / 2)) + distanceBetweenRays * i, sprite.bounds.min.y, 0);
-            Debug.DrawLine(startPoint, startPoint + (Vector3.down * .1f), Color.red);
+            Gizmos.DrawLine(startPoint, startPoint + (Vector3.down * .1f));
         }
     }
 
@@ -181,8 +223,16 @@ public class PlayerController : AMoveController
         for (int i = 0; i <= model.precisionDown; i++)
         {
             Vector3 startPoint = new Vector3((sprite.bounds.min.x + (model.trampolineOffset / 2)) + distanceBetweenRays * i, sprite.bounds.min.y, 0);
-            Debug.DrawLine(startPoint, startPoint + (Vector3.down * .1f), Color.magenta);
+            Gizmos.DrawLine(startPoint, startPoint + (Vector3.down * .1f));
         }
+    }
+
+    private void drawBoxDetectRayCast()
+    {
+        var boxCollider = GetComponent<BoxCollider2D>();
+        var startPorint = new Vector3(boxCollider.bounds.max.x, boxCollider.bounds.min.y);
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(startPorint, startPorint + (Vector3.right * 0.25f));
     }
 
     #endregion
