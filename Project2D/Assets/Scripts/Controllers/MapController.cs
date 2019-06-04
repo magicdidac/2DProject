@@ -2,47 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapController : MonoBehaviour
+public class MapController : AController
 {
 
-    //GameController instance
-    [HideInInspector] private GameController gc;
     
 
-
-    //New Variables
-
-    [SerializeField] private ChunkStore store = null;
-    [Range(0,.9f)]
-    [SerializeField] private float increaseAmmountProbability = .1f;
-    [SerializeField] private GameObject background = null;
-
-    [HideInInspector] private int challengeCounter = 3;
-    [HideInInspector] public int chunksCounter = 0;
-    [HideInInspector] private float transitionChunkProbability = 0;
-    [HideInInspector] private float xOffset = 0;
-    [HideInInspector] private float nextSpawnPosition = 9;
-    [HideInInspector] private float lastChunkLenght = 0;
-    [HideInInspector] private List<Chunk> chunksSpawned = null;
-    [HideInInspector] private Queue<GameObject> chunksQueue = null;
-    [HideInInspector] private Queue<GameObject> backgroundQueue = null;
-
-    private void Start()
-    {
-        gc = GameController.instance;
-        gc.mapController = this;
-
-        chunksSpawned = new List<Chunk>();
-        chunksQueue = new Queue<GameObject>();
-        backgroundQueue = new Queue<GameObject>();
-
-        NextChunk();
-        NewBackground();
-    }
+    
 
     private void Update()
     {
-        if (gc.player.isDead)
+        if (!gc.IsGameRunning() || gc.player.isDead)
             return;
 
         if (gc.player.transform.position.x >= xOffset-19.2f)
@@ -186,5 +155,102 @@ public class MapController : MonoBehaviour
     {
         return Instantiate(c.prefab, new Vector3(nextSpawnPosition + (lastChunkLenght/2) + (c.lenght / 2), gc.GetFloor() * 8, 0), Quaternion.identity);
     }
+
+
+
+
+
+    /*
+     LAWS:
+        - All variables will be private if you need access to it, plese do it by Getter and/or Setter
+        - All the functions should be used somewhere, except controllers (only on GameController class)
+        - Just put the regions that the class will use
+        - All variables, regardless of whether they are public or private, you should put [HideInInspector] or [SerializeField]
+     */
+
+    #region Variables
+
+
+
+    [SerializeField] private ChunkStore store = null;
+    [Range(0, .9f)]
+    [SerializeField] private float increaseAmmountProbability = .1f;
+    [SerializeField] private GameObject background = null;
+
+    [HideInInspector] private int challengeCounter = 3;
+    [HideInInspector] private int chunksCounter = 0;
+    [HideInInspector] private float transitionChunkProbability = 0;
+    [HideInInspector] private float xOffset = 0;
+    [HideInInspector] private float nextSpawnPosition = 9;
+    [HideInInspector] private float lastChunkLenght = 0;
+    [HideInInspector] private List<Chunk> chunksSpawned = null;
+    [HideInInspector] private Queue<GameObject> chunksQueue = null;
+    [HideInInspector] private Queue<GameObject> backgroundQueue = null;
+
+    #endregion
+
+
+    #region Initializers
+
+    //Awake
+
+    //OnEnable
+
+    //Start
+    private void Start()
+    {
+        chunksSpawned = new List<Chunk>();
+        chunksQueue = new Queue<GameObject>();
+        backgroundQueue = new Queue<GameObject>();
+
+        NextChunk();
+        NewBackground();
+    }
+
+    //Constructor
+
+    //Other functions that helps to initialize
+
+    #endregion
+
+
+    #region Getters
+
+    public int GetChunksCounter() { return chunksCounter; }
+
+    #endregion
+
+
+    #region Setters or Variable Modifiers
+
+
+
+    #endregion
+
+
+    //Update
+
+    //FixedUpdate
+
+    #region Triggers or Collisions
+
+
+
+    #endregion
+
+
+    #region Other
+
+    //Others functions...
+
+    #endregion
+
+
+    #region Gizmos
+
+
+
+    #endregion
+
 
 }

@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour //This class follows the Singleton Pattern
 {
+
+    #region Variables
+
     //Instance
     [HideInInspector] public static GameController instance = null;
 
@@ -34,8 +37,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [SerializeField] private float minEnemyDistance = 1;
     [SerializeField] private float maxEnemydistance = 9;
 
+    #endregion
 
-    
 
     #region Initializers
 
@@ -122,10 +125,25 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public float GetMinimumEnemyDistance() { return minEnemyDistance; }
 
+    public bool IsGameRunning() { return isGameRunning; }
+
     #endregion
 
 
     #region Setters or Variable Modifiers
+
+    public void AddController(AController c)
+    {
+        if (c is MapController)
+            mapController = (MapController)c;
+        else if (c is AudioController)
+            audioController = (AudioController)c;
+        else if (c is ScoreController)
+            scoreController = (ScoreController)c;
+        else if (c is UIController)
+            uiController = (UIController)c;
+
+    }
 
     public void AddFloor()
     {
@@ -149,7 +167,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void IncreasePlayerSkill()
     {
-        int r = (int)Mathf.Floor(Mathf.Log((mapController.chunksCounter * .5f), 1.5f));
+        int r = (int)Mathf.Floor(Mathf.Log((mapController.GetChunksCounter() * .5f), 1.5f));
         if (r < 0) r = 0;
         r += PlayerPrefs.GetInt("PlayerSkill", 30);
         if (r <= 100)
@@ -160,7 +178,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void DecreasePlayerSkill()
     {
-        int r = 30 - mapController.chunksCounter;
+        int r = 30 - mapController.GetChunksCounter();
         r += PlayerPrefs.GetInt("PlayerSkill", 30);
 
         if (r > 0)

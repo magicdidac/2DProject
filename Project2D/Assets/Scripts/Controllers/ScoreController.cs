@@ -4,9 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreController : MonoBehaviour
+public class ScoreController : AController
 {
-    private GameController gc;
 
     [HideInInspector]
     public int score { get; set; } = 0;
@@ -17,15 +16,13 @@ public class ScoreController : MonoBehaviour
     
     private void Awake()
     {
-        gc = GameController.instance;
-        gc.scoreController = this;
 
         highScore = PlayerPrefs.GetInt("HighScore",0);
     }
 
     private void Update()
     {
-        if (!gc.player.isDead)
+        if (gc.IsGameRunning() && !gc.player.isDead)
             UpdateScore();
     }
 

@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UIController : MonoBehaviour
+public class UIController : AController
 {
-    //GameController
-    [HideInInspector] private GameController gc;
 
     //Menus
     [Header("Menus")]
@@ -38,8 +36,6 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
-        gc = GameController.instance;
-        gc.uiController = this;
         highScoreText.text = Format(gc.scoreController.highScore);
     }
 

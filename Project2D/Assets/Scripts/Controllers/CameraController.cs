@@ -2,24 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController: MonoBehaviour
+public class CameraController: AController
 {
-    //GameController instace
-    [HideInInspector] private GameController gc;
     
 
     [HideInInspector] private float _offset = 4;
 
     [HideInInspector] private int myFloor = 0;
 
-    private void Start()
-    {
-        gc = GameController.instance;
-    }
 
     void FixedUpdate()
     {
-        if (gc.player.isDead)
+        if (!gc.IsGameRunning() || gc.player.isDead)
             return;
 
         if (gc.player.transform.position.x < transform.position.x - _offset - .1f)
