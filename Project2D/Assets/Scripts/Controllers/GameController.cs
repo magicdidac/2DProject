@@ -42,13 +42,13 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         else if (instance != this)
             Destroy(gameObject);
 
-        //AudioController._audioManager.PlayMusic("playGame"); no cal si ja es un PlayOnAwake
         DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
         if (Time.timeScale == 0) Time.timeScale = 1;
+        AudioController._audioManager.PlayMusic("softSound"); //PETA en el Awake
     }
 
     public void StartGame()
@@ -60,6 +60,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         uiController.StartGame();
         player.gameObject.SetActive(true);
         enemy.gameObject.SetActive(true);
+        AudioController._audioManager.PlayNewMusic("playGame");
     }
 
     private void Update()
