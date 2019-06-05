@@ -43,8 +43,6 @@ public class UIController : AController
 
     //Controll Vars
     [HideInInspector] private bool pauseIsActive = false;
-    [HideInInspector] private bool fpsAreShowing = false;
-    [HideInInspector] private float deltaTime = 0;
 
     #endregion
 
@@ -81,7 +79,6 @@ public class UIController : AController
         if (Input.GetKeyDown(KeyCode.Escape))
             SwitchPause();
 
-        UpdateFPS();
         UpdateEnemyDistance();
         UpdateFuel();
     }
@@ -89,15 +86,6 @@ public class UIController : AController
 
     #region Other
 
-    private void UpdateFPS()
-    {
-        if (!fpsAreShowing)
-            return;
-
-        deltaTime += (Time.deltaTime - deltaTime) * .1f;
-        float fps = 1 / deltaTime;
-        fpsText.text = "FPS: " + Mathf.Ceil(fps);
-    }
 
     public void SetOnTurboText()
     {
@@ -124,7 +112,6 @@ public class UIController : AController
 
     }
 
-
     public void UpdateScore()
     {
         scoreText.text = Format(gc.scoreController.GetScore());
@@ -143,12 +130,6 @@ public class UIController : AController
     public void UpdateEnemyDistance()
     {
         enemyDistanceText.text = Format2(gc.GetEnemyDistance());
-    }
-
-    public void SwitchFPS(bool _fpsAreShowing)
-    {
-        fpsAreShowing = _fpsAreShowing;
-        fpsText.gameObject.SetActive(fpsAreShowing);
     }
 
     public void SwitchPause()
