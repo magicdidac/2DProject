@@ -112,21 +112,30 @@ public class PlayerController : AMoveController
 
     private void detectObstacleCollision(LayerMask p_lm)
     {
-        /*
-         * - Quitar el tag Kill al prefab InstaKill, dejarlo en default
-         * - Recalcular el enemy la detección del Instakill usando el layer, no el tag (Raycast)
-         * - Una vez acabado suprimir la detección del tag Kill en el metodo OnTriggerEnter2D
-         */
-        var startPoint = new Vector3(boxCollider.bounds.max.x, boxCollider.bounds.min.y);
-        var hit = Physics2D.Raycast(startPoint, Vector3.right, 0.25f, p_lm);
+        var hitList = new List<RaycastHit2D>();
 
-        if (hit.collider == null) return;
-        if (hit.collider.CompareTag("Box"))
+        var headPoint = new Vector3(boxCollider.bounds.max.x, boxCollider.bounds.max.y - 0.25f);
+        var headHit = Physics2D.Raycast(headPoint, Vector3.right, 0.25f, p_lm);
+
+        hitList.Add(headHit);
+
+        var wheelPoint = new Vector3(boxCollider.bounds.max.x, boxCollider.bounds.min.y);
+        var wheelhit = Physics2D.Raycast(wheelPoint, Vector3.right, 0.25f, p_lm);
+
+        hitList.Add(wheelhit);
+
+        foreach (var hit in hitList)
         {
-            isStuned = true;
-            Destroy(hit.collider.gameObject);
+            if (hit.collider != null)
+            {
+                if (hit.collider.CompareTag("Box"))
+                {
+                    isStuned = true;
+                    Destroy(hit.collider.gameObject);
+                }
+                else gc.GameWin(false);
+            }
         }
-        else gc.GameWin(false);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -227,10 +236,14 @@ public class PlayerController : AMoveController
 
     private void drawBoxDetectRayCast()
     {
-        var boxCollider = GetComponent<BoxCollider2D>();
-        var startPorint = new Vector3(boxCollider.bounds.max.x, boxCollider.bounds.min.y);
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(startPorint, startPorint + (Vector3.right * 0.25f));
+
+        var boxCollider = GetComponent<BoxCollider2D>();
+        var headPoint = new Vector3(boxCollider.bounds.max.x, boxCollider.bounds.max.y - 0.25f);
+        Gizmos.DrawLine(headPoint, headPoint + (Vector3.right * 0.25f));
+
+        var wheelPoint = new Vector3(boxCollider.bounds.max.x, boxCollider.bounds.min.y);
+        Gizmos.DrawLine(wheelPoint, wheelPoint + (Vector3.right * 0.25f));
     }
 
     #endregion
