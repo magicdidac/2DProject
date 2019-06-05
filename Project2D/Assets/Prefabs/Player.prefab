@@ -230,6 +230,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   handObject: {fileID: 6766258079167848650}
+  boxMask:
+    serializedVersion: 2
+    m_Bits: 1024
   fuel: 0
 --- !u!1 &6926935270331468641
 GameObject:
