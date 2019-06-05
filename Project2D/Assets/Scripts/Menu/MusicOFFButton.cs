@@ -29,7 +29,7 @@ public class MusicOFFButton : MonoBehaviour
             on.GetComponent<MusicONButton>().isClicked = false;
             GetComponent<Image>().color = pressed;
             on.GetComponent<Image>().color = nonPressed;
-            AudioController._audioManager.PauseMusic();
+            GameController.instance.audioController.PauseMusic();
         }
     }
 }

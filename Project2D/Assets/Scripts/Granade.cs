@@ -100,7 +100,7 @@ public class Granade : MonoBehaviour
 
     private void explote()
     {
-        AudioController._audioManager.PlaySound("grenade");
+        gc.audioController.PlaySound("grenade");
         ps.Play();
         spr.SetActive(false);
         rb.velocity = Vector2.zero;

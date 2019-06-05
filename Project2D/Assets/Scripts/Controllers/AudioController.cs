@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AudioController : AController
 {
-    public static AudioController _audioManager = null;
+    //public static AudioController _audioManager = null;
 
     public List<Sound> music = new List<Sound>();
     public List<Sound> sounds = new List<Sound>();
@@ -17,14 +17,14 @@ public class AudioController : AController
 
     private void Awake()
     {
-        if (_audioManager == null) _audioManager = this;
+        /*if (_audioManager == null) _audioManager = this;
         else
         {
             Destroy(gameObject);
             return;
-        }
+        }*/
 
-        DontDestroyOnLoad(this);  //<-- yo creo que se necesita descomentar
+        //DontDestroyOnLoad(this);  //<-- yo creo que se necesita descomentar
 
         foreach (Sound m in music)
         {
@@ -43,6 +43,8 @@ public class AudioController : AController
             s.source.loop = s.loop;
             s.source.playOnAwake = s.playOnAwake;
         }
+
+        PlayMusic("radioSong");
 
     }
 

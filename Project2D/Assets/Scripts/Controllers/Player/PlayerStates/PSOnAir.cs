@@ -23,7 +23,7 @@ public class PSOnAir : AState
                 pc.animator.SetBool("B-Rope", false);
             if (pc.animator.GetBool("B-ZipLine"))
                 pc.animator.SetBool("B-ZipLine", false);
-            AudioController._audioManager.PlaySound("dropping");
+            gc.audioController.PlaySound("dropping");
             pc.ChangeState(new PSGrounded(pc));
         }
 

@@ -14,7 +14,7 @@ public class MasterVolume : MonoBehaviour
 
     public void ChangeVolume()
     {
-        AudioController._audioManager.setAllVolumes(GetComponent<Slider>().value);
+        GameController.instance.audioController.setAllVolumes(GetComponent<Slider>().value);
         PlayerPrefs.SetFloat("MasterVolume", GetComponent<Slider>().value);
     }
 }

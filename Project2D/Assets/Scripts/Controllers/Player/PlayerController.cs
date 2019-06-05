@@ -25,7 +25,7 @@ public class PlayerController : AMoveController
         gc.player = this;
         fuel = model.maxFuel;
         ChangeState(new PSGrounded(this));
-        AudioController._audioManager.PlaySound("playerMove"); // <- cal si ja esta en playOnAwake
+        gc.audioController.PlaySound("playerMove"); // <- cal si ja esta en playOnAwake
     }
     
     private void FixedUpdate()
@@ -138,14 +138,14 @@ public class PlayerController : AMoveController
         else if (col.CompareTag("Coin"))
         {
             gc.scoreController.AddCoins(1);
-            AudioController._audioManager.PlayNestedSound("coin");
+            gc.audioController.PlayNestedSound("coin");
             col.gameObject.SetActive(false);
         }
 
         else if (col.CompareTag("SuperCoin"))
         {
             gc.scoreController.AddCoins(5);
-            AudioController._audioManager.PlayNestedSound("coin");
+            gc.audioController.PlayNestedSound("coin");
             col.gameObject.SetActive(false);
         }
         else if (col.CompareTag("Combustible"))

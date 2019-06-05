@@ -44,21 +44,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   music:
-  - name: playGame
-    clip: {fileID: 8300000, guid: ebb09cf9d31975040973ca5e1761d0d3, type: 3}
+  - name: gameSong
+    clip: {fileID: 8300000, guid: 593f266098d9ed347958f56d50f10349, type: 3}
     loop: 1
-    playOnAwake: 1
+    playOnAwake: 0
     volume: 0.388
     source: {fileID: 0}
-  - name: softSound
-    clip: {fileID: 8300000, guid: d6c04f70eb29217419a93d54a5a40f3b, type: 3}
+  - name: radioSong
+    clip: {fileID: 8300000, guid: dbc776bbfe98e7b43bca2d1d16f8c8a8, type: 3}
     loop: 1
     playOnAwake: 0
     volume: 0.388
     source: {fileID: 0}
   sounds:
   - name: playerMove
-    clip: {fileID: 8300000, guid: ff438a3460e8fdb4da17667ecbb5c0c0, type: 3}
+    clip: {fileID: 8300000, guid: 8bf0ba12614a27245b0edd39a9fcd71d, type: 3}
     loop: 1
     playOnAwake: 1
     volume: 0.247

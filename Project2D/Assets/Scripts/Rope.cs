@@ -44,7 +44,7 @@ public class Rope : MonoBehaviour
     {
         playerTransform = playerT;
         allowMovement = true;
-        AudioController._audioManager.PlaySound("rope");
+        GameController.instance.audioController.PlaySound("rope");
     }
 
 }

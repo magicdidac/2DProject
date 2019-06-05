@@ -31,7 +31,6 @@ public class UIController : AController
 
     //Object references
     [Header("Objects References")]
-    [SerializeField] private Text fpsText = null;
     [SerializeField] private GameObject fuelPanel = null;
     [SerializeField] private Image fuelArrow = null;
     [SerializeField] private GameObject startMessage = null;
@@ -157,7 +156,6 @@ public class UIController : AController
         scorePanel.SetActive(false);
         fuelPanel.SetActive(false);
         enemyDistancePanel.SetActive(false);
-        fpsText.gameObject.SetActive(false);
     }
 
     public void ActiveEndMenu(bool win)

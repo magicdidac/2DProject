@@ -54,7 +54,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
         InitializePlayerPrefs();
 
-        //TODO: Play chill Music
+        
         //AudioController._audioManager.PlayMusic("softSound"); //PETA en el Awake
     }
 
@@ -72,7 +72,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         player = Instantiate(playerObj, playerSpawnPoint.position, Quaternion.identity).GetComponent<PlayerController>();
         enemy = Instantiate(enemyObj, GetEnemySpawnPosition(), Quaternion.identity).GetComponent<EnemyController>();
 
-        AudioController._audioManager.PlayNewMusic("playGame");
+        audioController.StopAllMusic();
+        audioController.PlayMusic("gameSong");
     }
 
     public void restartVariables()
@@ -232,7 +233,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         scoreController.UpdateHighScore();
 
         uiController.ActiveEndMenu(win);
-        AudioController._audioManager.StopAllMusic();
+        audioController.StopAllMusic();
+        audioController.StopSound("playerMove");
     }
 
     #endregion
