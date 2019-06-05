@@ -184,7 +184,6 @@ MonoBehaviour:
   coinsText: {fileID: 2029234104}
   highScoreText: {fileID: 1008387224}
   scorePanel: {fileID: 1679323709}
-  fpsText: {fileID: 0}
   fuelPanel: {fileID: 638251527}
   fuelArrow: {fileID: 354839038}
   startMessage: {fileID: 2001542609}
@@ -433,7 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab370b2edca4b8b4d9cbb2fcf3a16c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  store: {fileID: 11400000, guid: e1389ae6b77541b4e80be111d79d405f, type: 2}
+  store: {fileID: 11400000, guid: fffae33bdf146634da53b3f69aa73a8f, type: 2}
   increaseAmmountProbability: 0.1
   background: {fileID: 8713774238281902902, guid: c2f539d0681ef5e4da2e5b9ea77053b2,
     type: 3}
