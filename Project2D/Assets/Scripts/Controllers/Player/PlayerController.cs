@@ -13,6 +13,7 @@ public class PlayerController : AMoveController
     
 
     [HideInInspector] private GameObject downObject;
+    [SerializeField] public Transform handObject;
     
 
     [HideInInspector] private GameObject lastTriggerObject = null;
@@ -53,6 +54,11 @@ public class PlayerController : AMoveController
         currentState.CheckTransition();
     }
 
+
+    public float GetVerticalDifferenceHand()
+    {
+        return handObject.position.y - transform.position.y;
+    }
 
     public void Kill()
     {

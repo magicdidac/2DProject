@@ -20,18 +20,35 @@ public class ZipLine : MonoBehaviour
     [Header("Gizmos")]
     [Range(0, 100)] [SerializeField] private float distanceTraveled = 0;
 
+    [HideInInspector] private float total = 0;
+    [HideInInspector] private float totalVertical = 0;
+
+    private void OnEnable()
+    {
+        total = endPoint.position.x - startPoint.position.x;
+        totalVertical = endPoint.position.y - startPoint.position.y;
+    }
+
+    public Vector2 GetPositionByPosition(Vector2 position)
+    {
+        float playerDistance = ((position.x - startPoint.position.x) * 100) / total;
+        float currentVertical = (totalVertical * playerDistance) / 100;
+        Vector2 newPosition = new Vector2((total * playerDistance) / 100, (totalVertical * playerDistance) / 100);
+        newPosition = new Vector2(startPoint.position.x + newPosition.x, startPoint.position.y + newPosition.y);
+        return newPosition;
+    }
 
     private void OnDrawGizmos()
     {
+        total = endPoint.position.x - startPoint.position.x;
+        totalVertical = endPoint.position.y - startPoint.position.y;
         DrawZipLine();
         DrawFlowPoint();
-
     }
 
     private void DrawFlowPoint()
     {
-        float total = endPoint.position.x - startPoint.position.x;
-        float totalVertical = endPoint.position.y - startPoint.position.y;
+        
         float currentvertical = (totalVertical * distanceTraveled) / 100;
         Vector2 position = new Vector2((total * distanceTraveled) / 100, (totalVertical * distanceTraveled) / 100);
         position = new Vector2(startPoint.position.x + position.x, startPoint.position.y + position.y);
