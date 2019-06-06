@@ -130,7 +130,7 @@ MonoBehaviour:
   - box_sprite: {fileID: 21300004, guid: 396d9f7fc949a244f973b5b3a73eb40b, type: 3}
     box_destroy_prefab: {fileID: 4046933659692232899, guid: 4360c56aee8b31f459fdd63419880d9e,
       type: 3}
-  boxIndex: 2
+  boxIndex: -1
 --- !u!50 &5066044752325331557
 Rigidbody2D:
   serializedVersion: 4
