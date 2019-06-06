@@ -55,7 +55,11 @@ public class PlayerController : AMoveController
         if (isDead)
             return;
 
-        isGrounded = detectCollision(groundMask, model.offset);
+        LayerMask[] groundMasks = new LayerMask[2];
+        groundMasks[0] = groundMask;
+        groundMasks[1] = boxMask;
+
+        isGrounded = detectCollision(groundMasks, model.offset);
         detectObstacleCollision(boxMask);
         animator.SetBool("B-Ground", isGrounded);
         currentState.Update();
@@ -85,7 +89,7 @@ public class PlayerController : AMoveController
 
         isDead = true;
 
-        Instantiate(deadPlayer, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>().velocity = new Vector2(- rigidbody2d.velocity.x, Mathf.Abs(rigidbody2d.velocity.y)) * .25f;
+        Instantiate(deadPlayer, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>().velocity = new Vector2(-rigidbody2d.velocity.x, Mathf.Abs(rigidbody2d.velocity.y)) * .25f;
         Destroy(gameObject);
 
     }
@@ -133,8 +137,10 @@ public class PlayerController : AMoveController
             {
                 if (hit.collider.CompareTag("Box"))
                 {
-                    isStuned = true;
-                    Destroy(hit.collider.gameObject);
+                    if (!isSliding)
+                        isStuned = true;
+
+                    hit.collider.GetComponent<Box>().DestroyBox();
                 }
                 else gc.GameWin(false);
             }

@@ -27,6 +27,15 @@ public class PSOnAir : AState
             pc.ChangeState(new PSGrounded(pc));
         }
 
+        if (pc.isStuned)
+        {
+            if (pc.animator.GetBool("B-Rope"))
+                pc.animator.SetBool("B-Rope", false);
+            if (pc.animator.GetBool("B-ZipLine"))
+                pc.animator.SetBool("B-ZipLine", false);
+            pc.ChangeState(new PSStun(pc));
+        }
+
         if (pc.isTrampoline)
             pc.ChangeState(new PSTrampoline(pc));
 
@@ -35,6 +44,7 @@ public class PSOnAir : AState
 
         if (pc.isTirolina)
             pc.ChangeState(new PSZipLine(pc));
+
     }
 
     public override void FixedUpdate()
