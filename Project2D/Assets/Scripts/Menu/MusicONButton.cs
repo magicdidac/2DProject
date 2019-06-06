@@ -15,7 +15,7 @@ public class MusicONButton : MonoBehaviour
 
     void Start()
     {
-        GetComponent<Image>().color = (PlayerPrefs.GetInt("MusicActive") == 1) ? pressed : nonPressed;
+        transform.GetChild(0).GetComponent<Text>().color = (PlayerPrefs.GetInt("MusicActive") == 1) ? pressed : nonPressed;
         isClicked = (PlayerPrefs.GetInt("MusicActive") == 1) ? true : false;
     }
 
@@ -26,8 +26,8 @@ public class MusicONButton : MonoBehaviour
             isClicked = true;
             PlayerPrefs.SetInt("MusicActive", 1);
             off.GetComponent<MusicOFFButton>().isClicked = false;
-            GetComponent<Image>().color = pressed;
-            off.GetComponent<Image>().color = nonPressed;
+            transform.GetChild(0).GetComponent<Text>().color = pressed;
+            off.transform.GetChild(0).GetComponent<Text>().color = nonPressed;
             /*if (GameManager._manager.mainMenu)
             {
                 SoundManager._audioManager.PlayMusic("menuMusic");

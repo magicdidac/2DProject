@@ -229,10 +229,12 @@ MonoBehaviour:
   trampolineMask:
     serializedVersion: 2
     m_Bits: 512
-  handObject: {fileID: 6766258079167848650}
   boxMask:
     serializedVersion: 2
     m_Bits: 1024
+  handObject: {fileID: 6766258079167848650}
+  deadPlayer: {fileID: 6334789266956833176, guid: f70a0c0834b665649b12937367b109cb,
+    type: 3}
   fuel: 0
 --- !u!1 &6926935270331468641
 GameObject:

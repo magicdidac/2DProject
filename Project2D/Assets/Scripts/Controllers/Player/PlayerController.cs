@@ -15,8 +15,10 @@ public class PlayerController : AMoveController
 
 
     [HideInInspector] private GameObject downObject;
+    [Header("Other Objects")]
     [SerializeField] public Transform handObject;
-    
+    [SerializeField] private GameObject deadPlayer = null;
+
 
     [HideInInspector] private GameObject lastTriggerObject = null;
 
@@ -55,7 +57,7 @@ public class PlayerController : AMoveController
 
         isGrounded = detectCollision(groundMask, model.offset);
         detectObstacleCollision(boxMask);
-        animator.SetBool("B-Ground",isGrounded);
+        animator.SetBool("B-Ground", isGrounded);
         currentState.Update();
     }
 
@@ -80,11 +82,12 @@ public class PlayerController : AMoveController
         if (isDead)
             return;
 
-        ChangeState(new PSDead(this));
-        
+
         isDead = true;
 
-        Debug.LogWarning("Add Animation Trigger");
+        Instantiate(deadPlayer, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>().velocity = -rigidbody2d.velocity*.25f;
+        Destroy(gameObject);
+
     }
 
     public bool HaveFuel()
@@ -94,7 +97,7 @@ public class PlayerController : AMoveController
 
     public void ConsumeFuel()
     {
-        if (!isGrounded) return; 
+        if (!isGrounded) return;
         fuel -= Time.deltaTime;
         gc.uiController.UpdateFuel();
     }
