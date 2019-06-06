@@ -16,7 +16,7 @@ public class MusicOFFButton : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        GetComponent<Image>().color = (PlayerPrefs.GetInt("MusicActive") == 0) ? pressed : nonPressed;
+        transform.GetChild(0).GetComponent<Text>().color = (PlayerPrefs.GetInt("MusicActive") == 0) ? pressed : nonPressed;
         isClicked = (PlayerPrefs.GetInt("MusicActive") == 0) ? true : false;
     }
 
@@ -27,8 +27,8 @@ public class MusicOFFButton : MonoBehaviour
             isClicked = true;
             PlayerPrefs.SetInt("MusicActive", 0);
             on.GetComponent<MusicONButton>().isClicked = false;
-            GetComponent<Image>().color = pressed;
-            on.GetComponent<Image>().color = nonPressed;
+            transform.GetChild(0).GetComponent<Text>().color = pressed;
+            on.transform.GetChild(0).GetComponent<Text>().color = nonPressed;
             GameController.instance.audioController.PauseMusic();
         }
     }

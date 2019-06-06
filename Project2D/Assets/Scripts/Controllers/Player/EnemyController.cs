@@ -6,11 +6,11 @@ public class EnemyController : AMoveController
 {
     [SerializeField] private GameObject bulletPrefab = null;
     [SerializeField] private GameObject granadePrefab = null;
-    
 
-    [Range(0,5)][SerializeField] public float RadiusDetection = 1.3f;
-    [Range(0,5)][SerializeField] public float verticalDetectionDistance = 2;
-    [Range(0,5)][SerializeField] public float verticalDetectionXOffset = .5f;
+
+    [Range(0, 5)] [SerializeField] public float RadiusDetection = 1.3f;
+    [Range(0, 5)] [SerializeField] public float verticalDetectionDistance = 2;
+    [Range(0, 5)] [SerializeField] public float verticalDetectionXOffset = .5f;
     [SerializeField] public LayerMask groundMask;
 
     [SerializeField] public SpriteRenderer shield;
@@ -28,15 +28,21 @@ public class EnemyController : AMoveController
     {
         currentState.FixedUpdate();
 
-        if (!isDead)
+        try
         {
-            if (!gc.player.isRope && (gc.GetFloor() == 0 || (gc.GetFloor() != 0 && gc.GetEnemyDistance() > gc.GetMinimumEnemyDistance() + 1)))
-                rigidbody2d.velocity = new Vector2((gc.player.isSliding) ? gc.GetVelocity(model.slideSpeed) : gc.GetVelocity(model.normalSpeed), rigidbody2d.velocity.y);
-            else if (gc.player.isRope)
-                rigidbody2d.velocity = new Vector2(1, rigidbody2d.velocity.y);
-            else if (gc.GetEnemyDistance() <= gc.GetMinimumEnemyDistance() + 1)
-                transform.position = new Vector2(gc.player.transform.position.x + (gc.GetMinimumEnemyDistance() + 1), transform.position.y);
+
+            if (!isDead)
+            {
+                if (!gc.player.isRope && (gc.GetFloor() == 0 || (gc.GetFloor() != 0 && gc.GetEnemyDistance() > gc.GetMinimumEnemyDistance() + 1)))
+                    rigidbody2d.velocity = new Vector2((gc.player.isSliding) ? gc.GetVelocity(model.slideSpeed) : gc.GetVelocity(model.normalSpeed), rigidbody2d.velocity.y);
+                else if (gc.player.isRope)
+                    rigidbody2d.velocity = new Vector2(1, rigidbody2d.velocity.y);
+                else if (gc.GetEnemyDistance() <= gc.GetMinimumEnemyDistance() + 1)
+                    transform.position = new Vector2(gc.player.transform.position.x + (gc.GetMinimumEnemyDistance() + 1), transform.position.y);
+            }
+
         }
+        catch { }
 
     }
 
@@ -51,16 +57,17 @@ public class EnemyController : AMoveController
         currentState.CheckTransition();
     }
 
-    public  void attack()
+    public void attack()
     {
-        switch (gc.GetFloor()) {
+        switch (gc.GetFloor())
+        {
             case 1:
                 //gc.enemyIndicator.LoadShoot();
                 break;
             case 0:
-                //if (gc.GetEnemyDistance() > 3 && Random.Range(0, 2) == 1)
-                    //animator.SetTrigger("T-MidLaserShoot");
-                //else
+                if (gc.GetEnemyDistance() > 3 && Random.Range(0, 2) == 1)
+                    animator.SetTrigger("T-MidLaserShoot");
+                else
                     animator.SetTrigger("T-MidGranadeShoot");
                 break;
             case -1:
@@ -83,7 +90,7 @@ public class EnemyController : AMoveController
     public bool DetectObstacleToJump()
     {
         //Horizontal RayCast
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.min.y+.25f), Vector2.right, RadiusDetection);
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.min.y + .25f), Vector2.right, RadiusDetection);
 
         //If doesn't hit anything
         if (hit.collider == null) return false;
@@ -94,7 +101,7 @@ public class EnemyController : AMoveController
     public bool DetectObstacleToSlide()
     {
         //Horizontal RayCast
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.max.y + .5f), Vector2.right, RadiusDetection-.5f);
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.max.y + .5f), Vector2.right, RadiusDetection - .5f);
 
         //If doesn't hit anything
         if (hit.collider == null) return false;
@@ -146,8 +153,8 @@ public class EnemyController : AMoveController
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(
-            new Vector3(col.bounds.max.x, col.bounds.min.y+.25f),
-            new Vector3(col.bounds.max.x + RadiusDetection, col.bounds.min.y+.25f)
+            new Vector3(col.bounds.max.x, col.bounds.min.y + .25f),
+            new Vector3(col.bounds.max.x + RadiusDetection, col.bounds.min.y + .25f)
             );
     }
 
@@ -156,7 +163,7 @@ public class EnemyController : AMoveController
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(
             new Vector3(col.bounds.max.x, col.bounds.max.y + .5f),
-            new Vector3(col.bounds.max.x + RadiusDetection-.5f, col.bounds.max.y + .5f)
+            new Vector3(col.bounds.max.x + RadiusDetection - .5f, col.bounds.max.y + .5f)
             );
     }
 
@@ -165,7 +172,7 @@ public class EnemyController : AMoveController
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(
             new Vector3(col.bounds.max.x + verticalDetectionXOffset, col.bounds.min.y),
-            new Vector3(col.bounds.max.x + verticalDetectionXOffset, col.bounds.min.y-verticalDetectionDistance)
+            new Vector3(col.bounds.max.x + verticalDetectionXOffset, col.bounds.min.y - verticalDetectionDistance)
             );
     }
 

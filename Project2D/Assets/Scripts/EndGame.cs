@@ -28,6 +28,10 @@ public class EndGame : MonoBehaviour
 
     private void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            Retry();
+
     }
 
     public void WinSetUp()

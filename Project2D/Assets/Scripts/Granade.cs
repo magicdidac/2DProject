@@ -29,8 +29,12 @@ public class Granade : MonoBehaviour
         spr = transform.GetChild(0).gameObject;
         ps = transform.GetChild(1).GetComponent<ParticleSystem>();
 
-        xPos = (gc.GetFloor() == 0) ? gc.player.transform.position.x+8 : gc.player.transform.position.x+10;
-        
+        try
+        {
+            xPos = (gc.GetFloor() == 0) ? gc.player.transform.position.x + 8 : gc.player.transform.position.x + 10;
+        }
+        catch { }
+
     }
 
     private void Update()
@@ -41,7 +45,7 @@ public class Granade : MonoBehaviour
             switch (gc.GetFloor())
             {
                 case 1:
-                    if(transform.position.y >= 9.5f)
+                    if (transform.position.y >= 9.5f)
                     {
                         isFalling = true;
                         box.enabled = true;
@@ -78,12 +82,19 @@ public class Granade : MonoBehaviour
 
         }
 
-        if(!isExploted && (transform.position.x - gc.player.transform.position.x) < 1)
+        try
         {
-            isExploted = true;
-            explote();
-            InvokeRepeating("increaseCol", 0, .05f);
+
+            if (!isExploted && (transform.position.x - gc.player.transform.position.x) < 1)
+            {
+                isExploted = true;
+                explote();
+                InvokeRepeating("increaseCol", 0, .05f);
+            }
+
         }
+        catch { }
+
     }
 
     private void increaseCol()

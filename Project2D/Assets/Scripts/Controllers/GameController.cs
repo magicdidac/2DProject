@@ -93,7 +93,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public float GetEnemyDistance()
     {
-        if (enemy == null)
+        if (enemy == null || player == null)
             return 0;
 
         return (Mathf.Round((enemy.transform.position.x - player.transform.position.x) * 100) / 100);
@@ -232,9 +232,24 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
         scoreController.UpdateHighScore();
 
-        uiController.ActiveEndMenu(win);
+        
         audioController.StopAllMusic();
         audioController.StopSound("playerMove");
+
+        if (win)
+            Invoke("ActiveEndMenuWin", 2f);
+        else
+            Invoke("ActiveEndMenuLose", 2f);
+
+    }
+
+    private void ActiveEndMenuWin()
+    {
+        uiController.ActiveEndMenu(true);
+    }
+    private void ActiveEndMenuLose()
+    {
+        uiController.ActiveEndMenu(false);
     }
 
     #endregion
