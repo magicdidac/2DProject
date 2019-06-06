@@ -73,7 +73,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         enemy = Instantiate(enemyObj, GetEnemySpawnPosition(), Quaternion.identity).GetComponent<EnemyController>();
 
         audioController.StopAllMusic();
-        audioController.PlayNewMusic("gameSong");
+        audioController.PlayNewMusic("radioSong"); //por arreglar
     }
 
     public void restartVariables()

@@ -95,12 +95,15 @@ public class AudioController : AController
     {
         Sound m = music.Find(music => music.name == name);
         if (m == null) return;
-        foreach (Sound music in music)
+
+        StartCoroutine(FadeOut(m.source));
+
+        /*foreach (Sound music in music)
         {
             //if (music != m) music.source.Stop();
             if (music != m)
             {
-                StartCoroutine(FadeOut(music.source, m.source));
+                StartCoroutine(FadeOut(music.source));
             }
         }
         /*if (!m.source.isPlaying)
@@ -109,27 +112,15 @@ public class AudioController : AController
         }*/
     }
 
-    private IEnumerator FadeOut(AudioSource oldSong, AudioSource newSong)
+    private IEnumerator FadeOut(AudioSource oldSong)
     {
         while (oldSong.volume > 0f)
         {
-            oldSong.volume -= Time.deltaTime;
-            yield return new WaitForSeconds(.1f);
+            oldSong.volume -= 0.1f;
+            yield return new WaitForSeconds(.12f);
         }
         oldSong.Stop();
-        StartCoroutine(FadeIn(newSong));
-    }
-
-    private IEnumerator FadeIn(AudioSource s)
-    {
-        float maxVolume = s.volume;
-        s.volume = 0f;
-        s.Play();
-        while (s.volume < maxVolume)
-        {
-            s.volume += Time.deltaTime;
-            yield return new WaitForSeconds(.1f);
-        }
+        PlayMusic("gameSong");
     }
 
 
