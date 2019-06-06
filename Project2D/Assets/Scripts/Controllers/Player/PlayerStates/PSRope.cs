@@ -12,6 +12,7 @@ public class PSRope : AState
         pc = _pc;
         pc.animator.SetTrigger("T-Rope");
         pc.animator.SetBool("B-Rope", true);
+        gc.audioController.PlaySound("rope");
     }
 
     public override void CheckTransition()
@@ -22,6 +23,7 @@ public class PSRope : AState
             pc.isRope = false;
             pc.rigidbody2d.bodyType = RigidbodyType2D.Dynamic;
             pc.rigidbody2d.AddForce(Vector2.one * pc.model.exitRopeForce, ForceMode2D.Impulse);
+            gc.audioController.StopSound("rope");
             pc.ChangeState(new PSOnAir(pc));
         }
             

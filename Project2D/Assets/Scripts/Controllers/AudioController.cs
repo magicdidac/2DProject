@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AudioController : AController
 {
+    #region Variables
     //public static AudioController _audioManager = null;
 
     public List<Sound> music = new List<Sound>();
@@ -15,6 +16,10 @@ public class AudioController : AController
     private GameObject player;
     private List<Sound> pausedSounds = new List<Sound>();
 
+    #endregion
+
+
+    #region Initializers
     private void Awake()
     {
         /*if (_audioManager == null) _audioManager = this;
@@ -54,6 +59,10 @@ public class AudioController : AController
         //setAllVolumes(PlayerPrefs.GetFloat("MasterVolume"));
     }
 
+    #endregion
+
+
+    #region Others
     public void PlayMusic(string name)
     {
         Sound m = music.Find(music => music.name == name);
@@ -68,22 +77,18 @@ public class AudioController : AController
     public void PlaySound(string name)
     {
         Sound s = sounds.Find(sound => sound.name == name);
-        if (s == null) return;
+        if (s == null)
+        {
+            Debug.LogError("sound " + name + " NOT exist");
+            return;
+        }
 
         if (name == "TargetSlash") s.source.Play(); // targetslash sound has more duration than his cooldown
         else if (!s.source.isPlaying)
         {
             s.source.Play();
         }
-    }
-
-    public void PlayNestedSound(string name)
-    {
-        //quan es pot reproduir el mateix so multiples cops
-        //per exemple amb les coins
-        Sound s = sounds.Find(sound => sound.name == name);
-        if (s == null) return;
-        s.source.Play();
+        else Debug.LogWarning("sound + " + name + " is Playing");
     }
 
     public void PlayNewMusic(string name)
@@ -95,8 +100,7 @@ public class AudioController : AController
             //if (music != m) music.source.Stop();
             if (music != m)
             {
-                StartCoroutine(FadeIn(m));
-                StartCoroutine(FadeOut(music));
+                StartCoroutine(FadeOut(music.source, m.source));
             }
         }
         /*if (!m.source.isPlaying)
@@ -105,27 +109,29 @@ public class AudioController : AController
         }*/
     }
 
-    private IEnumerator FadeIn(Sound s)
+    private IEnumerator FadeOut(AudioSource oldSong, AudioSource newSong)
     {
-        float t = 0f;
-        s.source.Play();
-        while (t < s.volume)
+        while (oldSong.volume > 0f)
+        {
+            oldSong.volume -= Time.deltaTime;
+            yield return new WaitForSeconds(.1f);
+        }
+        oldSong.Stop();
+        StartCoroutine(FadeIn(newSong));
+    }
+
+    private IEnumerator FadeIn(AudioSource s)
+    {
+        float maxVolume = s.volume;
+        s.volume = 0f;
+        s.Play();
+        while (s.volume < maxVolume)
         {
             s.volume += Time.deltaTime;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.1f);
         }
     }
 
-    private IEnumerator FadeOut(Sound s)
-    {
-        float t = s.volume;
-        while (t > 0f)
-        {
-            s.volume -= Time.deltaTime;
-            yield return new WaitForSeconds(1f);
-        }
-        s.source.Stop();
-    }
 
     public void StopSound(string name)
     {
@@ -245,4 +251,6 @@ public class AudioController : AController
         }
         pausedSounds.Clear();
     }
+
+    #endregion
 }

@@ -23,6 +23,7 @@ public class PSZipLine : AState
 
         pc.animator.SetBool("B-ZipLine", true);
         pc.animator.SetTrigger("T-ZipLine");
+        gc.audioController.PlaySound("zipLine");
 
     }
 
@@ -32,10 +33,12 @@ public class PSZipLine : AState
         {
             ChangeStateTo(new PSOnAir(pc));
             this.pc.animator.SetTrigger("T-ZipLineOut");
+            gc.audioController.StopSound("zipLine");
         }
 
         if (Input.GetKeyDown(KeyCode.S))
             ChangeStateTo(new PSSliding(pc));
+            gc.audioController.StopSound("zipLine");
     }
 
     private void ChangeStateTo(AState state)

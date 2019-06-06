@@ -10,6 +10,7 @@ public class PSTrampoline : AState
     public PSTrampoline(PlayerController _pc) : base()
     {
         pc = _pc;
+        gc.audioController.PlaySound("trampoline");
     }
 
     public override void CheckTransition()
