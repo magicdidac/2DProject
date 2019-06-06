@@ -117,4 +117,10 @@ MonoBehaviour:
     playOnAwake: 0
     volume: 0.288
     source: {fileID: 0}
+  - name: electricity
+    clip: {fileID: 8300000, guid: 7c95cf2c6885c6c4680b4f194140e31f, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 0.622
+    source: {fileID: 0}
   playingMusic: []
