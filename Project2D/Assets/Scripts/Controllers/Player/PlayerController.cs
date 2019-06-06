@@ -85,7 +85,7 @@ public class PlayerController : AMoveController
 
         isDead = true;
 
-        Instantiate(deadPlayer, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>().velocity = -rigidbody2d.velocity*.25f;
+        Instantiate(deadPlayer, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>().velocity = new Vector2(- rigidbody2d.velocity.x, Mathf.Abs(rigidbody2d.velocity.y)) * .25f;
         Destroy(gameObject);
 
     }
