@@ -120,10 +120,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c01219383b1eb45a5a3ff04b2115b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites:
-  - {fileID: 21300004, guid: 396d9f7fc949a244f973b5b3a73eb40b, type: 3}
-  - {fileID: 21300006, guid: 396d9f7fc949a244f973b5b3a73eb40b, type: 3}
-  - {fileID: 21300008, guid: 396d9f7fc949a244f973b5b3a73eb40b, type: 3}
+  boxes:
+  - box_sprite: {fileID: 21300006, guid: 396d9f7fc949a244f973b5b3a73eb40b, type: 3}
+    box_destroy_prefab: {fileID: 7692684865000194449, guid: 6ddaa1bb02ecabe4c8a83a221aa130ad,
+      type: 3}
+  - box_sprite: {fileID: 21300008, guid: 396d9f7fc949a244f973b5b3a73eb40b, type: 3}
+    box_destroy_prefab: {fileID: 3197442983691760269, guid: 23ce91eefdde8fd40a67e6b89d4768a1,
+      type: 3}
+  boxIndex: -1
 --- !u!50 &5066044752325331557
 Rigidbody2D:
   serializedVersion: 4

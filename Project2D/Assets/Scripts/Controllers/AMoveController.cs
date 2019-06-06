@@ -67,4 +67,18 @@ public abstract class AMoveController : MonoBehaviour
 
         return false;
     }
+
+    public bool detectCollision(LayerMask[] layerMasks, float offset)
+    {
+        foreach(LayerMask lm in layerMasks)
+        {
+            bool result = detectCollision(lm, offset);
+            if (result)
+                return true;
+        }
+
+        return false;
+
+    }
+
 }

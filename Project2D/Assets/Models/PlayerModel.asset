@@ -21,7 +21,7 @@ MonoBehaviour:
   slideSpeed: 8.5
   normalSpeed: 7.5
   plusJumpSpeedX: 8.5
-  stunSpeed: 5
+  stunSpeed: 3
   groundRangeX: 0
   groundRangeY: 0
   stunTime: 0.5
