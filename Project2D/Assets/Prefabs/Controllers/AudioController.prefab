@@ -48,7 +48,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 593f266098d9ed347958f56d50f10349, type: 3}
     loop: 1
     playOnAwake: 0
-    volume: 0.388
+    volume: 0.577
     source: {fileID: 0}
   - name: radioSong
     clip: {fileID: 8300000, guid: dbc776bbfe98e7b43bca2d1d16f8c8a8, type: 3}
@@ -67,16 +67,16 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: d231a969c22a8074face0b5527b633b4, type: 3}
     loop: 0
     playOnAwake: 0
-    volume: 0.318
+    volume: 0.705
     source: {fileID: 0}
   - name: dropping
-    clip: {fileID: 8300000, guid: fcc13399a84891147b18b82c16b748e5, type: 3}
+    clip: {fileID: 8300000, guid: 144d1b9e18c4b3d448afa467eaa091d5, type: 3}
     loop: 0
     playOnAwake: 0
     volume: 0.355
     source: {fileID: 0}
   - name: shot
-    clip: {fileID: 8300000, guid: cee9e6a976144fb4388ea29e8ca012d3, type: 3}
+    clip: {fileID: 8300000, guid: e86c40ca10c4ceb4389a49c18389ed06, type: 3}
     loop: 0
     playOnAwake: 0
     volume: 0.169
@@ -92,5 +92,35 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     volume: 0.176
+    source: {fileID: 0}
+  - name: shield
+    clip: {fileID: 8300000, guid: 0e76665246a881f4a93cdb110fbd8a9b, type: 3}
+    loop: 1
+    playOnAwake: 0
+    volume: 0.375
+    source: {fileID: 0}
+  - name: zipLine
+    clip: {fileID: 8300000, guid: 8d6786ea63fc8274d91aab113668bebc, type: 3}
+    loop: 1
+    playOnAwake: 0
+    volume: 0.531
+    source: {fileID: 0}
+  - name: trampoline
+    clip: {fileID: 8300000, guid: 47dcfb86d30cbaf429218f2ec51c968c, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 1
+    source: {fileID: 0}
+  - name: pickFuel
+    clip: {fileID: 8300000, guid: bbc91588ac752ff4f872024057415856, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 0.288
+    source: {fileID: 0}
+  - name: electricity
+    clip: {fileID: 8300000, guid: 7c95cf2c6885c6c4680b4f194140e31f, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 0.622
     source: {fileID: 0}
   playingMusic: []

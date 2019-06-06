@@ -110,6 +110,7 @@ public class PlayerController : AMoveController
     {
         fuel = model.maxFuel;
         gc.uiController.UpdateFuel();
+        gc.audioController.PlaySound("pickFuel");
     }
 
     #endregion
@@ -186,14 +187,14 @@ public class PlayerController : AMoveController
         else if (col.CompareTag("Coin"))
         {
             gc.scoreController.AddCoins(1);
-            gc.audioController.PlayNestedSound("coin");
+            gc.audioController.PlaySound("coin");
             col.gameObject.SetActive(false);
         }
 
         else if (col.CompareTag("SuperCoin"))
         {
             gc.scoreController.AddCoins(5);
-            gc.audioController.PlayNestedSound("coin");
+            gc.audioController.PlaySound("coin");
             col.gameObject.SetActive(false);
         }
         else if (col.CompareTag("Combustible"))

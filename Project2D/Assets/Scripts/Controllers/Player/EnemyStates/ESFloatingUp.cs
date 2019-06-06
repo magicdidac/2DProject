@@ -15,6 +15,7 @@ public class ESFloatingUp : AState
         ec.rigidbody2d.bodyType = RigidbodyType2D.Kinematic;
         ec.col.isTrigger = true;
         ec.shield.gameObject.SetActive(true);
+        gc.audioController.PlaySound("shield");
     }
 
     public override void CheckTransition()
@@ -24,12 +25,16 @@ public class ESFloatingUp : AState
             ec.rigidbody2d.bodyType = RigidbodyType2D.Dynamic;
             ec.col.isTrigger = false;
             ec.shield.gameObject.SetActive(false);
+            gc.audioController.StopSound("dropping");
+            gc.audioController.StopSound("shield");
             ec.ChangeState(new ESOnAir(ec));
         }
         if (gc.GetFloor() != 0)
         {
             ec.rigidbody2d.bodyType = RigidbodyType2D.Dynamic;
             ec.col.isTrigger = false;
+            gc.audioController.StopSound("dropping");
+            gc.audioController.StopSound("shield");
             ec.ChangeState(new ESOtherFloor(ec));
         }
     }
