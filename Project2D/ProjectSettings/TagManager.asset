@@ -28,6 +28,8 @@ TagManager:
   - Shoot
   - KillTwo
   - InstaKill
+  - EnemyShoot
+  - EnemyGranade
   layers:
   - Default
   - TransparentFX
