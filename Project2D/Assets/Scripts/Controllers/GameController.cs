@@ -206,10 +206,10 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         if (isGameRunning)
         {
             if (GetEnemyDistance() < minEnemyDistance && floor == 0 && !player.isDead) //Check
-                GameWin(true);
+                GameWin(true, PlayerController.DeathType.CatchEnemy);
 
             if (GetEnemyDistance() > maxEnemyDistance && player.isDead)
-                GameWin(false);
+                GameWin(false, PlayerController.DeathType.EnemyRunAway);
         }
     }
 
@@ -220,12 +220,12 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void Exit() { Application.Quit(); }
 
-    public void GameWin(bool win)
+    public void GameWin(bool win, PlayerController.DeathType dt)
     {
         if (player.isDead)
             return;
 
-        player.Kill();
+        player.Kill(dt);
 
         
         if (win)
