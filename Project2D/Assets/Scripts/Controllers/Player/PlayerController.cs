@@ -18,6 +18,7 @@ public class PlayerController : AMoveController
     [Header("Other Objects")]
     [SerializeField] public Transform handObject;
     [SerializeField] private GameObject deadPlayer = null;
+    [SerializeField] private ParticleSystem smoke = null;
 
 
     [HideInInspector] private GameObject lastTriggerObject = null;
@@ -54,6 +55,13 @@ public class PlayerController : AMoveController
     {
         if (isDead)
             return;
+
+        var emission = smoke.emission;
+
+        if (isGrounded)
+            emission.rateOverTime = 50;
+        else
+            emission.rateOverTime = 0;
 
         LayerMask[] groundMasks = new LayerMask[2];
         groundMasks[0] = groundMask;
@@ -123,12 +131,12 @@ public class PlayerController : AMoveController
         var hitList = new List<RaycastHit2D>();
 
         var headPoint = new Vector3(boxCollider.bounds.max.x, boxCollider.bounds.max.y - 0.25f);
-        var headHit = Physics2D.Raycast(headPoint, Vector3.right, 0.25f, p_lm);
+        var headHit = Physics2D.Raycast(headPoint, Vector3.right, 0.5f, p_lm);
 
         hitList.Add(headHit);
 
         var wheelPoint = new Vector3(boxCollider.bounds.max.x, boxCollider.bounds.min.y);
-        var wheelhit = Physics2D.Raycast(wheelPoint, Vector3.right, 0.25f, p_lm);
+        var wheelhit = Physics2D.Raycast(wheelPoint, Vector3.right, 0.5f, p_lm);
 
         hitList.Add(wheelhit);
 
@@ -250,10 +258,10 @@ public class PlayerController : AMoveController
 
         var boxCollider = GetComponent<BoxCollider2D>();
         var headPoint = new Vector3(boxCollider.bounds.max.x, boxCollider.bounds.max.y - 0.25f);
-        Gizmos.DrawLine(headPoint, headPoint + (Vector3.right * 0.25f));
+        Gizmos.DrawLine(headPoint, headPoint + (Vector3.right * 0.5f));
 
         var wheelPoint = new Vector3(boxCollider.bounds.max.x, boxCollider.bounds.min.y);
-        Gizmos.DrawLine(wheelPoint, wheelPoint + (Vector3.right * 0.25f));
+        Gizmos.DrawLine(wheelPoint, wheelPoint + (Vector3.right * 0.5f));
     }
 
     #endregion
