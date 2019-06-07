@@ -8,6 +8,7 @@ public class PlayerDead : MonoBehaviour
 
     public void SetDeadAnimation(PlayerController.DeathType dt)
     {
+        GameController.instance.audioController.PlaySound("playerDeath");
         switch (dt)
         {
             case PlayerController.DeathType.Shoot:

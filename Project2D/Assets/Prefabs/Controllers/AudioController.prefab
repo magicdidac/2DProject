@@ -135,4 +135,10 @@ MonoBehaviour:
     playOnAwake: 0
     volume: 0.676
     source: {fileID: 0}
+  - name: playerDeath
+    clip: {fileID: 8300000, guid: 32148e2305f22c145b751b44a822d921, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 0.865
+    source: {fileID: 0}
   playingMusic: []
