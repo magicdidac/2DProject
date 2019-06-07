@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerController : AMoveController
 {
 
+    public enum DeathType {Fall, Electricity, Shoot, Granade, EnemyRunAway, CatchEnemy};
+
     #region Variables
 
     [Header("Layers")]
@@ -18,7 +20,10 @@ public class PlayerController : AMoveController
     [Header("Other Objects")]
     [SerializeField] public Transform handObject;
     [SerializeField] private GameObject deadPlayer = null;
+
+    [Header("Particles")]
     [SerializeField] private ParticleSystem smoke = null;
+    [SerializeField] private ParticleSystem sparks = null;
 
 
     [HideInInspector] private GameObject lastTriggerObject = null;
@@ -56,12 +61,7 @@ public class PlayerController : AMoveController
         if (isDead)
             return;
 
-        var emission = smoke.emission;
-
-        if (isGrounded)
-            emission.rateOverTime = 50;
-        else
-            emission.rateOverTime = 0;
+        UpdateParticles();        
 
         LayerMask[] groundMasks = new LayerMask[2];
         groundMasks[0] = groundMask;
@@ -75,6 +75,32 @@ public class PlayerController : AMoveController
 
 
     #region Other
+
+    private void UpdateParticles()
+    {
+        if (!isGrounded)
+            StopEmission(smoke);
+        else
+            SetRateOverTimeEmission(smoke, 50);
+
+        if (!isTirolina)
+            StopEmission(sparks);
+        else
+            SetRateOverTimeEmission(sparks, 50);
+    }
+
+    private void StopEmission(ParticleSystem ps)
+    {
+        SetRateOverTimeEmission(ps, 0);
+    }
+
+    private void SetRateOverTimeEmission(ParticleSystem ps, int ammount)
+    {
+        var emission = ps.emission;
+
+        emission.rateOverTime = ammount;
+    }
+
     private void LateUpdate()
     {
         if (isDead)
@@ -89,7 +115,7 @@ public class PlayerController : AMoveController
         return handObject.position.y - transform.position.y;
     }
 
-    public void Kill()
+    public void Kill(DeathType dt)
     {
         if (isDead)
             return;
@@ -97,7 +123,9 @@ public class PlayerController : AMoveController
 
         isDead = true;
 
-        Instantiate(deadPlayer, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>().velocity = new Vector2(-rigidbody2d.velocity.x, Mathf.Abs(rigidbody2d.velocity.y)) * .25f;
+        GameObject playerDead = Instantiate(deadPlayer, transform.position, Quaternion.identity);
+        playerDead.GetComponent<Rigidbody2D>().velocity = new Vector2(-rigidbody2d.velocity.x, Mathf.Abs(rigidbody2d.velocity.y)) * .25f;
+        playerDead.GetComponent<PlayerDead>().SetDeadAnimation(dt);
         Destroy(gameObject);
 
     }
@@ -151,7 +179,7 @@ public class PlayerController : AMoveController
 
                     hit.collider.GetComponent<Box>().DestroyBox();
                 }
-                else gc.GameWin(false);
+                else gc.GameWin(false, DeathType.Electricity);
             }
         }
     }
@@ -213,7 +241,17 @@ public class PlayerController : AMoveController
         else if (col.CompareTag("Shoot"))
             gc.enemy.attack();
         else if (col.CompareTag("InstaKill"))
-            gc.GameWin(false);
+        {
+            gc.GameWin(false, DeathType.Fall);
+        }
+        else if (col.CompareTag("EnemyShoot"))
+        {
+            gc.GameWin(false, DeathType.Shoot);
+        }
+        else if (col.CompareTag("EnemyGranade"))
+        {
+            gc.GameWin(false, DeathType.Granade);
+        }
     }
 
     #endregion
