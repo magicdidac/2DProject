@@ -79,7 +79,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: e86c40ca10c4ceb4389a49c18389ed06, type: 3}
     loop: 0
     playOnAwake: 0
-    volume: 0.169
+    volume: 1
     source: {fileID: 0}
   - name: grenade
     clip: {fileID: 8300000, guid: 42270666c879d064182f8ece8803d0be, type: 3}
@@ -124,10 +124,10 @@ MonoBehaviour:
     volume: 0.574
     source: {fileID: 0}
   - name: charge
-    clip: {fileID: 8300000, guid: 82513e2fef0e0ed498b7b67f6c644966, type: 3}
+    clip: {fileID: 8300000, guid: d0b295b6b0d599942a79440ccdac372d, type: 3}
     loop: 0
     playOnAwake: 0
-    volume: 0.201
+    volume: 0.501
     source: {fileID: 0}
   - name: scoreCounting
     clip: {fileID: 8300000, guid: c157a6c196103e44a9854def0e12dd0b, type: 3}
