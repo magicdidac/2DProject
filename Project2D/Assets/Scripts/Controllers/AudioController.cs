@@ -74,6 +74,17 @@ public class AudioController : AController
         }
     }
 
+    public void PlayNestedSound(string name)
+    {
+        Sound s = sounds.Find(sound => sound.name == name);
+        if (s == null)
+        {
+            Debug.LogError("sound " + name + " NOT exist");
+            return;
+        }
+        s.source.Play();
+    }
+
     public void PlaySound(string name)
     {
         Sound s = sounds.Find(sound => sound.name == name);
@@ -83,8 +94,7 @@ public class AudioController : AController
             return;
         }
 
-        if (name == "TargetSlash") s.source.Play(); // targetslash sound has more duration than his cooldown
-        else if (!s.source.isPlaying)
+        if (!s.source.isPlaying)
         {
             s.source.Play();
         }
@@ -96,31 +106,18 @@ public class AudioController : AController
         Sound m = music.Find(music => music.name == name);
         if (m == null) return;
 
-        StartCoroutine(FadeOut(m.source));
-
-        /*foreach (Sound music in music)
+        foreach (Sound music in music)
         {
-            //if (music != m) music.source.Stop();
+            if (music != m) music.source.Stop();
             if (music != m)
             {
-                StartCoroutine(FadeOut(music.source));
+                //
             }
         }
-        /*if (!m.source.isPlaying)
+        if (!m.source.isPlaying)
         {
             m.source.Play();
-        }*/
-    }
-
-    private IEnumerator FadeOut(AudioSource oldSong)
-    {
-        while (oldSong.volume > 0f)
-        {
-            oldSong.volume -= 0.1f;
-            yield return new WaitForSeconds(.12f);
         }
-        oldSong.Stop();
-        PlayMusic("gameSong");
     }
 
 
@@ -128,6 +125,7 @@ public class AudioController : AController
     {
         Sound s = sounds.Find(sound => sound.name == name);
         if (s == null) return;
+        Debug.Log("Stopa " + name);
         s.source.Stop();
     }
 
@@ -135,12 +133,17 @@ public class AudioController : AController
     {
         Sound m = music.Find(music => music.name == name);
         if (m == null) return;
+        Debug.Log("Stopa " + name);
         m.source.Stop();
     }
 
     public void StopAllMusic()
     {
-        foreach (Sound m in music) m.source.Stop();
+        foreach (Sound m in music)
+        {
+            Debug.Log("StopB " + m.name);
+            m.source.Stop();
+        }
     }
 
 

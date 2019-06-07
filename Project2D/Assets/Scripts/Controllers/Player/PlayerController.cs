@@ -187,14 +187,14 @@ public class PlayerController : AMoveController
         else if (col.CompareTag("Coin"))
         {
             gc.scoreController.AddCoins(1);
-            gc.audioController.PlaySound("coin");
+            gc.audioController.PlayNestedSound("coin");
             col.gameObject.SetActive(false);
         }
 
         else if (col.CompareTag("SuperCoin"))
         {
             gc.scoreController.AddCoins(5);
-            gc.audioController.PlaySound("coin");
+            gc.audioController.PlayNestedSound("coin");
             col.gameObject.SetActive(false);
         }
         else if (col.CompareTag("Combustible"))

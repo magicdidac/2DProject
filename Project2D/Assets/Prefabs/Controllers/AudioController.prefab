@@ -115,12 +115,12 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: bbc91588ac752ff4f872024057415856, type: 3}
     loop: 0
     playOnAwake: 0
-    volume: 0.288
+    volume: 0.428
     source: {fileID: 0}
-  - name: electricity
-    clip: {fileID: 8300000, guid: 7c95cf2c6885c6c4680b4f194140e31f, type: 3}
+  - name: introExplosion
+    clip: {fileID: 8300000, guid: 8cef9c5cff41d0d4cbac94acbf465eda, type: 3}
     loop: 0
     playOnAwake: 0
-    volume: 0.622
+    volume: 0.574
     source: {fileID: 0}
   playingMusic: []
