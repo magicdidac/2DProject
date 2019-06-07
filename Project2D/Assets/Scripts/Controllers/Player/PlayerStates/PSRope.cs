@@ -12,7 +12,6 @@ public class PSRope : AState
         pc = _pc;
         pc.animator.SetTrigger("T-Rope");
         pc.animator.SetBool("B-Rope", true);
-        gc.audioController.PlaySound("rope");
     }
 
     public override void CheckTransition()

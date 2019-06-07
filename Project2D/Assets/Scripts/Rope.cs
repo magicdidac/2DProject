@@ -8,6 +8,7 @@ public class Rope : MonoBehaviour
     //Self Components
     [Header("Self Components")]
     [SerializeField] private Rigidbody2D rb2d = null;
+    [HideInInspector] private AudioSource audioSource;
 
     //External Components
     [HideInInspector] public Transform playerTransform;
@@ -24,6 +25,7 @@ public class Rope : MonoBehaviour
     private void Awake()
     {
         initialPosition = transform.position;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
@@ -44,6 +46,7 @@ public class Rope : MonoBehaviour
     {
         playerTransform = playerT;
         allowMovement = true;
+        audioSource.Play();
     }
 
 }
