@@ -125,7 +125,6 @@ public class AudioController : AController
     {
         Sound s = sounds.Find(sound => sound.name == name);
         if (s == null) return;
-        Debug.Log("Stopa " + name);
         s.source.Stop();
     }
 

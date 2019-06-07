@@ -14,6 +14,7 @@ public class PSGrounded : AState
             pc.rigidbody2d.gravityScale = 2.7f;
 
         pc.model.speed = pc.model.normalSpeed;
+        pc.isSliding = false;
     }
 
     public override void CheckTransition()

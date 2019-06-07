@@ -175,7 +175,9 @@ public class PlayerController : AMoveController
                 if (hit.collider.CompareTag("Box"))
                 {
                     if (!isSliding)
+                    {
                         isStuned = true;
+                    }
 
                     hit.collider.GetComponent<Box>().DestroyBox();
                 }
