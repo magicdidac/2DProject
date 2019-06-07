@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7636848873243516782}
   - component: {fileID: 7356666683000124152}
   - component: {fileID: 4509034685430981389}
+  - component: {fileID: 8023853333631883679}
   m_Layer: 10
   m_Name: InstaKill
   m_TagString: Kill
@@ -142,7 +143,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: dca0ff9867232714894b5c9d07943e0c, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.805
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -226,6 +227,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8023853333631883679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359980483023106583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67087156a5ae84347a2b6e493d1d2f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3458371739003019390
 GameObject:
   m_ObjectHideFlags: 0

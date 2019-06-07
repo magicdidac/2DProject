@@ -59,6 +59,7 @@ public class EnemyController : AMoveController
 
     public void attack()
     {
+        gc.audioController.PlaySound("charge");
         switch (gc.GetFloor())
         {
             case 1:

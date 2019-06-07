@@ -48,13 +48,13 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 593f266098d9ed347958f56d50f10349, type: 3}
     loop: 1
     playOnAwake: 0
-    volume: 0.577
+    volume: 0.591
     source: {fileID: 0}
   - name: radioSong
     clip: {fileID: 8300000, guid: dbc776bbfe98e7b43bca2d1d16f8c8a8, type: 3}
     loop: 1
     playOnAwake: 0
-    volume: 0.388
+    volume: 0.272
     source: {fileID: 0}
   sounds:
   - name: playerMove
@@ -63,11 +63,11 @@ MonoBehaviour:
     playOnAwake: 1
     volume: 0.247
     source: {fileID: 0}
-  - name: rope
-    clip: {fileID: 8300000, guid: d231a969c22a8074face0b5527b633b4, type: 3}
+  - name: PENE
+    clip: {fileID: 0}
     loop: 0
     playOnAwake: 0
-    volume: 0.705
+    volume: 0.826
     source: {fileID: 0}
   - name: dropping
     clip: {fileID: 8300000, guid: 144d1b9e18c4b3d448afa467eaa091d5, type: 3}
@@ -79,7 +79,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: e86c40ca10c4ceb4389a49c18389ed06, type: 3}
     loop: 0
     playOnAwake: 0
-    volume: 0.169
+    volume: 1
     source: {fileID: 0}
   - name: grenade
     clip: {fileID: 8300000, guid: 42270666c879d064182f8ece8803d0be, type: 3}
@@ -122,5 +122,23 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     volume: 0.574
+    source: {fileID: 0}
+  - name: charge
+    clip: {fileID: 8300000, guid: d0b295b6b0d599942a79440ccdac372d, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 0.501
+    source: {fileID: 0}
+  - name: scoreCounting
+    clip: {fileID: 8300000, guid: c157a6c196103e44a9854def0e12dd0b, type: 3}
+    loop: 1
+    playOnAwake: 0
+    volume: 0.676
+    source: {fileID: 0}
+  - name: playerDeath
+    clip: {fileID: 8300000, guid: 32148e2305f22c145b751b44a822d921, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 0.255
     source: {fileID: 0}
   playingMusic: []

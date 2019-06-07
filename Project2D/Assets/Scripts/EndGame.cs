@@ -23,6 +23,11 @@ public class EndGame : MonoBehaviour
         coinsText.text = "" + gc.scoreController.GetCoinsScore();
         scoreText.text = "" + gc.scoreController.GetScore();
 
+        gc.audioController.StopAllMusic(); //hacer mejor un FadeOut
+        gc.audioController.StopAllSounds();
+
+        Destroy(gc.enemy.gameObject);
+
         Invoke("InvokeIncreaseScore", 1f);
     }
 
@@ -55,9 +60,10 @@ public class EndGame : MonoBehaviour
     IEnumerator IncreaseScore(Text t_score, int f_score)
     {
         int initialScore = gc.scoreController.GetScore();
+        gc.audioController.PlaySound("scoreCounting");
 
-        while(initialScore < f_score)
-        {
+        while (initialScore < f_score)
+        {  
             initialScore += 5;
             if (initialScore > f_score)
                 initialScore = f_score;
@@ -65,6 +71,7 @@ public class EndGame : MonoBehaviour
             t_score.text = initialScore+"";
             yield return new WaitForSeconds(.02f);
         }
+        gc.audioController.StopSound("scoreCounting");
     }
 
     IEnumerator DicreaseCoins(Text t_score, float f_score)

@@ -74,6 +74,7 @@ public class PSZipLine : AState
             pc.rigidbody2d.velocity = Vector2.up * pc.model.jumpForce;
             ChangeStateTo(new PSOnAir(pc));
             this.pc.animator.SetTrigger("T-ZipLineOut");
+            gc.audioController.StopSound("zipLine");
         }
     }
 
