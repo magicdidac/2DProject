@@ -233,10 +233,6 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
         scoreController.UpdateHighScore();
 
-        
-        audioController.StopAllMusic();
-        audioController.StopSound("playerMove");
-
         if (win)
             Invoke("ActiveEndMenuWin", 2f);
         else

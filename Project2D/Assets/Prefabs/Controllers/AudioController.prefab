@@ -123,4 +123,16 @@ MonoBehaviour:
     playOnAwake: 0
     volume: 0.574
     source: {fileID: 0}
+  - name: charge
+    clip: {fileID: 8300000, guid: 82513e2fef0e0ed498b7b67f6c644966, type: 3}
+    loop: 0
+    playOnAwake: 0
+    volume: 0.201
+    source: {fileID: 0}
+  - name: scoreCounting
+    clip: {fileID: 8300000, guid: c157a6c196103e44a9854def0e12dd0b, type: 3}
+    loop: 1
+    playOnAwake: 0
+    volume: 0.676
+    source: {fileID: 0}
   playingMusic: []

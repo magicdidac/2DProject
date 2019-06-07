@@ -139,11 +139,13 @@ public class AudioController : AController
 
     public void StopAllMusic()
     {
-        foreach (Sound m in music)
-        {
-            Debug.Log("StopB " + m.name);
-            m.source.Stop();
-        }
+        foreach (Sound m in music) m.source.Stop();
+    }
+
+    public void StopAllSounds()
+    {
+        foreach (Sound m in sounds) m.source.Stop();
+        
     }
 
 

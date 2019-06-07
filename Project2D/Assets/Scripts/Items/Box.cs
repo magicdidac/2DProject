@@ -26,6 +26,7 @@ public class Box : MonoBehaviour
 
     public void DestroyBox()
     {
+
         Instantiate(boxes[boxIndex].box_destroy_prefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
