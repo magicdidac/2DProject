@@ -152,6 +152,11 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     #region Setters or Variable Modifiers
 
+    public void SetFloor(int floor)
+    {
+        this.floor = floor;
+    }
+
     public void AddController(AController c)
     {
         if (c is MapController)
