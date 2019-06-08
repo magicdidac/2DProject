@@ -24,6 +24,6 @@ public class InstakillController : MonoBehaviour
 
     void Update()
     {
-        if (gc.player.isDead) audioSource.Stop();
+        if (gc.player != null && gc.player.isDead) audioSource.Stop();
     }
 }

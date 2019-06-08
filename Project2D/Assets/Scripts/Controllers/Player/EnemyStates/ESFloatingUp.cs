@@ -14,7 +14,7 @@ public class ESFloatingUp : AState
         ec = _ec;
         ec.rigidbody2d.bodyType = RigidbodyType2D.Kinematic;
         ec.col.isTrigger = true;
-        ec.shield.gameObject.SetActive(true);
+        ec.shield.SetTrigger("FadeIn");
         gc.audioController.PlaySound("shield");
     }
 
@@ -24,7 +24,7 @@ public class ESFloatingUp : AState
         {
             ec.rigidbody2d.bodyType = RigidbodyType2D.Dynamic;
             ec.col.isTrigger = false;
-            ec.shield.gameObject.SetActive(false);
+            ec.shield.SetTrigger("FadeOut");
             gc.audioController.StopSound("dropping");
             gc.audioController.StopSound("shield");
             ec.ChangeState(new ESOnAir(ec));
