@@ -39,6 +39,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [HideInInspector] private float playerEnemyDistance;
 
     [HideInInspector] public bool isAutomateStart { get; set; } = false;
+    [HideInInspector] private bool allowInstantiate;
 
     #endregion
 
@@ -60,10 +61,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void StartGame()
     {
-        if (isGameRunning)
+        if (!allowInstantiate)
             return;
-
-        
 
         uiController.StartGame();
         mapController.StartGame();
@@ -71,7 +70,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         //Spawn player and enemy
         playerSpawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
         Invoke("SpawnPlayer", 1);
-
+        allowInstantiate = false;
         
 
         audioController.PlaySound("introExplosion");
@@ -92,6 +91,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         floor = 0;
         velocityMultiplier = .9f;
         isGameRunning = false;
+        allowInstantiate = true;
         if (isAutomateStart) StartGame();
     }
 
@@ -151,6 +151,11 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
 
     #region Setters or Variable Modifiers
+
+    public void SetFloor(int floor)
+    {
+        this.floor = floor;
+    }
 
     public void AddController(AController c)
     {
@@ -234,11 +239,14 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void LoadScene(int index)
     {
-        Debug.Log("Quit Application");
         SceneManager.LoadScene(index);
     }
 
-    public void Exit() { Application.Quit(); }
+    public void Exit()
+    {
+        Debug.Log("Quit Application");
+        Application.Quit();
+    }
 
     public void GameWin(bool win, PlayerController.DeathType dt)
     {

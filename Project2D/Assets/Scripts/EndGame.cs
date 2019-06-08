@@ -97,6 +97,7 @@ public class EndGame : MonoBehaviour
 
     public void Retry()
     {
+        gc.SetFloor(0);
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);//.completed += gc.restartVariables();
         //gc.restartVariables();
     }

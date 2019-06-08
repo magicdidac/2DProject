@@ -175,8 +175,10 @@ public class UIController : AController
     }
 
     
-
     #endregion
 
-
+    public void Exit()
+    {
+        gc.Exit();
+    }
 }
