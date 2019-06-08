@@ -45,7 +45,7 @@ public class MapController : AController
         backgroundQueue = new Queue<GameObject>();
 
         NextChunk();
-        NewBackground();
+        //NewBackground();
     }
 
     public void StartGame()
@@ -148,8 +148,8 @@ public class MapController : AController
         if (!gc.IsGameRunning() || gc.player.isDead)
             return;
 
-        if (gc.player.transform.position.x >= xOffset - 19.2f)
-            NewBackground();
+        /*if (gc.player.transform.position.x >= xOffset - 19.2f)
+            NewBackground();*/
 
         if (gc.player.transform.position.x > nextSpawnPosition)
             NextChunk();
