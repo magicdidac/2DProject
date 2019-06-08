@@ -8,6 +8,7 @@ public class InstakillController : MonoBehaviour
 
     [HideInInspector] private GameController gc;
     [HideInInspector] private AudioSource audioSource;
+    [SerializeField] private Sprite[] sprites = null;
 
     #endregion
 
@@ -17,6 +18,9 @@ public class InstakillController : MonoBehaviour
     {
         gc = GameController.instance;
         audioSource = GetComponent<AudioSource>();
+
+        GetComponent<SpriteRenderer>().sprite = sprites[Random.Range(0, sprites.Length)];
+
     }
 
     #endregion
