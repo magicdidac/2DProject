@@ -17,7 +17,7 @@ public class ESOtherFloor : AState
         if(gc.GetFloor() == 0 && ec.DetectGroundToLand())
         {
             ec.rigidbody2d.bodyType = RigidbodyType2D.Dynamic;
-            ec.shield.gameObject.SetActive(false);
+            //ec.shield.SetTrigger("FadeOut");
             ec.ChangeState(new ESOnAir(ec));
         }
     }

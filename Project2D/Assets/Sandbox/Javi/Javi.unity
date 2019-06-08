@@ -1379,11 +1379,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameController
       objectReference: {fileID: 0}
-    - target: {fileID: 7796238646908324871, guid: eab68b9de87b85e4da3a7c7b2569cca5,
-        type: 3}
-      propertyPath: maxEnemyDistance
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 7796238646908324868, guid: eab68b9de87b85e4da3a7c7b2569cca5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7521,7 +7516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   store: {fileID: 11400000, guid: e1389ae6b77541b4e80be111d79d405f, type: 2}
-  increaseAmmountProbability: 0.9
+  increaseAmmountProbability: 0
   background: {fileID: 8713774238281902902, guid: c2f539d0681ef5e4da2e5b9ea77053b2,
     type: 3}
 --- !u!4 &2022826114

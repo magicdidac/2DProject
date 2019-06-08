@@ -35,7 +35,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [HideInInspector] private int floor = 0;
     [HideInInspector] private float velocityMultiplier = .9f;
     [SerializeField] private float minEnemyDistance = 1;
-    [SerializeField] private float maxEnemyDistance = 9;
+    [SerializeField] private float maxEnemyDistance;
+    [HideInInspector] private float playerEnemyDistance;
 
     #endregion
 
@@ -53,9 +54,6 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         DontDestroyOnLoad(gameObject); //Dont destroy when change the scene
 
         InitializePlayerPrefs();
-
-        
-        //AudioController._audioManager.PlayMusic("softSound"); //PETA en el Awake
     }
 
     public void StartGame()
@@ -71,6 +69,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         playerSpawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
         player = Instantiate(playerObj, playerSpawnPoint.position, Quaternion.identity).GetComponent<PlayerController>();
         enemy = Instantiate(enemyObj, GetEnemySpawnPosition(), Quaternion.identity).GetComponent<EnemyController>();
+
+        playerEnemyDistance = Mathf.Round((enemy.transform.position.x - player.transform.position.x) * 100) / 100; //new
 
         audioController.PlaySound("introExplosion");
         audioController.StopAllMusic();
@@ -94,10 +94,10 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public float GetEnemyDistance()
     {
-        if (enemy == null || player == null)
-            return 0;
+        if (enemy == null || player == null) return playerEnemyDistance;
 
-        return (Mathf.Round((enemy.transform.position.x - player.transform.position.x) * 100) / 100);
+        playerEnemyDistance = Mathf.Round((enemy.transform.position.x - player.transform.position.x) * 100) / 100;
+        return playerEnemyDistance;
     }
 
     public float GetSkillMultiplier()
@@ -208,7 +208,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             if (GetEnemyDistance() < minEnemyDistance && floor == 0 && !player.isDead) //Check
                 GameWin(true, PlayerController.DeathType.CatchEnemy);
 
-            if (GetEnemyDistance() > maxEnemyDistance && player.isDead)
+            if (GetEnemyDistance() > maxEnemyDistance && !player.isDead)
                 GameWin(false, PlayerController.DeathType.EnemyRunAway);
         }
     }

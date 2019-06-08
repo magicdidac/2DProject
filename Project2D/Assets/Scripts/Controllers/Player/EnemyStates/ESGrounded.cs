@@ -8,8 +8,7 @@ public class ESGrounded : AState
 
     public ESGrounded(EnemyController _ec) : base()
     {
-        ec = _ec;       
-        ec.shield.gameObject.SetActive(false);
+        ec = _ec;
     }
 
     public override void CheckTransition()

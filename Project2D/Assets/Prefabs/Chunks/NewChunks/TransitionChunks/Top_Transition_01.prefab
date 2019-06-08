@@ -1314,7 +1314,7 @@ GameObject:
   - component: {fileID: 3951495257501144056}
   - component: {fileID: 2287191061526247607}
   - component: {fileID: 9081890692596302139}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tilemap_Walls
   m_TagString: Kill
   m_Icon: {fileID: 0}

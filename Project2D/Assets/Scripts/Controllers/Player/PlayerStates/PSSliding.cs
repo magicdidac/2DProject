@@ -25,11 +25,12 @@ public class PSSliding : AState
         pc.animator.SetTrigger("T-Slide");
         gc.uiController.SetOnTurboText();
 
+        pc.isSliding = true; //nueva
+
     }
 
     public override void CheckTransition()
     {
-
         if (Input.GetKeyUp(KeyCode.S))
             ChangeToState(new PSGrounded(pc));
 

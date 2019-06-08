@@ -54,3 +54,5 @@ MonoBehaviour:
   uiController: {fileID: 0}
   player: {fileID: 0}
   enemy: {fileID: 0}
+  minEnemyDistance: 1
+  maxEnemyDistance: 10

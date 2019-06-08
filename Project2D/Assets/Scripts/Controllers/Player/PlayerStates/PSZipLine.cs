@@ -24,7 +24,6 @@ public class PSZipLine : AState
         pc.animator.SetBool("B-ZipLine", true);
         pc.animator.SetTrigger("T-ZipLine");
         gc.audioController.PlaySound("zipLine");
-        Debug.LogWarning("ZIPLINE");
 
     }
 
