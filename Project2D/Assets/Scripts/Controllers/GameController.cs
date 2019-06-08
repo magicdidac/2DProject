@@ -61,21 +61,28 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         if (isGameRunning)
             return;
 
-        isGameRunning = true;
+        
 
         uiController.StartGame();
         mapController.StartGame();
 
         //Spawn player and enemy
         playerSpawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
-        player = Instantiate(playerObj, playerSpawnPoint.position, Quaternion.identity).GetComponent<PlayerController>();
-        enemy = Instantiate(enemyObj, GetEnemySpawnPosition(), Quaternion.identity).GetComponent<EnemyController>();
+        Invoke("SpawnPlayer", 1);
 
-        playerEnemyDistance = Mathf.Round((enemy.transform.position.x - player.transform.position.x) * 100) / 100; //new
+        
 
         audioController.PlaySound("introExplosion");
         audioController.StopAllMusic();
         audioController.PlayMusic("gameSong");
+    }
+
+    private void SpawnPlayer()
+    {
+        isGameRunning = true;
+        player = Instantiate(playerObj, playerSpawnPoint.position, Quaternion.identity).GetComponent<PlayerController>();
+        enemy = Instantiate(enemyObj, GetEnemySpawnPosition(), Quaternion.identity).GetComponent<EnemyController>();
+        playerEnemyDistance = Mathf.Round((enemy.transform.position.x - player.transform.position.x) * 100) / 100; //new
     }
 
     public void restartVariables()
