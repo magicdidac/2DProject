@@ -5,7 +5,7 @@ using UnityEngine;
 public class BoxDestroy : MonoBehaviour
 {
 
-    [SerializeField] private Rigidbody2D[] parts;
+    [SerializeField] private Rigidbody2D[] parts = null;
     
     public void Start()
     {

@@ -3,11 +3,14 @@ guid: 396d9f7fc949a244f973b5b3a73eb40b
 TextureImporter:
   fileIDToRecycleName:
     21300000: Wall_01
-    21300002: Wall_02
+    21300002: Wall_04
     21300004: Box_03
     21300006: Box_01
     21300008: Box_02
     21300010: Steam_Tube
+    21300012: Wall_02
+    21300014: Wall_03
+    21300016: Box_04
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -143,7 +146,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Wall_02
+      name: Wall_04
       rect:
         serializedVersion: 2
         x: 768
@@ -238,6 +241,66 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 19cdc2d773aa63c4fa515ab7655a9746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wall_02
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 256
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a46db5dc6e42e0046a4f3b80fd4208b4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wall_03
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 256
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d06f4806645261f4f9fc242722f1e2b4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Box_04
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f61af8671f88f74ab5720626a2a113b
       vertices: []
       indices: 
       edges: []

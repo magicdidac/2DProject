@@ -11,6 +11,9 @@ public class EndGame : MonoBehaviour
 
     [SerializeField] private Text scoreText = null;
     [SerializeField] private Text coinsText = null;
+    [SerializeField] private Image winLosePanel = null;
+    [SerializeField] private Sprite winSprite = null;
+    [SerializeField] private Sprite loseSprite = null;
 
 
     private int maxScore;
@@ -41,12 +44,12 @@ public class EndGame : MonoBehaviour
 
     public void WinSetUp()
     {
-        Debug.Log("Win");
+        winLosePanel.sprite = winSprite;
     }
 
     public void LoseSetUp()
     {
-        Debug.Log("Lose");
+        winLosePanel.sprite = loseSprite;
     }
 
     private void InvokeIncreaseScore()
