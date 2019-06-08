@@ -64,6 +64,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         isGameRunning = true;
 
         uiController.StartGame();
+        mapController.StartGame();
 
         //Spawn player and enemy
         playerSpawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
