@@ -14,6 +14,9 @@ public class EndGame : MonoBehaviour
     [SerializeField] private Image winLosePanel = null;
     [SerializeField] private Sprite winSprite = null;
     [SerializeField] private Sprite loseSprite = null;
+    [SerializeField] private Image basePanel = null;
+    [SerializeField] private Sprite winBase = null;
+    [SerializeField] private Sprite loseBase = null;
 
 
     private int maxScore;
@@ -44,11 +47,13 @@ public class EndGame : MonoBehaviour
 
     public void WinSetUp()
     {
+        basePanel.sprite = winBase;
         winLosePanel.sprite = winSprite;
     }
 
     public void LoseSetUp()
     {
+        basePanel.sprite = loseBase;
         winLosePanel.sprite = loseSprite;
     }
 

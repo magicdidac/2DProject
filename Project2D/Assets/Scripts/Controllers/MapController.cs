@@ -29,6 +29,9 @@ public class MapController : AController
     [HideInInspector] private Queue<GameObject> chunksQueue = null;
     [HideInInspector] private Queue<GameObject> backgroundQueue = null;
 
+    [Header("Rocks")]
+    [SerializeField] private GameObject rocks = null;
+
     #endregion
 
 
@@ -44,6 +47,12 @@ public class MapController : AController
         NextChunk();
         NewBackground();
     }
+
+    public void StartGame()
+    {
+        rocks.SetActive(true);
+    }
+
 
     #endregion
 
