@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [HideInInspector] private int floor = 0;
     [HideInInspector] private float velocityMultiplier = .9f;
     [SerializeField] private float minEnemyDistance = 1;
-    [SerializeField] private float maxEnemyDistance;
+    [SerializeField] private float maxEnemyDistance = 0f;
     [HideInInspector] private float playerEnemyDistance;
 
     #endregion
