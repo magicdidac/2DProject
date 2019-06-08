@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [HideInInspector] private int floor = 0;
     [HideInInspector] private float velocityMultiplier = .9f;
     [SerializeField] private float minEnemyDistance = 1;
-    [SerializeField] private float maxEnemyDistance = 9;
+    [SerializeField] private float maxEnemyDistance;
     [HideInInspector] private float playerEnemyDistance;
 
     #endregion
@@ -208,7 +208,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             if (GetEnemyDistance() < minEnemyDistance && floor == 0 && !player.isDead) //Check
                 GameWin(true, PlayerController.DeathType.CatchEnemy);
 
-            if (GetEnemyDistance() > maxEnemyDistance && player.isDead)
+            if (GetEnemyDistance() > maxEnemyDistance && !player.isDead)
                 GameWin(false, PlayerController.DeathType.EnemyRunAway);
         }
     }

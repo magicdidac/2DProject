@@ -1379,11 +1379,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameController
       objectReference: {fileID: 0}
-    - target: {fileID: 7796238646908324871, guid: eab68b9de87b85e4da3a7c7b2569cca5,
-        type: 3}
-      propertyPath: maxEnemyDistance
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 7796238646908324868, guid: eab68b9de87b85e4da3a7c7b2569cca5,
         type: 3}
       propertyPath: m_LocalPosition.x
