@@ -7,10 +7,9 @@ public class Parallax : MonoBehaviour
     #region Variables
 
     [HideInInspector] private float length = 0f;
-    //[HideInInspector] private float selfLength = 0f;
     [HideInInspector] private float startpos = 0f;
-    [SerializeField] private GameObject cam = null;
-    [SerializeField] private float parallaxEffect = 0f;
+    [HideInInspector] private GameObject cam = null;
+    [HideInInspector] private float parallaxEffect = 0f;
 
     #endregion
 
@@ -42,4 +41,14 @@ public class Parallax : MonoBehaviour
         if (temp > startpos + length*2) startpos += length*6;
         //else if (temp < startpos - length) startpos -= length*5;
     }
+
+
+    #region Setters or Variable Modifiers
+
+    public void SetCamera(GameObject c) { cam = c; }
+
+    public void SetParallaxEffect(float pe) { parallaxEffect = pe; }
+
+    #endregion
+
 }
