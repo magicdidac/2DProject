@@ -4058,7 +4058,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80adc6c65682b9e469d15817651fc12c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
   pressed: {r: 0.16078432, g: 0.38039216, b: 0.6784314, a: 1}
   nonPressed: {r: 0.79607844, g: 0.79607844, b: 0.79607844, a: 1}
   on: {fileID: 1758435096}
@@ -5478,7 +5477,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abab19020bed2a940b18abc2d3416722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
   pressed: {r: 0.16078432, g: 0.3803922, b: 0.6784314, a: 1}
   nonPressed: {r: 0.79607844, g: 0.79607844, b: 0.79607844, a: 1}
   off: {fileID: 1304138385}

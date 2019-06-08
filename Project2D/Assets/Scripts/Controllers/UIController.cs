@@ -75,8 +75,8 @@ public class UIController : AController
         if (Input.GetKeyDown(KeyCode.F3))
             debugMenu.SetActive(!debugMenu.activeSelf);
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-            SwitchPause();
+        if (Input.GetKeyDown(KeyCode.Escape) && !gc.player.isDead)
+             SwitchPause();
 
         UpdateEnemyDistance();
         UpdateFuel();
