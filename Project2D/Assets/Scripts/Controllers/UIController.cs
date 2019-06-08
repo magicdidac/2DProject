@@ -39,6 +39,7 @@ public class UIController : AController
     [SerializeField] private Color turboOnColor = Color.black;
     [SerializeField] private Text enemyDistanceText = null;
     [SerializeField] private GameObject enemyDistancePanel = null;
+    [SerializeField] private Animator anim = null;
 
     //Controll Vars
     [HideInInspector] private bool pauseIsActive = false;
@@ -57,9 +58,11 @@ public class UIController : AController
     //Other functions that helps to initialize
     public void StartGame()
     {
-        fuelPanel.SetActive(true);
+        /*fuelPanel.SetActive(true);
         scorePanel.SetActive(true);
-        enemyDistancePanel.SetActive(true);
+        enemyDistancePanel.SetActive(true);*/
+
+        anim.SetTrigger("Change");
         startMessage.SetActive(false);
 
         UpdateHighScore();
@@ -151,22 +154,24 @@ public class UIController : AController
         return string.Format("{0}m", Mathf.Round(ammount*10)/10);
     }
 
-    private void StopGame()
+    /*private void StopGame()
     {
         scorePanel.SetActive(false);
         fuelPanel.SetActive(false);
         enemyDistancePanel.SetActive(false);
-    }
+    }*/
 
     public void ActiveEndMenu(bool win)
     {
-        StopGame();
+        //StopGame();
+        anim.SetTrigger("Change");
+
         if (win)
             endGameMenu.WinSetUp();
         else
             endGameMenu.LoseSetUp();
 
-        endGameMenu.gameObject.SetActive(true);
+        //endGameMenu.gameObject.SetActive(true);
     }
 
     
