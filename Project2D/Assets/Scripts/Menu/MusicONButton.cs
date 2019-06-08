@@ -6,7 +6,6 @@ using UnityEngine.Audio;
 
 public class MusicONButton : MonoBehaviour
 {
-    public AudioMixer mixer;
     public Color pressed;
     public Color nonPressed;
     public GameObject off;
@@ -25,16 +24,10 @@ public class MusicONButton : MonoBehaviour
         if (!isClicked)
         {
             isClicked = true;
-            //PlayerPrefs.SetInt("MusicActive", 1);
             off.GetComponent<MusicOFFButton>().isClicked = false;
             transform.GetChild(0).GetComponent<Text>().color = pressed;
             off.transform.GetChild(0).GetComponent<Text>().color = nonPressed;
-            mixer.SetFloat("MasterVolume", 1f);
-            PlayerPrefs.SetFloat("MasterVolume", 1f);
-            Debug.Log("MusicOOFFButton: " + PlayerPrefs.GetFloat("MasterVolume"));
-
-            //GameController.instance.audioController.ResumeAudio();
-
+            AudioListener.pause = false;
         }
     }
 }
