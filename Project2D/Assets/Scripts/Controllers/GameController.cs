@@ -38,6 +38,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [SerializeField] private float maxEnemyDistance = 0f;
     [HideInInspector] private float playerEnemyDistance;
 
+    [HideInInspector] public bool isAutomateStart { get; set; } = false;
+
     #endregion
 
 
@@ -50,7 +52,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-        
+
         DontDestroyOnLoad(gameObject); //Dont destroy when change the scene
 
         InitializePlayerPrefs();
@@ -90,7 +92,10 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         floor = 0;
         velocityMultiplier = .9f;
         isGameRunning = false;
+        if (isAutomateStart) StartGame();
     }
+
+    
 
 
     #endregion
@@ -208,8 +213,11 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     private void Update()
     {
-        if (!isGameRunning && Input.GetKeyDown(KeyCode.Space)) //Start Game
+        if (!isGameRunning && Input.GetKeyDown(KeyCode.Space))
+        {
+            //Start Game
             StartGame();
+        }
 
         if (isGameRunning)
         {
@@ -224,7 +232,11 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     #region Other
 
-    public void LoadScene(int index) { SceneManager.LoadScene(index); }
+    public void LoadScene(int index)
+    {
+        Debug.Log("Quit Application");
+        SceneManager.LoadScene(index);
+    }
 
     public void Exit() { Application.Quit(); }
 

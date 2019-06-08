@@ -31,6 +31,7 @@ public class EndGame : MonoBehaviour
 
         gc.audioController.StopAllMusic(); //hacer mejor un FadeOut
         gc.audioController.StopAllSounds();
+        gc.isAutomateStart = false;
 
         Destroy(gc.enemy.gameObject);
 
@@ -41,7 +42,7 @@ public class EndGame : MonoBehaviour
     {
 
         if (Input.GetKeyDown(KeyCode.Space))
-            Retry();
+            RetrySpace();
 
     }
 
@@ -97,6 +98,12 @@ public class EndGame : MonoBehaviour
     public void Retry()
     {
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);//.completed += gc.restartVariables();
-        gc.restartVariables();
+        //gc.restartVariables();
+    }
+
+    private void RetrySpace()
+    {
+        gc.isAutomateStart = true;
+        Retry();
     }
 }
