@@ -38,6 +38,7 @@ public class AudioController : AController
             m.source.volume = m.volume;
             m.source.loop = m.loop;
             m.source.playOnAwake = m.playOnAwake;
+            m.source.outputAudioMixerGroup = m.mixer;
         }
 
         foreach (Sound s in sounds)
@@ -47,6 +48,7 @@ public class AudioController : AController
             s.source.volume = s.volume;
             s.source.loop = s.loop;
             s.source.playOnAwake = s.playOnAwake;
+            s.source.outputAudioMixerGroup = s.mixer;
         }
 
         PlayMusic("radioSong");
@@ -169,57 +171,21 @@ public class AudioController : AController
         playingMusic.Clear();
     }
 
-    public void setAllVolumes(float volume)
+    /*public void SetAllVolumes(float volume)
     {
+        Debug.Log(volume);
         foreach (Sound m in music)
         {
-            m.source.volume = 1;
+            //mapear el volumen
+            m.source.volume = volume;
         }
         foreach (Sound s in sounds)
         {
-            s.source.volume = 1;
+            s.source.volume = volume;
         }
-    }
-
-    public void PauseMusic()
-    {
-        foreach (Sound m in music) m.source.Pause();
-    }
-
-    /*public void PauseAudio()
-    {
-        //foreach (Sound m in music) m.source.Pause();
-
-        if (!GameManager._manager.mainMenu)
-        {
-            player = GameObject.FindGameObjectWithTag("Player");
-            player.GetComponent<GodUsopp>().PauseSounds();
-
-            /*GameObject[] enemies = GameObject.FindGameObjectsWithTag("enemy");
-
-            foreach (GameObject e in enemies)
-            {
-                e.GetComponent<Enemy>().PauseSounds();
-            }      
-        }        
-    }
-
-    public void ResumeAudio()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-        player.GetComponent<PlayerController>().ResumeSounds();
-
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("enemy");
-
-        foreach (GameObject e in enemies)
-        {
-            e.GetComponent<Enemy>().ResumeSounds();
-        }  
-
-        //PlayActiveMusic();
     }*/
 
-    public void PauseSounds()
+    public void PauseAudio()
     {
         foreach (Sound s in sounds)
         {
@@ -227,21 +193,33 @@ public class AudioController : AController
             {
                 if (s.source.isPlaying)
                 {
-                    s.source.Stop();
+                    s.source.Pause();
+                    pausedSounds.Add(s);
+                }
+            }
+        }
+
+        foreach (Sound s in music)
+        {
+            if (s != null)
+            {
+                if (s.source.isPlaying)
+                {
+                    s.source.Pause();
                     pausedSounds.Add(s);
                 }
             }
         }
     }
 
-    public void ResumeSounds()
+    public void ResumeAudio()
     {
         foreach (Sound s in pausedSounds)
         {
-            if (pausedSounds.Count > 0 || s != null)
+            if (s != null)
             {
-                s.source.volume = PlayerPrefs.GetFloat("MasterVolume");
-                s.source.Play();
+                s.source.UnPause();
+                Debug.Log(s.source.volume);
             }
         }
         pausedSounds.Clear();

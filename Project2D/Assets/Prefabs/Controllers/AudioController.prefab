@@ -48,12 +48,14 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 593f266098d9ed347958f56d50f10349, type: 3}
     loop: 1
     playOnAwake: 0
+    mixer: {fileID: 24300002, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
     volume: 0.591
     source: {fileID: 0}
   - name: radioSong
     clip: {fileID: 8300000, guid: dbc776bbfe98e7b43bca2d1d16f8c8a8, type: 3}
     loop: 1
     playOnAwake: 0
+    mixer: {fileID: 24300002, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
     volume: 0.272
     source: {fileID: 0}
   sounds:
@@ -61,84 +63,98 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 8bf0ba12614a27245b0edd39a9fcd71d, type: 3}
     loop: 1
     playOnAwake: 1
+    mixer: {fileID: 24300002, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
     volume: 0.247
     source: {fileID: 0}
   - name: PENE
     clip: {fileID: 0}
     loop: 0
     playOnAwake: 0
+    mixer: {fileID: 24300002, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
     volume: 0.826
     source: {fileID: 0}
   - name: dropping
     clip: {fileID: 8300000, guid: 144d1b9e18c4b3d448afa467eaa091d5, type: 3}
     loop: 0
     playOnAwake: 0
+    mixer: {fileID: 24300002, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
     volume: 0.355
     source: {fileID: 0}
   - name: shot
     clip: {fileID: 8300000, guid: e86c40ca10c4ceb4389a49c18389ed06, type: 3}
     loop: 0
     playOnAwake: 0
+    mixer: {fileID: 24300002, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
     volume: 1
     source: {fileID: 0}
   - name: grenade
     clip: {fileID: 8300000, guid: 42270666c879d064182f8ece8803d0be, type: 3}
     loop: 0
     playOnAwake: 0
+    mixer: {fileID: 24300002, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
     volume: 0.176
     source: {fileID: 0}
   - name: coin
     clip: {fileID: 8300000, guid: 2e9d4d95ba419804c87c7f5d1cf91d18, type: 3}
     loop: 0
     playOnAwake: 0
+    mixer: {fileID: 24300002, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
     volume: 0.176
     source: {fileID: 0}
   - name: shield
     clip: {fileID: 8300000, guid: 0e76665246a881f4a93cdb110fbd8a9b, type: 3}
     loop: 1
     playOnAwake: 0
+    mixer: {fileID: 24300002, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
     volume: 0.375
     source: {fileID: 0}
   - name: zipLine
     clip: {fileID: 8300000, guid: 8d6786ea63fc8274d91aab113668bebc, type: 3}
     loop: 1
     playOnAwake: 0
+    mixer: {fileID: 24300002, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
     volume: 0.531
     source: {fileID: 0}
   - name: trampoline
     clip: {fileID: 8300000, guid: 47dcfb86d30cbaf429218f2ec51c968c, type: 3}
     loop: 0
     playOnAwake: 0
+    mixer: {fileID: 24300002, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
     volume: 1
     source: {fileID: 0}
   - name: pickFuel
     clip: {fileID: 8300000, guid: bbc91588ac752ff4f872024057415856, type: 3}
     loop: 0
     playOnAwake: 0
+    mixer: {fileID: 24300002, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
     volume: 0.428
     source: {fileID: 0}
   - name: introExplosion
     clip: {fileID: 8300000, guid: 8cef9c5cff41d0d4cbac94acbf465eda, type: 3}
     loop: 0
     playOnAwake: 0
+    mixer: {fileID: 24300002, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
     volume: 0.574
     source: {fileID: 0}
   - name: charge
     clip: {fileID: 8300000, guid: d0b295b6b0d599942a79440ccdac372d, type: 3}
     loop: 0
     playOnAwake: 0
+    mixer: {fileID: 24300002, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
     volume: 0.501
     source: {fileID: 0}
   - name: scoreCounting
     clip: {fileID: 8300000, guid: c157a6c196103e44a9854def0e12dd0b, type: 3}
     loop: 1
     playOnAwake: 0
+    mixer: {fileID: 24300002, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
     volume: 0.676
     source: {fileID: 0}
   - name: playerDeath
     clip: {fileID: 8300000, guid: 32148e2305f22c145b751b44a822d921, type: 3}
     loop: 0
     playOnAwake: 0
+    mixer: {fileID: 24300002, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
     volume: 0.255
     source: {fileID: 0}
   playingMusic: []
