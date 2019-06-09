@@ -1,26 +1,11 @@
 fileFormatVersion: 2
-guid: 9be006d2b37f26d489e9ee4e0c72665a
+guid: 7f6abf2b0ce4a2e418579e0cbaa130a5
 TextureImporter:
   fileIDToRecycleName:
-    21300000: PD_01_01
-    21300002: PD_01_02
-    21300004: PD_01_03
-    21300006: PD_01_04
-    21300008: PD_01_05
-    21300010: PD_01_06
-    21300012: PD_01_07
-    21300014: PD_01_08
-    21300016: PD_01_09
-    21300018: PD_02_01
-    21300020: PD_02_02
-    21300022: PD_02_03
-    21300024: PD_02_04
-    21300026: PD_02_05
-    21300028: PD_02_06
-    21300030: PD_02_07
-    21300032: PD_02_08
-    21300034: PD_02_09
-    21300036: Player_SpriteSheet_Deaths_35
+    21300000: RightArm
+    21300002: LeftArm
+    21300004: Body
+    21300006: Head
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -136,181 +121,81 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PD_01_01
+      name: RightArm
       rect:
         serializedVersion: 2
-        x: 256
-        y: 1792
-        width: 256
-        height: 256
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 91
+        y: 323
+        width: 81
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b2b3aa5ad368c4b448472eb4dab6ae97
+      spriteID: de5b07153b07b5844ba4314827ce00e2
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PD_01_02
+      name: LeftArm
       rect:
         serializedVersion: 2
-        x: 512
-        y: 1792
-        width: 256
-        height: 256
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 363
+        y: 324
+        width: 64
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed8f622801b8bb743a126af3494d59e6
+      spriteID: 4255642c81367c14ab3caa2dd5e06b03
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PD_01_03
+      name: Body
       rect:
         serializedVersion: 2
-        x: 768
-        y: 1792
-        width: 256
-        height: 256
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 91
+        y: 54
+        width: 81
+        height: 143
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7519237d072c7254f987bc98d3ed5cf4
+      spriteID: 866f332d9a460064e8a6db744b5cddcd
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PD_01_04
+      name: Head
       rect:
         serializedVersion: 2
-        x: 1024
-        y: 1792
-        width: 256
-        height: 256
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 366
+        y: 107
+        width: 59
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d6b1b9d1e97a3d240a6df9a8b2c042e5
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PD_01_05
-      rect:
-        serializedVersion: 2
-        x: 1280
-        y: 1792
-        width: 256
-        height: 256
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: af30def462ccef94f81a6e74a60a6e8b
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PD_01_06
-      rect:
-        serializedVersion: 2
-        x: 1536
-        y: 1792
-        width: 256
-        height: 256
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e8aed5cbf62ec8644b95864abadf5c73
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PD_01_07
-      rect:
-        serializedVersion: 2
-        x: 1792
-        y: 1792
-        width: 256
-        height: 256
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0a20827fcf0e9054294724046c5de56c
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PD_01_08
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 1536
-        width: 256
-        height: 256
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5e2b4856cc62750438d5294d492db9fd
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PD_01_09
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 1536
-        width: 256
-        height: 256
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e415924882cbd8f43b0b2157939126b9
+      spriteID: 9a2f78325a2e82b4796b42e409268e65
       vertices: []
       indices: 
       edges: []
@@ -318,14 +203,14 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: f9dae88c6bb1df5439f00a7fdadb31a4
+    spriteID: 5a8b2c671c9f4364eaef68ad5f35112b
     vertices: []
     indices: 
     edges: []
     weights: []
   spritePackingTag: 
-  pSDRemoveMatte: 1
-  pSDShowRemoveMatteOption: 1
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
