@@ -11165,10 +11165,10 @@ RectTransform:
   m_Father: {fileID: 1933407597}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.1786875, y: 0.70374084}
-  m_AnchorMax: {x: 0.8203333, y: 0.8352223}
-  m_AnchoredPosition: {x: 0.78027344, y: 0.020019531}
-  m_SizeDelta: {x: -27.03003, y: -30.839996}
+  m_AnchorMin: {x: 0.22657399, y: 0.52225935}
+  m_AnchorMax: {x: 0.77400005, y: 1}
+  m_AnchoredPosition: {x: -1.2197266, y: 49}
+  m_SizeDelta: {x: -28, y: -4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &527492205
 MonoBehaviour:
@@ -11190,7 +11190,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 418bd44178b1e754fbab61918079125d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3c572e4e86d655e4199cc1be21e604d4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -30238,7 +30238,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1702582233}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.21, y: 0.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 784801762}
@@ -30280,9 +30280,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1961036717
+  m_SortingLayer: 2
+  m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -30389,7 +30389,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -30442,7 +30442,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -30558,7 +30558,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -30933,7 +30933,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 4
+    type: 10
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -31020,7 +31020,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 1
+      value: 0.23464973
       mode: 0
       spread: 0
       speed:
@@ -31139,7 +31139,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 3
       minScalar: 10
       maxCurve:
         serializedVersion: 2
