@@ -18,7 +18,7 @@ public class PlayerDead : MonoBehaviour
                 anim.SetTrigger("ElectricityDead");
                 break;
             case PlayerController.DeathType.Granade:
-                anim.SetTrigger("ShootDead");
+                anim.SetTrigger("ExplosionDead");
                 break;
             case PlayerController.DeathType.Fall:
                 anim.SetTrigger("ShootDead");
