@@ -24,7 +24,7 @@ public class CoinTool : MonoBehaviour
     {
         Transform[] points = new Transform[parentOfPoints.childCount];
 
-        for(int i = 0; i<parentOfPoints.childCount; i++)
+        for (int i = 0; i < parentOfPoints.childCount; i++)
         {
             points[i] = parentOfPoints.GetChild(i);
         }
@@ -40,7 +40,7 @@ public class CoinTool : MonoBehaviour
         List<Vector3> positions = new List<Vector3>();
         positions.Add(points[0].position);
 
-        for(int i=1; i<points.Length; i++)
+        for (int i = 1; i < points.Length; i++)
         {
 
             if (!double.IsNaN((points[i].position - positions[positions.Count - 1]).magnitude))
@@ -60,7 +60,9 @@ public class CoinTool : MonoBehaviour
             }
         }
 
-        positions.Add(points[points.Length - 1].position);
+        if (!(positions[positions.Count - 1].x == points[points.Length - 1].position.x && positions[positions.Count - 1].y == points[points.Length - 1].position.y))
+            positions.Add(points[points.Length - 1].position);
+
 
         return positions;
 
@@ -81,7 +83,7 @@ public class CoinTool : MonoBehaviour
     {
         float xTotal = endPos.x - startPos.x;
         float yTotal = endPos.y - startPos.y;
-        float totalDistance = (endPos-startPos).magnitude;
+        float totalDistance = (endPos - startPos).magnitude;
         Vector3 fianalPoint = GetPoint(totalDistance, distance, xTotal, yTotal, startPos);
         return fianalPoint;
     }
@@ -91,7 +93,7 @@ public class CoinTool : MonoBehaviour
         Transform oldPoint = null;
         float distance = 0;
 
-        foreach(Transform t in points)
+        foreach (Transform t in points)
         {
             if (oldPoint == null)
                 oldPoint = t;
@@ -151,14 +153,30 @@ public class CoinTool : MonoBehaviour
 
         if (parentOfPoints == null)
         {
-            parentOfPoints = new GameObject("ParentOfPoints").transform;
-            parentOfPoints.SetParent(transform);
+            Transform t = transform.Find("ParentOfPoints");
+
+            if (t == null)
+            {
+                parentOfPoints = new GameObject("ParentOfPoints").transform;
+                parentOfPoints.SetParent(transform);
+                parentOfPoints.position = transform.position;
+            }
+            else
+                parentOfPoints = t;
         }
 
         if (parentOfCoins == null)
         {
-            parentOfCoins = new GameObject("ParentOfCoins").transform;
-            parentOfCoins.SetParent(transform);
+            Transform t = transform.Find("ParentOfCoins");
+
+            if (t == null)
+            {
+                parentOfCoins = new GameObject("ParentOfCoins").transform;
+                parentOfCoins.SetParent(transform);
+                parentOfCoins.position = transform.position;
+            }
+            else
+                parentOfCoins = t;
         }
 
         if (numberOfCoins < 2)
@@ -181,7 +199,7 @@ public class CoinTool : MonoBehaviour
             return;
         }
 
-        if(points.Length < 2)
+        if (points.Length < 2)
         {
             Transform two = new GameObject("SecondPoint").transform;
             two.SetParent(parentOfPoints);
@@ -193,7 +211,7 @@ public class CoinTool : MonoBehaviour
 
         Gizmos.color = Color.white;
 
-        foreach(Transform t in points)
+        foreach (Transform t in points)
         {
             if (oldPoint == null)
                 oldPoint = t;
@@ -203,12 +221,12 @@ public class CoinTool : MonoBehaviour
                 oldPoint = t;
             }
         }
-        
+
         positions = ObtainCoinPositions(points);
-        
+
         Gizmos.color = Color.red;
 
-        foreach(Vector3 v in positions)
+        foreach (Vector3 v in positions)
         {
             Gizmos.DrawSphere(v, .1f);
         }
