@@ -7,7 +7,7 @@ public class TopGranade : Granade
 
     #region Variables
 
-    [SerializeField] private Collider2D col;
+    [SerializeField] private Collider2D col = null;
 
     #endregion
 

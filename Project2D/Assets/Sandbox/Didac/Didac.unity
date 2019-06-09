@@ -5382,7 +5382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1457924750}
   parallaxes:
-  - parallaxEffect: 0
+  - parallaxEffect: 0.7
     parallaxes:
     - {fileID: 1053870846}
     - {fileID: 574236313}
