@@ -64,7 +64,7 @@ public class EnemyController : AMoveController
         switch (gc.GetFloor())
         {
             case 1:
-                //gc.enemyIndicator.LoadShoot();
+                animator.SetTrigger("T-MidGranadeShoot");
                 break;
             case 0:
                 /*if (gc.GetEnemyDistance() > 3 && Random.Range(0, 2) == 1)
@@ -73,7 +73,7 @@ public class EnemyController : AMoveController
                     animator.SetTrigger("T-MidGranadeShoot");
                 break;
             case -1:
-                //gc.enemyIndicator.LoadShoot();
+                animator.SetTrigger("T-MidGranadeShoot");
                 break;
         }
     }
@@ -85,7 +85,19 @@ public class EnemyController : AMoveController
 
     public void GranadeShoot()
     {
-        Instantiate(midGranade, transform.GetChild(0).transform.position, Quaternion.identity);
+        switch (gc.GetFloor())
+        {
+            case 1:
+                Instantiate(topGranade, transform.GetChild(0).transform.position, Quaternion.identity);
+                break;
+            case 0:
+                Instantiate(midGranade, transform.GetChild(0).transform.position, Quaternion.identity);
+                break;
+            case -1:
+                Instantiate(botGranade, transform.GetChild(0).transform.position, Quaternion.identity);
+                break;
+        }
+
     }
 
     public bool DetectObstacleToJump()
