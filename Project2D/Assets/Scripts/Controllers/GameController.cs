@@ -33,13 +33,22 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     [Header("Control Vars")]
     [HideInInspector] private bool isGameRunning = false;
     [HideInInspector] private int floor = 0;
-    [HideInInspector] private float velocityMultiplier = .9f;
     [SerializeField] private float minEnemyDistance = 1;
     [SerializeField] private float maxEnemyDistance = 0f;
     [HideInInspector] private float playerEnemyDistance;
 
     [HideInInspector] public bool isAutomateStart { get; set; } = false;
     [HideInInspector] private bool allowInstantiate;
+
+    [Header("Speed in Game")]
+    [SerializeField] private float speedMultiplier = 1;
+    [HideInInspector] private float startSpeedMultiplier;
+    [SerializeField] private float increaseSpeedMultiplier = .05f;
+    [SerializeField] private float maxSpeedMultiplier = 1.5f;
+
+    [Header("Dificult")]
+    [SerializeField] private DificultController dc = null;
+
 
     #endregion
 
@@ -55,6 +64,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject); //Dont destroy when change the scene
+
+        startSpeedMultiplier = speedMultiplier;
 
         InitializePlayerPrefs();
     }
@@ -89,7 +100,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     public void restartVariables()
     {
         floor = 0;
-        velocityMultiplier = .9f;
+        speedMultiplier = startSpeedMultiplier;
         isGameRunning = false;
         allowInstantiate = true;
         if (isAutomateStart) StartGame();
@@ -115,27 +126,23 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public float GetSkillMultiplier()
     {
-        int playerSkill = PlayerPrefs.GetInt("PlayerSkill", 30);
-
-        if (playerSkill <= 35)
-            return .8f;
-        else if (playerSkill <= 60)
-            return 1;
-        else if (playerSkill <= 75)
-            return 1.2f;
-        else if (playerSkill <= 95)
-            return 1.3f;
-        else
-            return 1.5f;
+        return dc.GetDificulty().GetSpeedMultiplier();
     }
 
-    public float GetVelocityMultiplier() { return velocityMultiplier; }
+    public PlayerDificulty.Dificulty GetCurrentDificulty()
+    {
+
+
+        return dc.GetDificulty().GetName();
+    }
+
+    public float GetVelocityMultiplier() { return speedMultiplier; }
 
     public float GetVelocity(float vo)
     {
         vo *= GetSkillMultiplier();
 
-        return vo * velocityMultiplier;
+        return vo * speedMultiplier;
     }
 
     private Vector3 GetEnemySpawnPosition()
@@ -152,10 +159,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     #region Setters or Variable Modifiers
 
-    public void SetFloor(int floor)
-    {
-        this.floor = floor;
-    }
+    public void SetFloor(int floor) { this.floor = floor; }
 
     public void AddController(AController c)
     {
@@ -184,10 +188,10 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void IncreaseVelocityMultiplier()
     {
-        if (velocityMultiplier < 1.75f)
-            velocityMultiplier += .1f;
+        if (speedMultiplier < maxSpeedMultiplier)
+            speedMultiplier += increaseSpeedMultiplier;
         else
-            velocityMultiplier = 1.75f;
+            speedMultiplier = maxSpeedMultiplier;
     }
 
     public void IncreasePlayerSkill()
@@ -203,8 +207,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void DecreasePlayerSkill()
     {
-        int r = 30 - mapController.GetChunksCounter();
-        r += PlayerPrefs.GetInt("PlayerSkill", 30);
+        int r = PlayerPrefs.GetInt("PlayerSkill", 30);
+        r -= 30 - mapController.GetChunksCounter();
 
         if (r > 0)
             PlayerPrefs.SetInt("PlayerSkill", r);
@@ -253,8 +257,10 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         if (player.isDead)
             return;
 
-        player.Kill(dt);
+        if(!win)
+            DecreasePlayerSkill();
 
+        player.Kill(dt);
         
         if (win)
             scoreController.MultiplyScore();

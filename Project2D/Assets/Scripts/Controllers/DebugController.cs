@@ -61,12 +61,7 @@ public class DebugController : AController
 
     private string GetDificulty()
     {
-        if (PlayerPrefs.GetInt("PlayerSkill", 30) <= 40)
-            return "easy";
-        else if (PlayerPrefs.GetInt("PlayerSkill", 30) <= 80)
-            return "normal";
-        else
-            return "hard";
+        return gc.GetCurrentDificulty().ToString();
     }
 
 }

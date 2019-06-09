@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7796238646908324868}
   - component: {fileID: 7796238646908324871}
+  - component: {fileID: 4706100715803907564}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -56,3 +57,32 @@ MonoBehaviour:
   enemy: {fileID: 0}
   minEnemyDistance: 1
   maxEnemyDistance: 10
+  speedMultiplier: 1
+  increaseSpeedMultiplier: 0.05
+  maxSpeedMultiplier: 1.5
+  dc: {fileID: 4706100715803907564}
+--- !u!114 &4706100715803907564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7796238646908324870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34b2b1b514a8cd64abddefc4afdc605a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dificulties:
+  - name: 0
+    maxSkillPoints: 40
+    minSkillPoints: 0
+    speedMultiplier: 1
+  - name: 1
+    maxSkillPoints: 70
+    minSkillPoints: 40
+    speedMultiplier: 1.1
+  - name: 2
+    maxSkillPoints: 100
+    minSkillPoints: 70
+    speedMultiplier: 1.25

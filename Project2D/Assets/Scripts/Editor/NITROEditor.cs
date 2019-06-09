@@ -40,4 +40,11 @@ public class NITROEditor : EditorWindow
         Debug.Log("Added 100 Coins to player");
     }
 
+    [MenuItem("N.I.T.R.O./ResetSkillPoints")]
+    public static void ResetSkillPoints()
+    {
+        PlayerPrefs.SetInt("PlayerSkill", 30);
+        Debug.Log("Reset Skill Points to 30");
+    }
+
 }
