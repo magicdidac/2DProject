@@ -17,17 +17,14 @@ public class Parallax : MonoBehaviour
     #region Initializers
 
     //Start
-    private void Start()
+    private void OnEnable()
     {
         startpos = transform.position.x;
         length = GetComponent<SpriteRenderer>().bounds.size.x;
-        //selfLength = GetComponent<SpriteRenderer>().bounds.size.x;
     }
 
     #endregion
 
-
-    //Update
 
     //FixedUpdate
     private void FixedUpdate()

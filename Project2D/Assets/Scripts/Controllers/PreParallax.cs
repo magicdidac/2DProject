@@ -8,9 +8,9 @@ public class PreParallax : MonoBehaviour
     [SerializeField] private GameObject cam = null;
 
     [Header("All Parallax")]
-    [SerializeField] private ParallaxLevel[] parallaxes;
+    [SerializeField] private ParallaxLevel[] parallaxes = null;
 
-    private void Start()
+    private void Awake()
     {
         foreach(ParallaxLevel pl in parallaxes)
         {

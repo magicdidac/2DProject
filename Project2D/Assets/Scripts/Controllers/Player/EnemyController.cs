@@ -5,9 +5,14 @@ using UnityEngine;
 public class EnemyController : AMoveController
 {
     [SerializeField] private GameObject bulletPrefab = null;
-    [SerializeField] private GameObject granadePrefab = null;
+    [SerializeField] private GameObject topGranade = null;
+    [SerializeField] private GameObject midGranade = null;
+    [SerializeField] private GameObject botGranade = null;
+    [Header("Particles")]
+    [SerializeField] private ParticleSystem smoke = null;
 
 
+    [Header("AI Vars")]
     [Range(0, 5)] [SerializeField] public float RadiusDetection = 1.3f;
     [Range(0, 5)] [SerializeField] public float verticalDetectionDistance = 2;
     [Range(0, 5)] [SerializeField] public float verticalDetectionXOffset = .5f;
@@ -49,6 +54,7 @@ public class EnemyController : AMoveController
     {
         currentState.Update();
         isGrounded = detectCollision(groundMask, model.offset);
+        UpdateParticles();
     }
 
     private void LateUpdate()
@@ -62,18 +68,24 @@ public class EnemyController : AMoveController
         switch (gc.GetFloor())
         {
             case 1:
-                //gc.enemyIndicator.LoadShoot();
+                animator.SetTrigger("T-MidGranadeShoot");
                 break;
             case 0:
-                //if (gc.GetEnemyDistance() > 3 && Random.Range(0, 2) == 1)
+
+                if (gc.GetEnemyDistance() > 3 && Random.Range(0, 2) == 1)
                     animator.SetTrigger("T-MidLaserShoot");
-                /*else
-                    animator.SetTrigger("T-MidGranadeShoot");*/
+                else
+                    animator.SetTrigger("T-MidGranadeShoot");
                 break;
             case -1:
-                //gc.enemyIndicator.LoadShoot();
+                animator.SetTrigger("T-MidGranadeShoot");
                 break;
         }
+    }
+
+    private bool isInState(AState state1, AState state2)
+    {
+        return (state1 == state2);       
     }
 
     public void LaserShoot()
@@ -83,8 +95,19 @@ public class EnemyController : AMoveController
 
     public void GranadeShoot()
     {
-        Instantiate(granadePrefab, transform.GetChild(0).transform.position, Quaternion.identity);
-        //granade.rb.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+        switch (gc.GetFloor())
+        {
+            case 1:
+                Instantiate(topGranade, transform.GetChild(0).transform.position, Quaternion.identity);
+                break;
+            case 0:
+                Instantiate(midGranade, transform.GetChild(0).transform.position, Quaternion.identity);
+                break;
+            case -1:
+                Instantiate(botGranade, transform.GetChild(0).transform.position, Quaternion.identity);
+                break;
+        }
+
     }
 
     public bool DetectObstacleToJump()
@@ -136,6 +159,28 @@ public class EnemyController : AMoveController
     {
         if (gc.player.isDead)
             gameObject.SetActive(false);
+    }
+
+
+    private void UpdateParticles()
+    {
+        if (!isGrounded)
+            StopEmission(smoke);
+        else
+            SetRateOverTimeEmission(smoke, 50);
+
+    }
+
+    private void StopEmission(ParticleSystem ps)
+    {
+        SetRateOverTimeEmission(ps, 0);
+    }
+
+    private void SetRateOverTimeEmission(ParticleSystem ps, int ammount)
+    {
+        var emission = ps.emission;
+
+        emission.rateOverTime = ammount;
     }
 
     #region Gizmos

@@ -248,6 +248,7 @@ public class PlayerController : AMoveController
         }
         else if (col.CompareTag("EnemyShoot"))
         {
+            Destroy(col.gameObject);
             gc.GameWin(false, DeathType.Shoot);
         }
         else if (col.CompareTag("EnemyGranade"))
