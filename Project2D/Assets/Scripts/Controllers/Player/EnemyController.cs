@@ -67,9 +67,9 @@ public class EnemyController : AMoveController
                 animator.SetTrigger("T-MidGranadeShoot");
                 break;
             case 0:
-                /*if (gc.GetEnemyDistance() > 3 && Random.Range(0, 2) == 1)
+                if (gc.GetEnemyDistance() > 3 && Random.Range(0, 2) == 1)
                     animator.SetTrigger("T-MidLaserShoot");
-                else*/
+                else
                     animator.SetTrigger("T-MidGranadeShoot");
                 break;
             case -1:
