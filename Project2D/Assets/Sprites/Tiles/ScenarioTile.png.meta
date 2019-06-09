@@ -63,6 +63,7 @@ TextureImporter:
     21300116: C_12
     21300118: ZPB_02
     21300120: CH_02
+    21300122: ZPB_03
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -773,6 +774,26 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 39aa6d1e374a5724d9f187203db913ab
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZPB_03
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 887
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5904ee68f820774d81c5c407a79b081
       vertices: []
       indices: 
       edges: []
