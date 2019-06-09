@@ -309,8 +309,10 @@ MonoBehaviour:
   zipLine: {fileID: 0}
   bulletPrefab: {fileID: 8686533054903447472, guid: 98275d561080dc14490309accdc73343,
     type: 3}
-  granadePrefab: {fileID: 6493932739216059904, guid: 56da11a6ab24e214e9177fac34e1132f,
+  topGranade: {fileID: 0}
+  midGranade: {fileID: 6493932739216059904, guid: 56da11a6ab24e214e9177fac34e1132f,
     type: 3}
+  botGranade: {fileID: 0}
   RadiusDetection: 2
   verticalDetectionDistance: 2
   verticalDetectionXOffset: 0.5

@@ -5,7 +5,9 @@ using UnityEngine;
 public class EnemyController : AMoveController
 {
     [SerializeField] private GameObject bulletPrefab = null;
-    [SerializeField] private GameObject granadePrefab = null;
+    [SerializeField] private GameObject topGranade = null;
+    [SerializeField] private GameObject midGranade = null;
+    [SerializeField] private GameObject botGranade = null;
 
 
     [Range(0, 5)] [SerializeField] public float RadiusDetection = 1.3f;
@@ -65,10 +67,10 @@ public class EnemyController : AMoveController
                 //gc.enemyIndicator.LoadShoot();
                 break;
             case 0:
-                //if (gc.GetEnemyDistance() > 3 && Random.Range(0, 2) == 1)
+                /*if (gc.GetEnemyDistance() > 3 && Random.Range(0, 2) == 1)
                     animator.SetTrigger("T-MidLaserShoot");
-                /*else
-                    animator.SetTrigger("T-MidGranadeShoot");*/
+                else*/
+                    animator.SetTrigger("T-MidGranadeShoot");
                 break;
             case -1:
                 //gc.enemyIndicator.LoadShoot();
@@ -83,8 +85,7 @@ public class EnemyController : AMoveController
 
     public void GranadeShoot()
     {
-        Instantiate(granadePrefab, transform.GetChild(0).transform.position, Quaternion.identity);
-        //granade.rb.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+        Instantiate(midGranade, transform.GetChild(0).transform.position, Quaternion.identity);
     }
 
     public bool DetectObstacleToJump()
