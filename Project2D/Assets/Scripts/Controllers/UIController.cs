@@ -22,6 +22,7 @@ public class UIController : AController
     [SerializeField] private EndGame endGameMenu = null;
     [SerializeField] private GameObject debugMenu = null;
     [SerializeField] private GameObject controlsMenu = null;
+    [SerializeField] private GameObject optionsMenu = null;
 
     //Score Objects
     [Header("Score Objects")]
@@ -79,7 +80,7 @@ public class UIController : AController
         if (Input.GetKeyDown(KeyCode.F3))
             debugMenu.SetActive(!debugMenu.activeSelf);
 
-        if (!controlsMenu.activeSelf && Input.GetKeyDown(KeyCode.Escape) && (gc.player == null || !gc.player.isDead))
+        if (!optionsMenu.activeSelf && !controlsMenu.activeSelf && Input.GetKeyDown(KeyCode.Escape) && (gc.player == null || !gc.player.isDead))
              SwitchPause();
 
         if (controlsMenu.activeSelf && Input.GetKeyDown(KeyCode.Escape))
