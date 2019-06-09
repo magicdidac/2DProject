@@ -854,7 +854,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6954145095092307852}
   m_Layer: 0
-  m_Name: 08
+  m_Name: D2_08
   m_TagString: Untagged
   m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -2637,6 +2637,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: InstaKill
       objectReference: {fileID: 0}
+    - target: {fileID: 1359980483023106583, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4285792237192567278, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2711,6 +2716,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FallKill (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726646826981565224, guid: 3e842b43ec61e844b8ca12d2521cb3d9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7511373475693824209, guid: 3e842b43ec61e844b8ca12d2521cb3d9,
         type: 3}
@@ -2792,6 +2802,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FallKill
       objectReference: {fileID: 0}
+    - target: {fileID: 4726646826981565224, guid: 3e842b43ec61e844b8ca12d2521cb3d9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7511373475693824209, guid: 3e842b43ec61e844b8ca12d2521cb3d9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2872,6 +2887,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: InstaKill (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1359980483023106583, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4285792237192567278, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2946,6 +2966,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FallKill (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726646826981565224, guid: 3e842b43ec61e844b8ca12d2521cb3d9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7511373475693824209, guid: 3e842b43ec61e844b8ca12d2521cb3d9,
         type: 3}
@@ -3027,6 +3052,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FallKill (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 4726646826981565224, guid: 3e842b43ec61e844b8ca12d2521cb3d9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7511373475693824209, guid: 3e842b43ec61e844b8ca12d2521cb3d9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3106,6 +3136,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ZipLine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2025472991266057658, guid: 80f72f0c5fad2fb4394fb229185d0601,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2025472991266057652, guid: 80f72f0c5fad2fb4394fb229185d0601,
         type: 3}
@@ -3207,6 +3242,11 @@ PrefabInstance:
       propertyPath: m_Size.x
       value: 20.107723
       objectReference: {fileID: 0}
+    - target: {fileID: 3572183606014374987, guid: 80f72f0c5fad2fb4394fb229185d0601,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 3489379765145581498, guid: 80f72f0c5fad2fb4394fb229185d0601,
         type: 3}
       propertyPath: m_Size.x
@@ -3231,6 +3271,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FallKill (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726646826981565224, guid: 3e842b43ec61e844b8ca12d2521cb3d9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7511373475693824209, guid: 3e842b43ec61e844b8ca12d2521cb3d9,
         type: 3}
@@ -3311,6 +3356,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: InstaKill (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1359980483023106583, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4285792237192567278, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
         type: 3}
