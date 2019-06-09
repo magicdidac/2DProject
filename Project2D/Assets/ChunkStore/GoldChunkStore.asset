@@ -13,24 +13,17 @@ MonoBehaviour:
   m_Name: GoldChunkStore
   m_EditorClassIdentifier: 
   top:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 0c56e8795fed26f42b20f64e01f6153b, type: 2}
   middle:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 6c009f74363241542a135f2c475df063, type: 2}
   bottom:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 8250163112069464182a59363e8291c3, type: 2}
   easy:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 7e8cfa388937b394b923739daba7b18c, type: 2}
   normal:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 04c387c9bb6d25742b1c3399f5530277, type: 2}
+  - {fileID: 11400000, guid: b3439b2edb8a6fd469625468f58bf827, type: 2}
   hard:
-  - {fileID: 0}
   - {fileID: 0}
   reward:
   - {fileID: 11400000, guid: 2b4aa3fb374a72943947f8eea9006327, type: 2}
