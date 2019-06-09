@@ -10,7 +10,7 @@ public class PreParallax : MonoBehaviour
     [Header("All Parallax")]
     [SerializeField] private ParallaxLevel[] parallaxes = null;
 
-    private void Start()
+    private void Awake()
     {
         foreach(ParallaxLevel pl in parallaxes)
         {

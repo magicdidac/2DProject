@@ -8,8 +8,11 @@ public class EnemyController : AMoveController
     [SerializeField] private GameObject topGranade = null;
     [SerializeField] private GameObject midGranade = null;
     [SerializeField] private GameObject botGranade = null;
+    [Header("Particles")]
+    [SerializeField] private ParticleSystem smoke = null;
 
 
+    [Header("AI Vars")]
     [Range(0, 5)] [SerializeField] public float RadiusDetection = 1.3f;
     [Range(0, 5)] [SerializeField] public float verticalDetectionDistance = 2;
     [Range(0, 5)] [SerializeField] public float verticalDetectionXOffset = .5f;
@@ -51,6 +54,7 @@ public class EnemyController : AMoveController
     {
         currentState.Update();
         isGrounded = detectCollision(groundMask, model.offset);
+        UpdateParticles();
     }
 
     private void LateUpdate()
@@ -77,6 +81,11 @@ public class EnemyController : AMoveController
                 animator.SetTrigger("T-MidGranadeShoot");
                 break;
         }
+    }
+
+    private bool isInState(AState state1, AState state2)
+    {
+        return (state1 == state2);       
     }
 
     public void LaserShoot()
@@ -150,6 +159,28 @@ public class EnemyController : AMoveController
     {
         if (gc.player.isDead)
             gameObject.SetActive(false);
+    }
+
+
+    private void UpdateParticles()
+    {
+        if (!isGrounded)
+            StopEmission(smoke);
+        else
+            SetRateOverTimeEmission(smoke, 50);
+
+    }
+
+    private void StopEmission(ParticleSystem ps)
+    {
+        SetRateOverTimeEmission(ps, 0);
+    }
+
+    private void SetRateOverTimeEmission(ParticleSystem ps, int ammount)
+    {
+        var emission = ps.emission;
+
+        emission.rateOverTime = ammount;
     }
 
     #region Gizmos
