@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MapController : AController
 {
+
     /*
      LAWS:
         - All variables will be private if you need access to it, plese do it by Getter and/or Setter
@@ -65,12 +66,18 @@ public class MapController : AController
     {
         Chunk resultChunk = null;
 
-        if (PlayerPrefs.GetInt("PlayerSkill", 30) <= 40)
-            resultChunk = GetEasyChunk();
-        else if (PlayerPrefs.GetInt("PlayerSkill", 30) <= 80)
-            resultChunk = GetNormalChunk();
-        else
-            resultChunk = GetHardChunk();
+        switch (gc.GetCurrentDificulty())
+        {
+            case PlayerDificulty.Dificulty.Easy:
+                resultChunk = GetEasyChunk();
+                break;
+            case PlayerDificulty.Dificulty.Normal:
+                resultChunk = GetNormalChunk();
+                break;
+            case PlayerDificulty.Dificulty.Hard:
+                resultChunk = GetHardChunk();
+                break;
+        }            
 
         return resultChunk;
     }
