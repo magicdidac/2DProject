@@ -21,6 +21,7 @@ public class UIController : AController
     [SerializeField] private GameObject pauseMenu = null;
     [SerializeField] private EndGame endGameMenu = null;
     [SerializeField] private GameObject debugMenu = null;
+    [SerializeField] private GameObject controlsMenu = null;
 
     //Score Objects
     [Header("Score Objects")]
@@ -72,11 +73,17 @@ public class UIController : AController
     //Update
     private void Update()
     {
+        if (!pauseMenu.activeSelf && !gc.IsGameRunning() && Input.GetKeyDown(KeyCode.Q))
+            controlsMenu.SetActive(!controlsMenu.activeSelf);
+
         if (Input.GetKeyDown(KeyCode.F3))
             debugMenu.SetActive(!debugMenu.activeSelf);
 
-        if (Input.GetKeyDown(KeyCode.Escape) && (gc.player == null || !gc.player.isDead))
+        if (!controlsMenu.activeSelf && Input.GetKeyDown(KeyCode.Escape) && (gc.player == null || !gc.player.isDead))
              SwitchPause();
+
+        if (controlsMenu.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+            controlsMenu.SetActive(false);
 
         UpdateEnemyDistance();
         UpdateFuel();
@@ -84,7 +91,6 @@ public class UIController : AController
 
 
     #region Other
-
 
     public void SetOnTurboText()
     {
@@ -134,10 +140,15 @@ public class UIController : AController
     public void SwitchPause()
     {
         pauseIsActive = !pauseIsActive;
+
+        if (pauseIsActive)
+            startMessage.SetActive(false);
+        else if (!gc.IsGameRunning())
+            startMessage.SetActive(true);
+
         pauseMenu.SetActive(pauseIsActive);
         Time.timeScale = (pauseIsActive) ? 0 : 1;
     }
-
     private string Format(int ammount)
     {
         if (ammount > 999) return string.Format("{0}", ammount);
