@@ -80,7 +80,7 @@ public class UIController : AController
         if (Input.GetKeyDown(KeyCode.F3))
             debugMenu.SetActive(!debugMenu.activeSelf);
 
-        if (!optionsMenu.activeSelf && !controlsMenu.activeSelf && Input.GetKeyDown(KeyCode.Escape) && (gc.player == null || !gc.player.isDead))
+        if (!endGameMenu.isActiveAndEnabled && !optionsMenu.activeSelf && !controlsMenu.activeSelf && Input.GetKeyDown(KeyCode.Escape) && (gc.player == null || !gc.player.isDead))
              SwitchPause();
 
         if (controlsMenu.activeSelf && Input.GetKeyDown(KeyCode.Escape))
