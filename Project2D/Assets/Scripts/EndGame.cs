@@ -31,6 +31,7 @@ public class EndGame : MonoBehaviour
 
         gc.audioController.StopAllMusic(); //hacer mejor un FadeOut
         gc.audioController.StopAllSounds();
+        AudioListener.pause = true;  //es para parar el sonido de los instantKill
         gc.isAutomateStart = false;
 
         Destroy(gc.enemy.gameObject);
@@ -99,6 +100,7 @@ public class EndGame : MonoBehaviour
     {
         gc.SetFloor(0);
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);//.completed += gc.restartVariables();
+        AudioListener.pause = false;
         //gc.restartVariables();
     }
 

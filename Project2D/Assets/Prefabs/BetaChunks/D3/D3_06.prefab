@@ -1898,7 +1898,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2761866499737645290}
   m_Layer: 0
-  m_Name: 03
+  m_Name: D3_06
   m_TagString: Untagged
   m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -2091,7 +2091,7 @@ PrefabInstance:
     - target: {fileID: 4285792237192567278, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18
+      value: 19.5
       objectReference: {fileID: 0}
     - target: {fileID: 4285792237192567278, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
         type: 3}
@@ -2561,7 +2561,7 @@ PrefabInstance:
     - target: {fileID: 4285792237192567278, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.5
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4285792237192567278, guid: 0ccf0e5e6099bcd4d9d54b1980b39003,
         type: 3}

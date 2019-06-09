@@ -19,12 +19,14 @@ MonoBehaviour:
   bottom:
   - {fileID: 11400000, guid: 8250163112069464182a59363e8291c3, type: 2}
   easy:
-  - {fileID: 11400000, guid: 7e8cfa388937b394b923739daba7b18c, type: 2}
+  - {fileID: 11400000, guid: 8d521783b64d44e4c8275b06fc3c10d9, type: 2}
+  - {fileID: 11400000, guid: 0c3f62646d4a12646a78a068d9134d50, type: 2}
   normal:
   - {fileID: 11400000, guid: 04c387c9bb6d25742b1c3399f5530277, type: 2}
   - {fileID: 11400000, guid: b3439b2edb8a6fd469625468f58bf827, type: 2}
   hard:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 09ef741228882104e8f6b49e02216b5e, type: 2}
+  - {fileID: 11400000, guid: 09ef741228882104e8f6b49e02216b5e, type: 2}
   reward:
   - {fileID: 11400000, guid: 2b4aa3fb374a72943947f8eea9006327, type: 2}
   - {fileID: 11400000, guid: a44550b51e6e4af41b2da5eeac7bd047, type: 2}

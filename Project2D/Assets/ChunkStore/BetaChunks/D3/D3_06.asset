@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9a62e60c482a1d498522a452f3eed1f, type: 3}
-  m_Name: 07
+  m_Name: D3_06
   m_EditorClassIdentifier: 
-  lenght: 81
-  prefab: {fileID: 6562607216727246081, guid: abf25433ccc6d4c4487747c10b89986d, type: 3}
+  lenght: 56
+  prefab: {fileID: 9154749906076778757, guid: caba5ee4c63b14449b94650d4b2422d5, type: 3}

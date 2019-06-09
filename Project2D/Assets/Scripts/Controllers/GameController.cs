@@ -61,6 +61,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     public void StartGame()
     {
+        
         if (!allowInstantiate)
             return;
 
@@ -71,8 +72,8 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         playerSpawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
         Invoke("SpawnPlayer", 1);
         allowInstantiate = false;
-        
 
+        AudioListener.pause = false; // new
         audioController.PlaySound("introExplosion");
         audioController.StopAllMusic();
         audioController.PlayMusic("gameSong");

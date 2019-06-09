@@ -24543,15 +24543,12 @@ MonoBehaviour:
   scoreText: {fileID: 110325865}
   coinsText: {fileID: 1083908257}
   highScoreText: {fileID: 1349430727}
-  scorePanel: {fileID: 1681401441}
-  fuelPanel: {fileID: 2134914184}
   fuelArrow: {fileID: 941171427}
   startMessage: {fileID: 1960231298}
   turboText: {fileID: 1339790012}
   turboOffColor: {r: 0.5647059, g: 0.5647059, b: 0.5647059, a: 1}
   turboOnColor: {r: 1, g: 0.72823006, b: 0, a: 1}
   enemyDistanceText: {fileID: 552157600}
-  enemyDistancePanel: {fileID: 567005378}
   anim: {fileID: 358556092}
 --- !u!4 &1423519688
 Transform:
