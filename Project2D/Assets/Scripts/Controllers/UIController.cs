@@ -27,18 +27,15 @@ public class UIController : AController
     [SerializeField] private Text scoreText = null;
     [SerializeField] private Text coinsText = null;
     [SerializeField] private Text highScoreText = null;
-    [SerializeField] private GameObject scorePanel = null;
 
     //Object references
     [Header("Objects References")]
-    [SerializeField] private GameObject fuelPanel = null;
     [SerializeField] private Image fuelArrow = null;
     [SerializeField] private GameObject startMessage = null;
     [SerializeField] private Text turboText = null;
     [SerializeField] private Color turboOffColor = Color.black;
     [SerializeField] private Color turboOnColor = Color.black;
     [SerializeField] private Text enemyDistanceText = null;
-    [SerializeField] private GameObject enemyDistancePanel = null;
     [SerializeField] private Animator anim = null;
 
     //Controll Vars

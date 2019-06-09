@@ -183,15 +183,12 @@ MonoBehaviour:
   scoreText: {fileID: 884282515}
   coinsText: {fileID: 2029234104}
   highScoreText: {fileID: 1008387224}
-  scorePanel: {fileID: 1679323709}
-  fuelPanel: {fileID: 638251527}
   fuelArrow: {fileID: 354839038}
   startMessage: {fileID: 2001542609}
   turboText: {fileID: 298893974}
   turboOffColor: {r: 0.5647059, g: 0.5647059, b: 0.5647059, a: 1}
   turboOnColor: {r: 1, g: 0.72823006, b: 0, a: 1}
   enemyDistanceText: {fileID: 2021695280}
-  enemyDistancePanel: {fileID: 672002131}
   anim: {fileID: 1933407593}
 --- !u!4 &42169602
 Transform:
