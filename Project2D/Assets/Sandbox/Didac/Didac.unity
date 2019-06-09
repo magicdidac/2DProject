@@ -5083,7 +5083,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab370b2edca4b8b4d9cbb2fcf3a16c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  store: {fileID: 11400000, guid: e1389ae6b77541b4e80be111d79d405f, type: 2}
+  store: {fileID: 11400000, guid: 9d46a832901dc1b48aa1b46b3801cba3, type: 2}
   increaseAmmountProbability: 0
   background: {fileID: 8713774238281902902, guid: c2f539d0681ef5e4da2e5b9ea77053b2,
     type: 3}
@@ -29146,7 +29146,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: -1658122525
+  m_SortingLayerID: -1697332185
   m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!224 &1233519986
