@@ -32,6 +32,7 @@ public class MapController : AController
 
     [Header("Rocks")]
     [SerializeField] private GameObject rocks = null;
+    [SerializeField] private Radio radio = null;
 
     #endregion
 
@@ -52,6 +53,7 @@ public class MapController : AController
     public void StartGame()
     {
         rocks.SetActive(true);
+        radio.Launch();
     }
 
 
