@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyController : AMoveController
 {
+
+    #region Variables
+
     [SerializeField] private GameObject bulletPrefab = null;
     [SerializeField] private GameObject topGranade = null;
     [SerializeField] private GameObject midGranade = null;
@@ -17,16 +20,23 @@ public class EnemyController : AMoveController
     [Range(0, 5)] [SerializeField] public float verticalDetectionDistance = 2;
     [Range(0, 5)] [SerializeField] public float verticalDetectionXOffset = .5f;
     [SerializeField] public LayerMask groundMask;
+    [SerializeField] public LayerMask obstacleMask;
 
     [SerializeField] public Animator shield;
 
     [SerializeField] public Collider2D col = null;
+
+
+    #endregion
 
     private void Start()
     {
         gc.enemy = this;
         ChangeState(new ESGrounded(this));
     }
+
+
+    #region Initializers
 
     private void FixedUpdate()
     {
@@ -50,6 +60,9 @@ public class EnemyController : AMoveController
 
     }
 
+
+    #endregion
+
     private void Update()
     {
         currentState.Update();
@@ -61,6 +74,60 @@ public class EnemyController : AMoveController
     {
         currentState.CheckTransition();
     }
+
+    
+    #region Colliders
+
+    public bool DetectObstacleToJump()
+    {
+        //Horizontal RayCast
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.min.y + .25f), Vector2.right, RadiusDetection);
+
+        //If doesn't hit anything
+        if (hit.collider == null) return false;
+
+        return hit.collider.CompareTag("Box") || hit.collider.CompareTag("Kill");
+    }
+
+    public bool DetectObstacleToFall(LayerMask l_m)
+    {
+        //Horizontal RayCast
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.max.y + .5f), Vector2.right, RadiusDetection, l_m);
+
+        //If doesn't hit anything
+        if (hit.collider == null) return false;
+
+        return rigidbody2d.velocity.y <= 0f && hit.collider.CompareTag("Kill");
+    }
+
+    public bool DetectGroundToLand()
+    {
+        return DetectGroundToLand("Platform");
+    }
+
+    public bool DetectGroundToLand(string tagToLand)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.max.x + verticalDetectionXOffset, col.bounds.min.y), Vector2.down, verticalDetectionDistance);
+
+        if (hit.collider == null) return false;
+
+        return hit.collider.CompareTag(tagToLand);
+    }
+
+    public bool DetectObstacleUp()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.min.x, col.bounds.max.y), Vector2.up, .5f);
+
+        if (hit.collider == null) return false;
+
+        return hit.collider.CompareTag("Kill") || hit.collider.CompareTag("Box");
+    }
+
+
+    #endregion
+
+
+    #region Others
 
     public void attack()
     {
@@ -85,7 +152,7 @@ public class EnemyController : AMoveController
 
     private bool isInState(AState state1, AState state2)
     {
-        return (state1 == state2);       
+        return (state1 == state2);
     }
 
     public void LaserShoot()
@@ -108,51 +175,6 @@ public class EnemyController : AMoveController
                 break;
         }
 
-    }
-
-    public bool DetectObstacleToJump()
-    {
-        //Horizontal RayCast
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.min.y + .25f), Vector2.right, RadiusDetection);
-
-        //If doesn't hit anything
-        if (hit.collider == null) return false;
-
-        return hit.collider.CompareTag("Box") || hit.collider.CompareTag("Kill");
-    }
-
-    public bool DetectObstacleToSlide()
-    {
-        //Horizontal RayCast
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.max.x, col.bounds.max.y + .5f), Vector2.right, RadiusDetection - .5f);
-
-        //If doesn't hit anything
-        if (hit.collider == null) return false;
-
-        return hit.collider.CompareTag("Box") || hit.collider.CompareTag("Kill");
-    }
-
-    public bool DetectGroundToLand()
-    {
-        return DetectGroundToLand("Platform");
-    }
-
-    public bool DetectGroundToLand(string tagToLand)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.max.x + verticalDetectionXOffset, col.bounds.min.y), Vector2.down, verticalDetectionDistance);
-
-        if (hit.collider == null) return false;
-
-        return hit.collider.CompareTag(tagToLand);
-    }
-
-    public bool DetectObstacleUp()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(new Vector2(col.bounds.min.x, col.bounds.max.y), Vector2.up, .5f);
-
-        if (hit.collider == null) return false;
-
-        return hit.collider.CompareTag("Kill") || hit.collider.CompareTag("Box");
     }
 
     private void OnBecameInvisible()
@@ -183,11 +205,15 @@ public class EnemyController : AMoveController
         emission.rateOverTime = ammount;
     }
 
+
+    #endregion
+
+
     #region Gizmos
 
     private void OnDrawGizmos()
     {
-        DrawHorizontalDetectionUp();
+        DrawHorizontalDetectionOnAir();
         DrawHorizontalDetection();
         DrawVerticalDetection();
         DrawVerticalDetectionUp();
@@ -203,12 +229,12 @@ public class EnemyController : AMoveController
             );
     }
 
-    private void DrawHorizontalDetectionUp()
+    private void DrawHorizontalDetectionOnAir()
     {
-        Gizmos.color = Color.blue;
+        Gizmos.color = Color.green;
         Gizmos.DrawLine(
             new Vector3(col.bounds.max.x, col.bounds.max.y + .5f),
-            new Vector3(col.bounds.max.x + RadiusDetection - .5f, col.bounds.max.y + .5f)
+            new Vector3(col.bounds.max.x + RadiusDetection, col.bounds.max.y + .5f)
             );
     }
 

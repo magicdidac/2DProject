@@ -20,7 +20,8 @@ public class ESGrounded : AState
         }
 
         if (!ec.DetectGroundToLand()) ec.ChangeState(new ESFloatingUp(ec));
-        if (ec.DetectObstacleToSlide()) ec.ChangeState(new ESSliding(ec));
+
+        //if (ec.DetectObstacleToSlide()) ec.ChangeState(new ESSliding(ec));
         if (gc.GetFloor() != 0)
             ec.ChangeState(new ESOtherFloor(ec));
     }
