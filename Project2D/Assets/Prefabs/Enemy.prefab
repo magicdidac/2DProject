@@ -5030,6 +5030,9 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 256
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 1024
   shield: {fileID: 2693121343685841461}
   col: {fileID: 7565217064731188147}
 --- !u!95 &1567120741061893845

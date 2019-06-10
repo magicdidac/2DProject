@@ -26,6 +26,11 @@ public class ESOnAir : AState
         if (ec.DetectGroundToLand("Down"))
             ec.ChangeState(new ESFloatingUp(ec));
 
+        if (ec.DetectObstacleToFall(ec.obstacleMask))
+        {
+            ec.rigidbody2d.velocity = Vector2.down * ec.model.jumpForce * 2;
+        }
+
     }
 
     public override void FixedUpdate()
