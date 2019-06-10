@@ -10,6 +10,7 @@ public class Parallax : MonoBehaviour
     [HideInInspector] private float startpos = 0f;
     [HideInInspector] private GameObject cam = null;
     [HideInInspector] private float parallaxEffect = 0f;
+    [HideInInspector] private int bkCount = 0;
 
     #endregion
 
@@ -35,8 +36,7 @@ public class Parallax : MonoBehaviour
 
         transform.position = new Vector3(startpos + distance, transform.position.y, transform.position.z);
 
-        if (temp > startpos + length*2) startpos += length*6 - .2f;
-        //else if (temp < startpos - length) startpos -= length*5;
+        if (temp > startpos + length*2) startpos += length*bkCount - .2f;
     }
 
 
@@ -45,6 +45,8 @@ public class Parallax : MonoBehaviour
     public void SetCamera(GameObject c) { cam = c; }
 
     public void SetParallaxEffect(float pe) { parallaxEffect = pe; }
+
+    public void SetBKCount(int count) { bkCount = count; }
 
     #endregion
 

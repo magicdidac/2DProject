@@ -18,6 +18,7 @@ public class PreParallax : MonoBehaviour
             {
                 p.SetCamera(cam);
                 p.SetParallaxEffect(pl.parallaxEffect);
+                p.SetBKCount(pl.parallaxes.Length / 3);
             }
         }
     }
