@@ -5,7 +5,7 @@ using UnityEngine;
 public class ESFloatingUp : AState
 {
     //Additional temporal variable to test the rb velocity to go up while floating and multiplie br RadiusDetection to test when fall down
-    private readonly float plusOffset = 3f;//1.5f;
+    private readonly float plusOffset = 1.5f;
 
     [HideInInspector] private EnemyController ec;
 
