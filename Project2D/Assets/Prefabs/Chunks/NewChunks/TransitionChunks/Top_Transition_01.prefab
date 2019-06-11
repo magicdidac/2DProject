@@ -65,8 +65,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1212693793
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c0e51886c01b4f243bb749af8ec937a4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2045,7 +2045,7 @@ Tilemap:
   - m_RefCount: 31
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   - m_RefCount: 1
-    m_Data: {r: 0.7942171, g: 0.5557871, b: 0.5562923, a: 1}
+    m_Data: {r: 0.88347095, g: 0.5755035, b: 0.6223592, a: 1}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -14, y: -13, z: 0}
