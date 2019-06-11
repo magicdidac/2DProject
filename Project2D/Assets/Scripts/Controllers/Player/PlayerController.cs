@@ -31,6 +31,7 @@ public class PlayerController : AMoveController
     [HideInInspector] public float fuel;
 
     [HideInInspector] private BoxCollider2D boxCollider;
+    [HideInInspector] public bool canStunt;
 
     #endregion
 
@@ -44,6 +45,7 @@ public class PlayerController : AMoveController
         boxCollider = GetComponent<BoxCollider2D>();
         ChangeState(new PSGrounded(this));
         gc.audioController.PlaySound("playerMove"); // <- cal si ja esta en playOnAwake
+        canStunt = true;
     }
 
     #endregion
@@ -174,7 +176,7 @@ public class PlayerController : AMoveController
             {
                 if (hit.collider.CompareTag("Box"))
                 {
-                    if (!isSliding)
+                    if (!isSliding && canStunt)
                     {
                         isStuned = true;
                     }
@@ -184,6 +186,17 @@ public class PlayerController : AMoveController
                 else gc.GameWin(false, DeathType.Electricity);
             }
         }
+    }
+
+    public void EnableStun()
+    {
+        Invoke("_EnableStun", 1f);
+        
+    }
+
+    private void _EnableStun()
+    {
+        canStunt = true;
     }
 
     private void OnTriggerEnter2D(Collider2D col)

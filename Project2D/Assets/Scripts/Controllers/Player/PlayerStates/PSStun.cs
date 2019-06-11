@@ -22,7 +22,9 @@ public class PSStun : AState
         {
             pc.isStuned = false;
             pc.ChangeState(new PSGrounded(pc));
-        } 
+        }
+        pc.canStunt = false;
+        pc.EnableStun();
     }
 
     public override void FixedUpdate()
