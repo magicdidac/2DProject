@@ -1393,7 +1393,7 @@ GameObject:
   - component: {fileID: 3951495257501144056}
   - component: {fileID: 2287191061526247607}
   - component: {fileID: 9081890692596302139}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Tilemap_Walls
   m_TagString: Kill
   m_Icon: {fileID: 0}
@@ -2045,7 +2045,7 @@ Tilemap:
   - m_RefCount: 31
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   - m_RefCount: 1
-    m_Data: {r: 0.88347095, g: 0.5755035, b: 0.6223592, a: 1}
+    m_Data: {r: 0.7615497, g: 0.34904197, b: 0.35163486, a: 1}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -14, y: -13, z: 0}
