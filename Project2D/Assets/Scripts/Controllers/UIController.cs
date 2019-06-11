@@ -150,6 +150,7 @@ public class UIController : AController
 
         pauseMenu.SetActive(pauseIsActive);
         Time.timeScale = (pauseIsActive) ? 0 : 1;
+        AudioListener.pause = (pauseIsActive) ? true : false;
     }
     private string Format(int ammount)
     {
