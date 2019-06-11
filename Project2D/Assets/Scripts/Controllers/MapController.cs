@@ -68,6 +68,9 @@ public class MapController : AController
     {
         Chunk resultChunk = null;
 
+        if (gc == null)
+            gc = GameController.instance;
+
         switch (gc.GetCurrentDificulty())
         {
             case PlayerDificulty.Dificulty.Easy:
@@ -194,7 +197,8 @@ public class MapController : AController
                 challengeCounter--;
                 transitionChunkProbability += increaseAmmountProbability;
                 chunksCounter++;
-                gc.IncreasePlayerSkill();
+                if(lastChunkLenght != 0)
+                 gc.IncreasePlayerSkill();
             }
         }
         else

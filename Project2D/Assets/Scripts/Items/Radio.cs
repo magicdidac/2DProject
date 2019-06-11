@@ -41,7 +41,8 @@ public class Radio : MonoBehaviour
             Physics2D.IgnoreCollision(enemyCol, col, true);
             foreach (Collider2D c in otherRocks)
             {
-                Physics2D.IgnoreCollision(c, col, true);
+                if(c != null)
+                   Physics2D.IgnoreCollision(c, col, true);
             }
 
         }

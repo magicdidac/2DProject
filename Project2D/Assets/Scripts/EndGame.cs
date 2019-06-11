@@ -36,7 +36,7 @@ public class EndGame : MonoBehaviour
 
         Destroy(gc.enemy.gameObject);
 
-        Invoke("InvokeIncreaseScore", 1f);
+        Invoke("InvokeIncreaseScore", 2);
     }
 
     private void Update()
