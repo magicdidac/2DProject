@@ -21,7 +21,7 @@ public class PlayerDead : MonoBehaviour
                 anim.SetTrigger("ExplosionDead");
                 break;
             case PlayerController.DeathType.Fall:
-                anim.SetTrigger("ShootDead");
+                //anim.SetTrigger("ExplosionDead");
                 break;
             case PlayerController.DeathType.CatchEnemy:
                 anim.SetTrigger("ShootDead");
