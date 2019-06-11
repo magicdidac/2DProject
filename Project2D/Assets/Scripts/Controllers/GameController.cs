@@ -209,7 +209,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
     public void DecreasePlayerSkill()
     {
         int r = PlayerPrefs.GetInt("PlayerSkill", 30);
-        r -= 30 / mapController.GetChunksCounter();
+        r -= 10 / mapController.GetChunksCounter();
 
         if (r > 0)
             PlayerPrefs.SetInt("PlayerSkill", r);

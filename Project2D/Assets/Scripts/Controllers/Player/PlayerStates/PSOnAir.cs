@@ -14,7 +14,7 @@ public class PSOnAir : AState
 
     public override void CheckTransition()
     {
-        if (Input.GetKey(KeyCode.S) && pc.rigidbody2d.velocity.y <= 0)
+        if (Input.GetKey(KeyCode.S))//&& pc.rigidbody2d.velocity.y <= 0)
             pc.ChangeState(new PSSliding(pc));
 
         if (pc.isGrounded)

@@ -11,6 +11,7 @@ public class PSTrampoline : AState
     {
         pc = _pc;
         gc.audioController.PlaySound("trampoline");
+        GameObject.FindGameObjectWithTag("Trampoline").GetComponent<Trampoline>().Shoot();
     }
 
     public override void CheckTransition()
@@ -24,7 +25,7 @@ public class PSTrampoline : AState
 
     public override void FixedUpdate()
     {
-        pc.rigidbody2d.velocity = new Vector2(1, pc.model.jumpForce);
+        pc.rigidbody2d.velocity = new Vector2(3, pc.model.jumpForce);
     }
 
     public override void Update() { }
