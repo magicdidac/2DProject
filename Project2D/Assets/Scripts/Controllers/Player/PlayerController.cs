@@ -188,10 +188,12 @@ public class PlayerController : AMoveController
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject == lastTriggerObject) //Detectar si el collaider que ha entrado no entra otra vez por los dos colliders del player
+        if (col.gameObject == lastTriggerObject && !col.tag.Contains("Tirolina")) //Detectar si el collaider que ha entrado no entra otra vez por los dos colliders del player
             return;
 
-        lastTriggerObject = col.gameObject;
+
+
+        
 
         if (col.CompareTag("Rope") && !isRope) //Si colisiona con una Rope
         {
@@ -215,7 +217,16 @@ public class PlayerController : AMoveController
         }
         else if (col.tag.Contains("Tirolina"))
         {
-            zipLine = col.gameObject.transform.parent.GetComponent<ZipLine>();
+
+            if (rigidbody2d.velocity.y > 0)
+            {
+                if (zipLine != null && zipLine.transform.GetChild(0).gameObject == col.gameObject)
+                    return;
+                if (col.gameObject == lastTriggerObject)
+                    return;
+            }
+
+            zipLine = col.transform.parent.GetComponent<ZipLine>();
             isTirolina = true;
             if (zipLine.floorDiference < 0)
                 gc.SubtractFloor();
@@ -255,7 +266,16 @@ public class PlayerController : AMoveController
         {
             gc.GameWin(false, DeathType.Granade);
         }
+
+        lastTriggerObject = col.gameObject;
+
     }
+
+    /*private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Tirolina") && collision.gameObject == lastTriggerObject)
+            lastTriggerObject = null;
+    }*/
 
     #endregion
 

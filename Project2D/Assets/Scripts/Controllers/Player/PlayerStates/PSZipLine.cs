@@ -45,7 +45,7 @@ public class PSZipLine : AState
 
     private void ChangeStateTo(AState state)
     {
-        zip.col.enabled = false;
+        //zip.col.enabled = false;
 
         pc.isTirolina = false;
         pc.transform.parent = null;
@@ -70,7 +70,7 @@ public class PSZipLine : AState
         //if (!pc.isTirolinaD && Input.GetButtonDown("Jump") && distance < 2) //--> saltar solo al final
         if (!pc.isTirolinaD && Input.GetButtonDown("Jump"))
         {
-            pc.rigidbody2d.velocity = Vector2.up * pc.model.jumpForce;
+            pc.rigidbody2d.velocity = Vector2.up * pc.model.jumpForce*1.1f;
             ChangeStateTo(new PSOnAir(pc));
             this.pc.animator.SetTrigger("T-ZipLineOut");
             gc.audioController.StopSound("zipLine");
