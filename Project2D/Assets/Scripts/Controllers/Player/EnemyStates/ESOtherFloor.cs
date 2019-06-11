@@ -10,6 +10,7 @@ public class ESOtherFloor : AState
     {
         ec = _ec;
         ec.rigidbody2d.bodyType = RigidbodyType2D.Kinematic;
+        ec.shield.SetTrigger("FadeIn");
     }
 
     public override void CheckTransition()
@@ -17,7 +18,7 @@ public class ESOtherFloor : AState
         if(gc.GetFloor() == 0 && ec.DetectGroundToLand())
         {
             ec.rigidbody2d.bodyType = RigidbodyType2D.Dynamic;
-            //ec.shield.SetTrigger("FadeOut");
+            ec.shield.SetTrigger("FadeOut");
             ec.ChangeState(new ESOnAir(ec));
         }
     }
