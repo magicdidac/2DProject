@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9a62e60c482a1d498522a452f3eed1f, type: 3}
   m_Name: New Chunk
   m_EditorClassIdentifier: 
-  lenght: 0
-  prefab: {fileID: 0}
+  lenght: 40
+  prefab: {fileID: 7386854773651806474, guid: 8d3160c49cc0ed0489ae72f1578a0235, type: 3}
