@@ -74,8 +74,14 @@ public class UIController : AController
     //Update
     private void Update()
     {
-        if (!pauseMenu.activeSelf && !gc.IsGameRunning() && Input.GetKeyDown(KeyCode.Q))
+        if (!gc.IsGameRunning() && Input.GetKeyDown(KeyCode.Q))
             controlsMenu.SetActive(!controlsMenu.activeSelf);
+
+        if (gc.IsGameRunning() && pauseMenu.activeSelf && Input.GetKeyDown(KeyCode.Q))
+        {
+            Debug.Log("PENE");
+            controlsMenu.SetActive(!controlsMenu.activeSelf);
+        }
 
         if (Input.GetKeyDown(KeyCode.F3))
             debugMenu.SetActive(!debugMenu.activeSelf);
