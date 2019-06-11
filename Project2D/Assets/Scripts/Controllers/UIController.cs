@@ -112,6 +112,7 @@ public class UIController : AController
             return;
 
         float rotationZ = (gc.player.fuel / gc.player.model.maxFuel * 170) - 85;
+        if (rotationZ < -85) rotationZ = -85;
 
         fuelArrow.rectTransform.rotation = Quaternion.Lerp(fuelArrow.rectTransform.rotation, Quaternion.Euler(0, 0, -rotationZ), .1f);
 
