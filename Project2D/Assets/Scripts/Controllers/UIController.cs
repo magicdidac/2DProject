@@ -17,7 +17,7 @@ public class UIController : AController
 
     #region Variables
 
-    
+
 
     //Menus
     [Header("Menus")]
@@ -76,7 +76,7 @@ public class UIController : AController
     }
 
     #endregion
-    
+
 
     //Update
     private void Update()
@@ -93,7 +93,7 @@ public class UIController : AController
             debugMenu.SetActive(!debugMenu.activeSelf);
 
         if (!endGameMenu.isActiveAndEnabled && !optionsMenu.activeSelf && !controlsMenu.activeSelf && Input.GetKeyDown(KeyCode.Escape) && (gc.player == null || !gc.player.isDead))
-             SwitchPause();
+            SwitchPause();
 
         if (controlsMenu.activeSelf && Input.GetKeyDown(KeyCode.Escape))
             controlsMenu.SetActive(false);
@@ -174,7 +174,7 @@ public class UIController : AController
 
     private string Format2(float ammount)
     {
-        return string.Format("{0}m", Mathf.Round(ammount*10)/10);
+        return string.Format("{0}m", Mathf.Round(ammount * 10) / 10);
     }
 
     /*private void StopGame()
@@ -188,15 +188,18 @@ public class UIController : AController
     {
         isWin = win;
 
-        if(dt == PlayerController.DeathType.CatchEnemy)
+        if (dt == PlayerController.DeathType.CatchEnemy)
         {
             vp.clip = winClip;
             vp.gameObject.SetActive(true);
-            Invoke("ActiveEndMenu", 4);
-        }else if(dt == PlayerController.DeathType.EnemyRunAway)
+            anim.SetTrigger("Change");
+            Invoke("ActiveEndMenu", 3.5f);
+        }
+        else if (dt == PlayerController.DeathType.EnemyRunAway)
         {
             vp.clip = loseClip;
             vp.gameObject.SetActive(true);
+            anim.SetTrigger("Change");
             Invoke("ActiveEndMenu", 2.5f);
         }
         else
@@ -209,35 +212,30 @@ public class UIController : AController
     {
         //vp.gameObject.SetActive(false);
 
-        //StopGame();
-        anim.SetTrigger("Change");
+        //Destroy(gc.player.gameObject);
 
-        killVideo();
+        //StopGame();
+        if (isWin)
+            endGameMenu.WinSetUp();
+        else
+            endGameMenu.LoseSetUp();
 
         
+
+
+        vp.GetComponent<Animator>().SetTrigger("End");
+
+
 
         //endGameMenu.gameObject.SetActive(true);
     }
 
-    private void killVideo()
+    public void killVideo()
     {
-        if (vp.targetCameraAlpha >= 0)
-        {
-            vp.targetCameraAlpha -= .1f;
-            Invoke("killVideo", .1f);
-        }
-        else
-        {
-            vp.gameObject.SetActive(false);
-            if (isWin)
-                endGameMenu.WinSetUp();
-            else
-                endGameMenu.LoseSetUp();
-        }
+        anim.SetTrigger("Change");
 
     }
 
-    
     #endregion
 
     public void Exit()
