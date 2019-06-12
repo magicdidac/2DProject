@@ -47,4 +47,16 @@ public class NITROEditor : EditorWindow
         Debug.Log("Reset Skill Points to 30");
     }
 
+    [MenuItem("N.I.T.R.O./Win")]
+    public static void win()
+    {
+        GameController.instance.GameWin(true, PlayerController.DeathType.CatchEnemy);
+    }
+
+    [MenuItem("N.I.T.R.O./Lose")]
+    public static void lose()
+    {
+        GameController.instance.GameWin(false, PlayerController.DeathType.EnemyRunAway);
+    }
+
 }

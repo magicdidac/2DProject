@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Video;
 
 public class UIController : AController
 {
@@ -15,6 +16,8 @@ public class UIController : AController
      */
 
     #region Variables
+
+    
 
     //Menus
     [Header("Menus")]
@@ -39,9 +42,13 @@ public class UIController : AController
     [SerializeField] private Color turboOnColor = Color.black;
     [SerializeField] private Text enemyDistanceText = null;
     [SerializeField] private Animator anim = null;
+    [SerializeField] private VideoPlayer vp = null;
+    [SerializeField] private VideoClip winClip = null;
+    [SerializeField] private VideoClip loseClip = null;
 
     //Controll Vars
     [HideInInspector] private bool pauseIsActive = false;
+    [HideInInspector] private bool isWin = false;
 
     #endregion
 
@@ -79,7 +86,6 @@ public class UIController : AController
 
         if (gc.IsGameRunning() && pauseMenu.activeSelf && Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log("PENE");
             controlsMenu.SetActive(!controlsMenu.activeSelf);
         }
 
@@ -178,17 +184,57 @@ public class UIController : AController
         enemyDistancePanel.SetActive(false);
     }*/
 
-    public void ActiveEndMenu(bool win)
+    public void FinishGame(bool win, PlayerController.DeathType dt)
     {
+        isWin = win;
+
+        if(dt == PlayerController.DeathType.CatchEnemy)
+        {
+            vp.clip = winClip;
+            vp.gameObject.SetActive(true);
+            Invoke("ActiveEndMenu", 4);
+        }else if(dt == PlayerController.DeathType.EnemyRunAway)
+        {
+            vp.clip = loseClip;
+            vp.gameObject.SetActive(true);
+            Invoke("ActiveEndMenu", 2.5f);
+        }
+        else
+        {
+            Invoke("ActiveEndMenu", 2);
+        }
+    }
+
+    private void ActiveEndMenu()
+    {
+        //vp.gameObject.SetActive(false);
+
         //StopGame();
         anim.SetTrigger("Change");
 
-        if (win)
-            endGameMenu.WinSetUp();
-        else
-            endGameMenu.LoseSetUp();
+        killVideo();
+
+        
 
         //endGameMenu.gameObject.SetActive(true);
+    }
+
+    private void killVideo()
+    {
+        if (vp.targetCameraAlpha >= 0)
+        {
+            vp.targetCameraAlpha -= .1f;
+            Invoke("killVideo", .1f);
+        }
+        else
+        {
+            vp.gameObject.SetActive(false);
+            if (isWin)
+                endGameMenu.WinSetUp();
+            else
+                endGameMenu.LoseSetUp();
+        }
+
     }
 
     

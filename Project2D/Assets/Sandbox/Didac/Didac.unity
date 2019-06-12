@@ -240,6 +240,71 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &33651041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 33651043}
+  - component: {fileID: 33651042}
+  m_Layer: 0
+  m_Name: Video Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!328 &33651042
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33651041}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 32900000, guid: 667ca263cb7555f4f9f8b053585b8c11, type: 3}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 1457924751}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: _MainTex
+  m_RenderMode: 1
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 2
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+--- !u!4 &33651043
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33651041}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &42169600
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,6 +349,9 @@ MonoBehaviour:
   turboOnColor: {r: 1, g: 0.72823006, b: 0, a: 1}
   enemyDistanceText: {fileID: 2021695280}
   anim: {fileID: 1933407593}
+  vp: {fileID: 33651042}
+  winClip: {fileID: 32900000, guid: 667ca263cb7555f4f9f8b053585b8c11, type: 3}
+  loseClip: {fileID: 32900000, guid: 6678fb508fd249a438bf95c318ce00f2, type: 3}
 --- !u!4 &42169602
 Transform:
   m_ObjectHideFlags: 0
@@ -5916,7 +5984,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.009479167, y: 0.068}
   m_AnchorMax: {x: 0.298, y: 0.125}
-  m_AnchoredPosition: {x: 0.4000244, y: 0}
+  m_AnchoredPosition: {x: 0.39990234, y: 0}
   m_SizeDelta: {x: -13.100006, y: -12.599998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &217027879
@@ -11909,18 +11977,6 @@ Transform:
   m_Father: {fileID: 886340673}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &429122407 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7796238646908324871, guid: eab68b9de87b85e4da3a7c7b2569cca5,
-    type: 3}
-  m_PrefabInstance: {fileID: 308535355}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a7fb62144ff3f949aa5e51b09efe0c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &448743994
 GameObject:
   m_ObjectHideFlags: 0
@@ -12025,7 +12081,6 @@ GameObject:
   - component: {fileID: 482293821}
   - component: {fileID: 482293820}
   - component: {fileID: 482293819}
-  - component: {fileID: 482293818}
   m_Layer: 5
   m_Name: Resume
   m_TagString: Untagged
@@ -12052,18 +12107,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.12988281, y: -0.98999023}
   m_SizeDelta: {x: -9.049999, y: -8.299999}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &482293818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 482293816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdb0611354b6cc84680a82f859d16693, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &482293819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12104,8 +12147,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 482293818}
-        m_MethodName: Resume
+      - m_Target: {fileID: 42169601}
+        m_MethodName: SwitchPause
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -29778,7 +29821,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 429122407}
+      - m_Target: {fileID: 42169601}
         m_MethodName: Exit
         m_Mode: 1
         m_Arguments:
@@ -45126,8 +45169,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7796238646908324871, guid: eab68b9de87b85e4da3a7c7b2569cca5,
-          type: 3}
+      - m_Target: {fileID: 42169601}
         m_MethodName: Exit
         m_Mode: 1
         m_Arguments:

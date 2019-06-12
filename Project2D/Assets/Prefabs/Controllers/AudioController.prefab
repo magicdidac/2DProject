@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7b314dcbcfbeaf4d8916541625f5a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: 658aa26d7fa8f2c4c8b1bfa069f3e5e9, type: 2}
   music:
   - name: gameSong
     clip: {fileID: 8300000, guid: 593f266098d9ed347958f56d50f10349, type: 3}

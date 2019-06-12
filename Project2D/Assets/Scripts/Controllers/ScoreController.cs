@@ -83,6 +83,7 @@ public class ScoreController : AController
     {
         if (score + coins > highScore)
         {
+            Debug.Log("JEJEJE");
             highScore = score + coins;
             PlayerPrefs.SetInt("HighScore", highScore);
         }

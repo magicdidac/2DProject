@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioController : AController
 {
     #region Variables
     //public static AudioController _audioManager = null;
+
+    [SerializeField] private AudioMixer mixer = null;
 
     public List<Sound> music = new List<Sound>();
     public List<Sound> sounds = new List<Sound>();
@@ -51,6 +54,8 @@ public class AudioController : AController
             s.source.outputAudioMixerGroup = s.mixer;
         }
 
+        
+
         PlayMusic("radioSong");
 
     }
@@ -59,6 +64,7 @@ public class AudioController : AController
     {
         //esta linea da problemas de audio
         //setAllVolumes(PlayerPrefs.GetFloat("MasterVolume"));
+        mixer.SetFloat("MasterVolume", Mathf.Log10(PlayerPrefs.GetFloat("MasterVolume", 0.75f)) * 20);
     }
 
     #endregion

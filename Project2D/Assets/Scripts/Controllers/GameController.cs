@@ -268,21 +268,24 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
         scoreController.UpdateHighScore();
 
-        if (win)
+
+        uiController.FinishGame(win, dt);
+
+        /*if (win)
             Invoke("ActiveEndMenuWin", 2f);
         else
-            Invoke("ActiveEndMenuLose", 2f);
+            Invoke("ActiveEndMenuLose", 2f);*/
 
     }
 
-    private void ActiveEndMenuWin()
+    /*private void ActiveEndMenuWin()
     {
         uiController.ActiveEndMenu(true);
     }
     private void ActiveEndMenuLose()
     {
         uiController.ActiveEndMenu(false);
-    }
+    }*/
 
     #endregion
 
