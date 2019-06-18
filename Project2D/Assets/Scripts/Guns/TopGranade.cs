@@ -22,7 +22,7 @@ public class TopGranade : Granade
 
     #endregion
 
-    protected void Update()
+    protected new void Update()
     {
         base.Update();
 

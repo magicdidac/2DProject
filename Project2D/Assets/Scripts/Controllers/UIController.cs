@@ -204,7 +204,13 @@ public class UIController : AController
         }
         else
         {
-            Invoke("ActiveEndMenu", 2);
+            if (isWin)
+                endGameMenu.WinSetUp();
+            else
+                endGameMenu.LoseSetUp();
+            anim.SetTrigger("Change");
+            Invoke("killVideo", .5f);
+
         }
     }
 

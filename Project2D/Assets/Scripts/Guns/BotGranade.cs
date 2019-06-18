@@ -23,7 +23,7 @@ public class BotGranade : Granade
 
     #endregion
 
-    protected void Update()
+    protected new void Update()
     {
         base.Update();
 
