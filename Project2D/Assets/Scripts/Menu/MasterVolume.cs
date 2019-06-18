@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class MasterVolume : MonoBehaviour
 {
+    public AudioMixer mixer;
+    [HideInInspector] private Slider slider;
 
-    // Use this for initialization
     void Start()
     {
-        GetComponent<Slider>().value = PlayerPrefs.GetFloat("MasterVolume");
+        slider = GetComponent<Slider>();
+        slider.value = PlayerPrefs.GetFloat("MasterVolume", 0.75f);
     }
 
-    public void ChangeVolume()
+    public void ChangeVolume(float sliderValue)
     {
-        AudioController._audioManager.setAllVolumes(GetComponent<Slider>().value);
-        PlayerPrefs.SetFloat("MasterVolume", GetComponent<Slider>().value);
+        mixer.SetFloat("MasterVolume", Mathf.Log10(sliderValue) * 20);
+        PlayerPrefs.SetFloat("MasterVolume", sliderValue);
     }
 }

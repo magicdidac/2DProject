@@ -7,26 +7,29 @@ public class PSSliding : AState
     float time;
     bool goingDown;
 
-    private AMoveController moveController;
+    private PlayerController pc;
 
-    public PSSliding(AMoveController pc)
+    public PSSliding(PlayerController _pc) : base()
     {
-        moveController = pc;
+        pc = _pc;
         if (!pc.isGrounded)
         {
-            pc.rb.gravityScale = 7;
+            pc.rigidbody2d.gravityScale = 7;
             goingDown = true;
         }
         else goingDown = false;
 
-        pc.anim.SetBool("B-Rope", false);
-        pc.anim.SetBool("B-ZipLine", false);
-        pc.anim.SetBool("B-Slide", true);
-        pc.anim.SetTrigger("T-Slide");
-        
+        pc.animator.SetBool("B-Rope", false);
+        pc.animator.SetBool("B-ZipLine", false);
+        pc.animator.SetBool("B-Slide", true);
+        pc.animator.SetTrigger("T-Slide");
+        gc.uiController.SetOnTurboText();
+
+        pc.isSliding = true; //nueva
+
     }
 
-    public override void CheckTransition(AMoveController pc)
+    public override void CheckTransition()
     {
         if (Input.GetKeyUp(KeyCode.S))
             ChangeToState(new PSGrounded(pc));
@@ -35,9 +38,9 @@ public class PSSliding : AState
             ChangeToState(new PSRope(pc));
 
         if (pc.isTrampoline)
-            ChangeToState(new PSTrampoline());
+            ChangeToState(new PSTrampoline(pc));
 
-        if (pc.combustible <= 0 && pc.isGrounded)
+        if (!pc.HaveFuel() && pc.isGrounded)
             ChangeToState(new PSGrounded(pc));
 
         if (!pc.isGrounded && !goingDown)
@@ -46,29 +49,30 @@ public class PSSliding : AState
 
     private void ChangeToState(AState state)
     {
-        moveController.anim.SetTrigger("T-SlideUp");
-        moveController.anim.SetBool("B-Slide", false);
-        moveController.ChangeState(state);
+        pc.animator.SetTrigger("T-SlideUp");
+        pc.animator.SetBool("B-Slide", false);
+        gc.uiController.SetOffTurboText();
+        pc.ChangeState(state);
     }
 
-    public override void FixedUpdate(AMoveController pc)
+    public override void FixedUpdate()
     {
-        pc.rb.velocity = new Vector2(pc.model.slideSpeed, pc.rb.velocity.y);
+        pc.rigidbody2d.velocity = new Vector2(gc.GetVelocity(pc.model.slideSpeed), pc.rigidbody2d.velocity.y);
     }
 
-    public override void Update(AMoveController pc)
+    public override void Update()
     {
         if (pc.isGrounded) goingDown = false;
-        Jump(pc);
-        pc.gc.ConsumeCombustible();
+        Jump();
+        pc.ConsumeFuel();
     }
 
-    private void Jump(AMoveController pc)
+    private void Jump()
     {
         if (pc.isGrounded && Input.GetButtonDown("Jump"))
         {
             pc.model.speed = pc.model.plusJumpSpeedX;
-            pc.rb.velocity = Vector2.up * pc.model.jumpForce;
+            pc.rigidbody2d.velocity = Vector2.up * pc.model.jumpForce;
         }
     }
 }

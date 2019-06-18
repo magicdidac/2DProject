@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af6b6e0c191a15849ac109fefe5837a8, type: 3}
+  m_Name: RewardChunkStore
+  m_EditorClassIdentifier: 
+  top:
+  - {fileID: 11400000, guid: 0c56e8795fed26f42b20f64e01f6153b, type: 2}
+  middle:
+  - {fileID: 11400000, guid: 6c009f74363241542a135f2c475df063, type: 2}
+  bottom:
+  - {fileID: 11400000, guid: 8250163112069464182a59363e8291c3, type: 2}
+  easy:
+  - {fileID: 11400000, guid: 2b4aa3fb374a72943947f8eea9006327, type: 2}
+  - {fileID: 11400000, guid: a44550b51e6e4af41b2da5eeac7bd047, type: 2}
+  normal:
+  - {fileID: 11400000, guid: 2b4aa3fb374a72943947f8eea9006327, type: 2}
+  - {fileID: 11400000, guid: a44550b51e6e4af41b2da5eeac7bd047, type: 2}
+  hard:
+  - {fileID: 11400000, guid: 2b4aa3fb374a72943947f8eea9006327, type: 2}
+  - {fileID: 11400000, guid: a44550b51e6e4af41b2da5eeac7bd047, type: 2}
+  reward:
+  - {fileID: 11400000, guid: 2b4aa3fb374a72943947f8eea9006327, type: 2}
+  - {fileID: 11400000, guid: a44550b51e6e4af41b2da5eeac7bd047, type: 2}

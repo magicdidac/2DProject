@@ -5,30 +5,34 @@ using UnityEngine;
 public class PSRope : AState
 {
 
-    public PSRope(AMoveController pc)
+    [HideInInspector] private PlayerController pc;
+
+    public PSRope(PlayerController _pc) : base()
     {
-        pc.anim.SetTrigger("T-Rope");
-        pc.anim.SetBool("B-Rope", true);
+        pc = _pc;
+        pc.animator.SetTrigger("T-Rope");
+        pc.animator.SetBool("B-Rope", true);
     }
 
-    public override void CheckTransition(AMoveController pc)
+    public override void CheckTransition()
     {
         if (pc.transform.parent == null)
         {
-            pc.anim.SetTrigger("T-RopeOut");
+            pc.animator.SetTrigger("T-RopeOut");
             pc.isRope = false;
-            pc.rb.bodyType = RigidbodyType2D.Dynamic;
-            pc.rb.AddForce(Vector2.one * pc.model.exitRopeForce, ForceMode2D.Impulse);
+            pc.rigidbody2d.bodyType = RigidbodyType2D.Dynamic;
+            pc.rigidbody2d.AddForce(Vector2.one * pc.model.exitRopeForce, ForceMode2D.Impulse);
+            gc.audioController.StopSound("rope");
             pc.ChangeState(new PSOnAir(pc));
         }
             
     }
 
-    public override void FixedUpdate(AMoveController pc)
+    public override void FixedUpdate()
     {
         pc.transform.position = Vector3.Lerp(pc.transform.position, new Vector3(pc.transform.parent.position.x-.3f, pc.transform.position.y, 0), .5f);
-        pc.rb.velocity = new Vector2(0, pc.rb.velocity.y);
+        pc.rigidbody2d.velocity = new Vector2(0, pc.rigidbody2d.velocity.y);
     }
 
-    public override void Update(AMoveController pc) { }
+    public override void Update() { }
 }

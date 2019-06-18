@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class MusicONButton : MonoBehaviour
 {
-
     public Color pressed;
     public Color nonPressed;
     public GameObject off;
@@ -15,8 +15,8 @@ public class MusicONButton : MonoBehaviour
 
     void Start()
     {
-        GetComponent<Image>().color = (PlayerPrefs.GetInt("MusicActive") == 1) ? pressed : nonPressed;
-        isClicked = (PlayerPrefs.GetInt("MusicActive") == 1) ? true : false;
+        transform.GetChild(0).GetComponent<Text>().color = (PlayerPrefs.GetInt("MusicActive") == 1) ? pressed : nonPressed;
+        isClicked = (PlayerPrefs.GetFloat("MasterVolume") == 1f) ? true : false;
     }
 
     public void OnClick()
@@ -24,15 +24,10 @@ public class MusicONButton : MonoBehaviour
         if (!isClicked)
         {
             isClicked = true;
-            PlayerPrefs.SetInt("MusicActive", 1);
             off.GetComponent<MusicOFFButton>().isClicked = false;
-            GetComponent<Image>().color = pressed;
-            off.GetComponent<Image>().color = nonPressed;
-            /*if (GameManager._manager.mainMenu)
-            {
-                SoundManager._audioManager.PlayMusic("menuMusic");
-                SoundManager._audioManager.PlayMusic("seaSound");
-            }*/
+            transform.GetChild(0).GetComponent<Text>().color = pressed;
+            off.transform.GetChild(0).GetComponent<Text>().color = nonPressed;
+            AudioListener.pause = false;
         }
     }
 }

@@ -3,230 +3,345 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameController : MonoBehaviour //This class follows the Singleton Pattern
 {
-    [SerializeField] private Vector3 stateInfoPosition = Vector3.zero;
-    [SerializeField] private int fontSize = 20;
 
-    [HideInInspector] public GameObject HUD;
-    [HideInInspector] public GameObject pauseMenu;
-    [HideInInspector] public GameObject optionsMenu;    
+    #region Variables
 
-    [HideInInspector] public static GameController instance = null; //Allows to acces to the game controller from any other script
+    //Instance
+    [HideInInspector] public static GameController instance = null;
 
-    [HideInInspector] public MapController mapController; //Map controller reference
-    [HideInInspector] public PlayerController player; //Player reference
-    [HideInInspector] public EnemyController enemy; //Enemy reference
 
+    //Prefabs
+    [Header("Prefabs")]
+    [HideInInspector] private Transform playerSpawnPoint = null;
+    [SerializeField] private GameObject playerObj = null;
+    [SerializeField] private GameObject enemyObj = null;
+    [SerializeField] private float enemyPositionOfset = 0;
+
+    //Controllers
+    [HideInInspector] public MapController mapController;
+    [HideInInspector] public AudioController audioController;
+    [HideInInspector] public ScoreController scoreController;
+    [HideInInspector] public UIController uiController;
+
+    [HideInInspector] public PlayerController player;
+    [HideInInspector] public EnemyController enemy;
+
+    //Control Vars
+    [Header("Control Vars")]
+    [HideInInspector] private bool isGameRunning = false;
     [HideInInspector] private int floor = 0;
-    [SerializeField] public float minEnemyDistance;
-    [SerializeField] public float maxEnemydistance;
+    [SerializeField] private float minEnemyDistance = 1;
+    [SerializeField] private float maxEnemyDistance = 0f;
+    [HideInInspector] private float playerEnemyDistance;
 
-    [HideInInspector] public bool pauseActive;
-    [HideInInspector] public bool fpsShowed;
+    [HideInInspector] public bool isAutomateStart { get; set; } = false;
+    [HideInInspector] private bool allowInstantiate;
 
-    [HideInInspector] public Scene activeScene;
+    [Header("Speed in Game")]
+    [SerializeField] private float speedMultiplier = 1;
+    [HideInInspector] private float startSpeedMultiplier;
+    [SerializeField] private float increaseSpeedMultiplier = .05f;
+    [SerializeField] private float maxSpeedMultiplier = 1.5f;
 
-    [HideInInspector] public ScoreManager scoreManager; // Score Manager reference
-    [HideInInspector] public EndGame endGame; // End Game menu reference
+    [Header("Dificult")]
+    [SerializeField] private DificultController dc = null;
 
-    [HideInInspector] public float highScore;
 
-    [HideInInspector] public EnemyIndicator enemyIndicator;
+    #endregion
+
+
+    #region Initializers
 
     private void Awake()
     {
+        //Singleton Pattern
         if (instance == null)
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
 
+        DontDestroyOnLoad(gameObject); //Dont destroy when change the scene
 
-        //DontDestroyOnLoad(gameObject);
+        startSpeedMultiplier = speedMultiplier;
 
-        activeScene = SceneManager.GetActiveScene();
-
-        if(activeScene.buildIndex != 0)
-        {
-            player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-            enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
-            mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
-            scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
-            HUD = GameObject.FindGameObjectWithTag("HUD");
-            enemyIndicator = Camera.main.transform.GetChild(0).GetComponent<EnemyIndicator>();
-
-            pauseMenu = HUD.transform.GetChild(2).gameObject;
-            optionsMenu = HUD.transform.GetChild(3).gameObject;
-
-            endGame = GameObject.FindGameObjectWithTag("Finish").GetComponent<EndGame>();            
-        }
+        InitializePlayerPrefs();
     }
 
-    private void Start()
+    public void StartGame()
     {
-        pauseActive = false;
-        fpsShowed = (PlayerPrefs.GetInt("ShowFPS") == 0) ? false : true;
+        
+        if (!allowInstantiate)
+            return;
 
-        if(activeScene.buildIndex != 0)
-        {
-            pauseMenu.SetActive(false);
-            optionsMenu.SetActive(false);
-        }
+        uiController.StartGame();
+        mapController.StartGame();
 
-        if (Time.timeScale == 0) Time.timeScale = 1;
+        //Spawn player and enemy
+        playerSpawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
+        Invoke("SpawnPlayer", 1);
+        allowInstantiate = false;
+
+        AudioListener.pause = false; // new
+        audioController.PlaySound("introExplosion");
+        audioController.StopAllMusic();
+        audioController.PlayMusic("gameSong");
     }
+
+    private void SpawnPlayer()
+    {
+        isGameRunning = true;
+        player = Instantiate(playerObj, playerSpawnPoint.position, Quaternion.identity).GetComponent<PlayerController>();
+        enemy = Instantiate(enemyObj, GetEnemySpawnPosition(), Quaternion.identity).GetComponent<EnemyController>();
+        playerEnemyDistance = Mathf.Round((enemy.transform.position.x - player.transform.position.x) * 100) / 100; //new
+    }
+
+    public void restartVariables()
+    {
+        floor = 0;
+        speedMultiplier = startSpeedMultiplier;
+        isGameRunning = false;
+        allowInstantiate = true;
+        if (isAutomateStart) StartGame();
+    }
+
+    
+
+
+    #endregion
+
+
+    #region Getters
+
+    public int GetFloor() { return floor; }
+
+    public float GetEnemyDistance()
+    {
+        if (enemy == null || player == null) return playerEnemyDistance;
+
+        playerEnemyDistance = Mathf.Round((enemy.transform.position.x - player.transform.position.x) * 100) / 100;
+        return playerEnemyDistance;
+    }
+
+    public float GetSkillMultiplier()
+    {
+        return dc.GetDificulty().GetSpeedMultiplier();
+    }
+
+    public PlayerDificulty.Dificulty GetCurrentDificulty()
+    {
+
+
+        return dc.GetDificulty().GetName();
+    }
+
+    public float GetVelocityMultiplier() { return speedMultiplier; }
+
+    public float GetVelocity(float vo)
+    {
+        vo *= GetSkillMultiplier();
+
+        return vo * speedMultiplier;
+    }
+
+    private Vector3 GetEnemySpawnPosition()
+    {
+        return playerSpawnPoint.position + (Vector3.right * enemyPositionOfset);
+    }
+
+    public float GetMinimumEnemyDistance() { return minEnemyDistance; }
+
+    public bool IsGameRunning() { return isGameRunning; }
+
+    #endregion
+
+
+    #region Setters or Variable Modifiers
+
+    public void SetFloor(int floor) { this.floor = floor; }
+
+    public void AddController(AController c)
+    {
+        if (c is MapController)
+            mapController = (MapController)c;
+        else if (c is AudioController)
+            audioController = (AudioController)c;
+        else if (c is ScoreController)
+            scoreController = (ScoreController)c;
+        else if (c is UIController)
+            uiController = (UIController)c;
+
+    }
+
+    public void AddFloor()
+    {
+        if (floor < 1)
+            floor++;
+    }
+
+    public void SubtractFloor()
+    {
+        if (floor > -1)
+            floor--;
+    }
+
+    public void IncreaseVelocityMultiplier()
+    {
+        if (speedMultiplier < maxSpeedMultiplier)
+            speedMultiplier += increaseSpeedMultiplier;
+        else
+            speedMultiplier = maxSpeedMultiplier;
+    }
+
+    public void IncreasePlayerSkill()
+    {
+        int r = (int)Mathf.Floor(Mathf.Log((mapController.GetChunksCounter() * .5f), 1.5f));
+        if (r < 0) r = 0;
+        r += PlayerPrefs.GetInt("PlayerSkill", 30);
+        if (r <= 100)
+            PlayerPrefs.SetInt("PlayerSkill", r);
+        else
+            PlayerPrefs.SetInt("PlayerSkill", 100);
+    }
+
+    public void DecreasePlayerSkill()
+    {
+        int r = PlayerPrefs.GetInt("PlayerSkill", 30);
+        r -= 10 / mapController.GetChunksCounter()+1;
+
+        if (r > 0)
+            PlayerPrefs.SetInt("PlayerSkill", r);
+        else
+            PlayerPrefs.SetInt("PlayerSkill", 0);
+
+    }
+
+    #endregion
+
 
     private void Update()
     {
-        if(activeScene.buildIndex != 0)
+        if (!isGameRunning && Input.GetKeyDown(KeyCode.Space))
         {
-            if (getEnemyDistance() < minEnemyDistance && floor == 0 && !player.isDead)
-                GameWin(true);
-            if (getEnemyDistance() > maxEnemydistance && !player.isDead)
-                GameWin(false);
-            
-            if (!player.isDead) scoreManager.AddScore(player.transform.position.x);
+            //Start Game
+            StartGame();
+        }
 
-            if (Input.GetKeyDown(KeyCode.Escape) && !optionsMenu.activeSelf)
-                Pause();
+        if (isGameRunning)
+        {
+            if (GetEnemyDistance() < minEnemyDistance && floor == 0 && !player.isDead) //Check
+                GameWin(true, PlayerController.DeathType.CatchEnemy);
 
-            if (Input.GetKeyDown(KeyCode.Escape) && optionsMenu.activeSelf)
-            {
-                pauseMenu.SetActive(true);
-                optionsMenu.SetActive(false);
-            }
+            if (GetEnemyDistance() > maxEnemyDistance && !player.isDead)
+                GameWin(false, PlayerController.DeathType.EnemyRunAway);
         }
     }
+
+
+    #region Other
 
     public void LoadScene(int index)
     {
         SceneManager.LoadScene(index);
     }
 
-    public void GameWin(bool win)
-    {
-        player.isDead = true;
-        enemy.isDead = true;
-        player.ChangeState(new PSDead(player));
-        endGame.gameObject.SetActive(true);
-        endGame.GameWin(win);
-        /*highScore = (scoreManager.HighScore > highScore) ? scoreManager.HighScore : highScore;
-        if (win) highScore *= 2;*/
-    }
-
-    public void setFloor(int p_floor)
-    {
-        if(p_floor == 1 || p_floor == 0 || p_floor == -1)
-            floor = p_floor;
-    }
-
-    public int getFloor()
-    {
-        return floor;
-    }
-
-    public void AddCoins(int newScoreValue)
-    {
-        scoreManager.AddCoins(newScoreValue);
-    }
-
-    //lo he pasado a public para usarlo desde EndGame.cs que controla las escenas
-    public void GameController_completed(AsyncOperation obj)
-    {
-        instance.highScore = (instance.scoreManager.HighScore > instance.highScore) ? instance.scoreManager.HighScore : instance.highScore;
-
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
-        mapController = GameObject.FindGameObjectWithTag("MapController").GetComponent<MapController>();
-        scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
-        endGame = GameObject.FindGameObjectWithTag("Finish").GetComponent<EndGame>();
-    }
-
-    public void ConsumeCombustible()
-    {
-        if (player.combustible > 0)
-        {
-            player.combustible -= Time.deltaTime;
-            GameObject.FindWithTag("HUD").GetComponent<HUD>().ChangeFuelBar(player.combustible);
-        }
-    }
-
-    public void GetCombustible(float value)
-    { 
-        if (player.combustible + value < player.model.maxCombustible) player.combustible += value;
-        else player.combustible = player.model.maxCombustible;
-        GameObject.FindWithTag("HUD").GetComponent<HUD>().ChangeFuelBar(player.combustible);
-    }
-    
-    public float getEnemyDistance()
-    {
-        return (Mathf.Round((enemy.transform.position.x - player.transform.position.x)*100)/100);
-    }
-
-    public void Pause()
-    {
-        pauseActive = !pauseActive;
-        pauseMenu.SetActive(pauseActive);
-        //GameManager._gameManager.isPaused = active;
-        Time.timeScale = (pauseActive) ? 0 : 1;
-    }
-
-    public void ShowFPS(bool show)
-    {
-        fpsShowed = show;
-        if (GameObject.FindWithTag("HUD") != null)
-        {
-            GameObject.FindWithTag("HUD").GetComponent<HUD>().fpsText.SetActive(show);
-        }
-    }
-
     public void Exit()
     {
+        Debug.Log("Quit Application");
         Application.Quit();
     }
 
-    private void OnDrawGizmos()
+    public void GameWin(bool win, PlayerController.DeathType dt)
     {
-        try
-        {
-            player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-            enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyController>();
-            //enemyDistance = Mathf.Abs(player.transform.position.x) + Mathf.Abs(enemy.transform.position.x);
-            drawState();
-        }
-        catch { }
+        if (player.isDead)
+            return;
+
+        if(!win)
+            DecreasePlayerSkill();
+
+        player.Kill(dt);
+        
+        if (win)
+            scoreController.MultiplyScore();
+
+        scoreController.UpdateHighScore();
+
+
+        uiController.FinishGame(win, dt);
+
+        /*if (win)
+            Invoke("ActiveEndMenuWin", 2f);
+        else
+            Invoke("ActiveEndMenuLose", 2f);*/
+
     }
 
-    private void drawState()
+    /*private void ActiveEndMenuWin()
     {
-        if (player.currentState != null)
-        {
-            GUIStyle style = new GUIStyle();
-            style.normal.textColor = Color.red;
-            style.fontSize = fontSize;
-            style.alignment = TextAnchor.MiddleLeft;
-            //Handles.Label(stateInfoPosition + Camera.main.transform.position, "Player state: " + player.currentState + "\nEnemy state: " + enemy.currentState + "\nFloor: " + floor+ "\nEnemy: "+getEnemyDistance(), style);
-        }
+        uiController.ActiveEndMenu(true);
     }
-    
-    private void DeletePlayerPrefs()
+    private void ActiveEndMenuLose()
     {
-        PlayerPrefs.DeleteAll();
-    }
+        uiController.ActiveEndMenu(false);
+    }*/
+
+    #endregion
+
+
+    #region PlayerPrefs
+
+    private void DeletePlayerPrefs() { PlayerPrefs.DeleteAll(); }
 
     private void InitializePlayerPrefs()
     {
-        PlayerPrefs.SetFloat("MasterVolume", 0.6f);
-        PlayerPrefs.SetInt("MusicActive", 1); //0 = OFF, 1 = ON
-        PlayerPrefs.SetInt("ShowFPS", 0); //0 = OFF, 1 = ON
-        PlayerPrefs.SetFloat("Brightness", 0.0f);
-        PlayerPrefs.SetFloat("HighScore", 0.0f);
+        PlayerPrefs.GetFloat("MasterVolume", .6f);
+        PlayerPrefs.GetInt("MusicActive", 1); //0 = OFF - 1 = ON
+        PlayerPrefs.GetInt("ShowFPS", 0); //0 = OFF - 1 = ON
+        PlayerPrefs.GetFloat("Brightness", .5f);
+        PlayerPrefs.GetInt("HighScore", 0);
+        PlayerPrefs.GetInt("PlayerSkill", 30);
     }
 
+    #endregion
 
-    //DATABASE
+
+    #region Gizmos
+
+    private void OnDrawGizmos()
+    {
+        DrawEnemySpawnPoint();
+        DrawMinimalDistance();
+    }
+
+    private void DrawEnemySpawnPoint()
+    {
+        if (playerSpawnPoint != null)
+        {
+            Gizmos.color = Color.white;
+            Gizmos.DrawSphere(GetEnemySpawnPosition(), .25f);
+        }
+        else
+            playerSpawnPoint = GameObject.FindGameObjectWithTag("Respawn").transform;
+    }
+
+    private void DrawMinimalDistance()
+    {
+        if (player == null) //Exit if player doesn't exists on current scene
+            return;
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawLine(new Vector3(player.transform.position.x + minEnemyDistance, -.5f), new Vector3(player.transform.position.x + minEnemyDistance, 1));
+               
+    }
+
+    #endregion
+
+
+
+    #region Database
+
     /*
     public void UploadScore()
     {
@@ -243,4 +358,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
         yield return www;
         Debug.Log(www.text);
     }*/
+
+    #endregion
+
 }

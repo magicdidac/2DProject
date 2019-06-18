@@ -7,93 +7,84 @@ using UnityEngine.UI;
 
 public class EndGame : MonoBehaviour
 {
+    [HideInInspector] private GameController gc;
 
-    private Image panel;
+    [SerializeField] private Text scoreText = null;
+    [SerializeField] private Text coinsText = null;
+    [SerializeField] private Image winLosePanel = null;
+    [SerializeField] private Sprite winSprite = null;
+    [SerializeField] private Sprite loseSprite = null;
+    [SerializeField] private Image basePanel = null;
+    [SerializeField] private Sprite winBase = null;
+    [SerializeField] private Sprite loseBase = null;
 
-    private float score;
-    private float coins;
-    private float highScore;
-
-    private GameController gc;
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI highScoreText;
-    public TextMeshProUGUI coinsText;
-
-    public GameObject coinImage;
-    public GameObject fuelBar;
 
     private int maxScore;
+    
 
-    private void Start()
+    private void OnEnable()
     {
-        panel = GetComponent<Image>();
         gc = GameController.instance;
-        gameObject.SetActive(false);
+
+        coinsText.text = "" + gc.scoreController.GetCoinsScore();
+        scoreText.text = "" + gc.scoreController.GetScore();
+
+        gc.audioController.StopAllMusic(); //hacer mejor un FadeOut
+        gc.audioController.StopAllSounds();
+        AudioListener.pause = true;  //es para parar el sonido de los instantKill
+        gc.isAutomateStart = false;
+
+        Destroy(gc.enemy.gameObject);
+
+        Invoke("InvokeIncreaseScore", 2.5f);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-           Retry();
-        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            RetrySpace();
+
     }
 
-    public void GameWin(bool win)
+    public void WinSetUp()
     {
-        score = gc.scoreManager.Score;
-        coins = gc.scoreManager.Coins;
-        gc.scoreManager.coinsText.gameObject.SetActive(false);
-        gc.scoreManager.scoreText.gameObject.SetActive(false);
-        gc.scoreManager.highScoreText.gameObject.SetActive(false);
-        gc.scoreManager.gameObject.SetActive(false);
-        coinImage.SetActive(false);
-        fuelBar.SetActive(false);
+        basePanel.sprite = winBase;
+        winLosePanel.sprite = winSprite;
+    }
 
-        scoreText.text = score.ToString();
-        coinsText.text = coins.ToString();
-
-        if (gc.scoreManager.Score + gc.scoreManager.Coins > PlayerPrefs.GetFloat("HighScore"))
-        {
-            PlayerPrefs.SetFloat("HighScore", gc.scoreManager.Score + gc.scoreManager.Coins);
-        }
-
-        if (win)
-        {
-            PlayerPrefs.SetFloat("HighScore", (gc.scoreManager.Score + gc.scoreManager.Coins) * 2);
-            gc.highScore *= 2;
-            panel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "WINNER";
-            highScore = (coins + score) * 2;
-        }
-        else
-        {
-            panel.GetComponent<Image>().color = new Color(r:255f, g:0f, b:0f, a:.100f);
-            panel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "LOSER";
-            highScore = coins + score;
-        }
-
-        Invoke("InvokeIncreaseScore", 1f);
+    public void LoseSetUp()
+    {
+        basePanel.sprite = loseBase;
+        winLosePanel.sprite = loseSprite;
     }
 
     private void InvokeIncreaseScore()
     {
-        StartCoroutine(DicreaseCoins(coinsText, coins));
-        StartCoroutine(IncreaseScore(scoreText, highScore));
+        
+
+        StartCoroutine(DicreaseCoins(coinsText, gc.scoreController.GetCoinsScore()));
+        StartCoroutine(IncreaseScore(scoreText, gc.scoreController.GetScore()+gc.scoreController.GetCoinsScore()));
     }
 
-    IEnumerator IncreaseScore(TextMeshProUGUI t_score, float f_score)
+    IEnumerator IncreaseScore(Text t_score, int f_score)
     {
-        while(score < f_score)
-        {
-            score+=5;
-            if (score > f_score)
-                score = f_score;
-            t_score.text = score.ToString();
+        int initialScore = gc.scoreController.GetScore();
+        gc.audioController.PlaySound("scoreCounting");
+
+        while (initialScore < f_score)
+        {  
+            initialScore += 5;
+            if (initialScore > f_score)
+                initialScore = f_score;
+
+            t_score.text = initialScore+"";
             yield return new WaitForSeconds(.02f);
         }
+        gc.audioController.StopSound("scoreCounting");
     }
 
-    IEnumerator DicreaseCoins(TextMeshProUGUI t_score, float f_score)
+    IEnumerator DicreaseCoins(Text t_score, float f_score)
     {
         while (f_score > 0)
         {
@@ -107,7 +98,15 @@ public class EndGame : MonoBehaviour
 
     public void Retry()
     {
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex).completed += gc.GameController_completed;
-        gc.setFloor(0);
+        gc.SetFloor(0);
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);//.completed += gc.restartVariables();
+        AudioListener.pause = false;
+        //gc.restartVariables();
+    }
+
+    private void RetrySpace()
+    {
+        gc.isAutomateStart = true;
+        Retry();
     }
 }

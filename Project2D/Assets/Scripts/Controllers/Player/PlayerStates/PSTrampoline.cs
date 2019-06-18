@@ -5,19 +5,28 @@ using UnityEngine;
 public class PSTrampoline : AState
 {
 
-    public override void CheckTransition(AMoveController pc)
+    [HideInInspector] private PlayerController pc;
+
+    public PSTrampoline(PlayerController _pc) : base()
     {
-        if (pc.transform.position.y > 8 * pc.gc.getFloor())
+        pc = _pc;
+        gc.audioController.PlaySound("trampoline");
+        GameObject.FindGameObjectWithTag("Trampoline").GetComponent<Trampoline>().Shoot();
+    }
+
+    public override void CheckTransition()
+    {
+        if (pc.transform.position.y > 8 * gc.GetFloor())
         {
             pc.isTrampoline = false;
             pc.ChangeState(new PSOnAir(pc));
         }
     }
 
-    public override void FixedUpdate(AMoveController pc)
+    public override void FixedUpdate()
     {
-        pc.rb.velocity = new Vector2(pc.model.speed, pc.model.jumpForce);
+        pc.rigidbody2d.velocity = new Vector2(3, pc.model.jumpForce);
     }
 
-    public override void Update(AMoveController pc) { }
+    public override void Update() { }
 }

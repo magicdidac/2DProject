@@ -6,20 +6,22 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public abstract class AMoveController : MonoBehaviour
 {
-
-    [HideInInspector] public GameController gc;
+    //GameController reference
+    [HideInInspector] protected GameController gc;
 
     //Components
-    [SerializeField] public Rigidbody2D rb;
-    [SerializeField] public SpriteRenderer spr;
-    [HideInInspector] public Animator anim;
-    [HideInInspector] public float combustible;
+    [Header("Components")]
+    [SerializeField] public Rigidbody2D rigidbody2d = null;
+    [SerializeField] public SpriteRenderer sprite = null;
+    [SerializeField] public Animator animator = null;
+    
 
     //State
-    [HideInInspector] public AState currentState;
+    [HideInInspector] public AState currentState = null;
 
     //Model
-    [SerializeField] public PlayerModel model;
+    [Header("Model")]
+    [SerializeField] public PlayerModel model = null;
 
     //Control
     [HideInInspector] public bool isGrounded = false;
@@ -34,25 +36,26 @@ public abstract class AMoveController : MonoBehaviour
     //Others
     [HideInInspector] public ZipLine zipLine = null;
 
-    private void Start()
+    private void Awake()
     {
         gc = GameController.instance;
-        anim = GetComponent<Animator>();
         model = Instantiate(model);
-        combustible = model.maxCombustible;
     }
 
     public void ChangeState(AState ps) { currentState = ps; }
 
+    //p_lm: la layer que quieres detectar como suelo
+    //p_offset: el offset que deja por cada lado del sprite
+    //Función para detectar las colisiones con el suelo siedo este con la layer que se pase por  parametro
     public bool detectCollision(LayerMask p_lm, float p_offset)
     {
         List<RaycastHit2D> hits = new List<RaycastHit2D>();
 
-        float distanceBetweenRays = (spr.bounds.size.x - p_offset) / model.precisionDown;
+        float distanceBetweenRays = (sprite.bounds.size.x - p_offset) / model.precisionDown;
 
         for (int i = 0; i <= model.precisionDown; i++)
         {
-            Vector3 startPoint = new Vector3((spr.bounds.min.x + (p_offset / 2)) + distanceBetweenRays * i, spr.bounds.min.y, 0);
+            Vector3 startPoint = new Vector3((sprite.bounds.min.x + (p_offset / 2)) + distanceBetweenRays * i, sprite.bounds.min.y, 0);
             hits.Add(Physics2D.Raycast(startPoint, Vector2.down, .1f, p_lm));
         }
 
@@ -64,4 +67,18 @@ public abstract class AMoveController : MonoBehaviour
 
         return false;
     }
+
+    public bool detectCollision(LayerMask[] layerMasks, float offset)
+    {
+        foreach(LayerMask lm in layerMasks)
+        {
+            bool result = detectCollision(lm, offset);
+            if (result)
+                return true;
+        }
+
+        return false;
+
+    }
+
 }

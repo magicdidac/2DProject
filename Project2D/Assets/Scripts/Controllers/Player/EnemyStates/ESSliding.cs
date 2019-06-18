@@ -5,33 +5,35 @@ using UnityEngine;
 public class ESSliding : AState
 {
 
+    [HideInInspector] private EnemyController ec;
+
     private bool enterSlideZone = false;
 
-    public ESSliding(AMoveController pc)
+    public ESSliding(EnemyController _ec) : base()
     {
-        pc.anim.SetTrigger("T-Slide");
+        ec = _ec;
+        ec.animator.SetTrigger("T-Slide");
     }
 
-    public override void CheckTransition(AMoveController pc)
+    public override void CheckTransition()
     {
-        EnemyController ec = (EnemyController)pc;
 
         if (!enterSlideZone && ec.DetectObstacleUp())
             enterSlideZone = true;
         if (enterSlideZone && !ec.DetectObstacleUp())
         {
-            pc.anim.SetTrigger("T-SlideOut");
+            ec.animator.SetTrigger("T-SlideOut");
             ec.ChangeState(new ESGrounded(ec));
         }
                 
     }
 
-    public override void FixedUpdate(AMoveController pc)
+    public override void FixedUpdate()
     {
         
     }
 
-    public override void Update(AMoveController pc)
+    public override void Update()
     {
         
     }

@@ -2,107 +2,231 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapController : MonoBehaviour
+public class MapController : AController
 {
-    private GameController gc;
 
-    private Chunk _lastChunk;
-    private int _oldChunk = -1;
-    private int _currentChunk = -1;
-    private int _nextChunk = -1;
-    private float _lastPos = 0;
-    private float offset = 0;
-    private float transitionProbability = .0f;
-    private Queue<GameObject> chunksQueue = new Queue<GameObject>();
-    private Queue<GameObject> backgroundQueue = new Queue<GameObject>();
+    /*
+     LAWS:
+        - All variables will be private if you need access to it, plese do it by Getter and/or Setter
+        - All the functions should be used somewhere, except controllers (only on GameController class)
+        - Just put the regions that the class will use
+        - All variables, regardless of whether they are public or private, you should put [HideInInspector] or [SerializeField]
+     */
 
-    [SerializeField] private GameObject background;
-    private float xOffset = 0;
+    #region Variables
 
-    [SerializeField] private float _perIncrease = .05f;
+    [SerializeField] private ChunkStore store = null;
+    [Range(0, .9f)]
+    [SerializeField] private float increaseAmmountProbability = .1f;
+    [SerializeField] private GameObject background = null;
 
-    [SerializeField] private ChunkStore _chunkStore = null;
+    [HideInInspector] private int challengeCounter = 3;
+    [HideInInspector] private int chunksCounter = 0;
+    [HideInInspector] private float transitionChunkProbability = 0;
+    [HideInInspector] private float xOffset = 0;
+    [HideInInspector] private float nextSpawnPosition = 53;
+    [HideInInspector] private float lastChunkLenght = 0;
+    [HideInInspector] private List<Chunk> chunksSpawned = null;
+    [HideInInspector] private Queue<GameObject> chunksQueue = null;
+    [HideInInspector] private Queue<GameObject> backgroundQueue = null;
 
+    [Header("Rocks")]
+    [SerializeField] private GameObject rocks = null;
+    [SerializeField] private Radio radio = null;
+
+    #endregion
+
+
+    #region Initializers
+
+    //Start
     private void Start()
     {
-        gc = GameController.instance;
-        offset = Mathf.Abs(gc.player.transform.position.x) / 2;
-        NewBackground();
+        chunksSpawned = new List<Chunk>();
+        chunksQueue = new Queue<GameObject>();
+        backgroundQueue = new Queue<GameObject>();
+
+        NextChunk();
+        //NewBackground();
     }
 
-    private void Update()
+    public void StartGame()
     {
-        if (gc.player.transform.position.x >= xOffset-19.2f)
-            NewBackground();
-
-        if (gc.player.transform.position.x > _lastPos - offset)
-            changeChunk();
-        
+        rocks.SetActive(true);
+        radio.Launch();
     }
 
-    private void changeChunk()
-    {
 
-        if (Random.value < transitionProbability)
+    #endregion
+
+
+    #region Getters
+
+    public int GetChunksCounter() { return chunksCounter; }
+
+    private Chunk GetChallengeChunk()
+    {
+        Chunk resultChunk = null;
+
+        if (gc == null)
+            gc = GameController.instance;
+
+        switch (gc.GetCurrentDificulty())
         {
-            switch (gc.getFloor())
-            {
-                case 1: //Top Transitions
-                    _nextChunk = Random.Range(0, _chunkStore.topTChunks.Length);
-                    instantiateChunk(_chunkStore.topTChunks[_nextChunk]);
-                    break;
-                case 0: //Mid Transitions
-                    _nextChunk = Random.Range(0, _chunkStore.midTChunks.Length);
-                    instantiateChunk(_chunkStore.midTChunks[_nextChunk]);
-                    break;
-                case -1: //Bot Transitions
-                    _nextChunk = Random.Range(0, _chunkStore.botTChunks.Length);
-                    instantiateChunk(_chunkStore.botTChunks[_nextChunk]);
-                    break;
-            }
-            transitionProbability = .0f;
-            _nextChunk = -1;
-            return;
-        }
+            case PlayerDificulty.Dificulty.Easy:
+                resultChunk = GetEasyChunk();
+                break;
+            case PlayerDificulty.Dificulty.Normal:
+                resultChunk = GetNormalChunk();
+                break;
+            case PlayerDificulty.Dificulty.Hard:
+                resultChunk = GetHardChunk();
+                break;
+        }            
 
+        return resultChunk;
+    }
+
+    private Chunk GetEasyChunk()
+    {
+        return GetChunkByArrayWithoutRepeating(store.easy);
+    }
+
+    private Chunk GetNormalChunk()
+    {
+        return GetChunkByArrayWithoutRepeating(store.normal);
+    }
+
+    private Chunk GetHardChunk()
+    {
+        return GetChunkByArrayWithoutRepeating(store.hard);
+    }
+
+    private Chunk GetChunkByArrayWithoutRepeating(Chunk[] array)
+    {
+        List<Chunk> allChunks = new List<Chunk>(array);
+        Chunk chunk;
         do
         {
-            _nextChunk = Random.Range(0, _chunkStore.continueChunks.Length);
-        } while (_nextChunk == _currentChunk || _nextChunk == _oldChunk);
-        
-        instantiateChunk(_chunkStore.continueChunks[_nextChunk]);
 
-        transitionProbability += _perIncrease;
+            if (allChunks.Count == 0)
+            {
+                chunksSpawned.Clear();
+                allChunks = new List<Chunk>(array);
+            }
+
+            chunk = allChunks[Random.Range(0, allChunks.Count)];
+
+            if (chunksSpawned.Contains(chunk))
+                allChunks.Remove(chunk);
+
+        } while (chunksSpawned.Contains(chunk));
+
+        chunksSpawned.Add(chunk);
+        return chunk;
     }
-    
-    private void instantiateChunk(Chunk p_chunk)
+
+    private Chunk GetChunkByArray(Chunk[] array)
     {
-        _oldChunk = _currentChunk;
-        if (_currentChunk != -1)
-            _lastPos += _lastChunk.lenght / 2;
-        else
-            _lastPos += 9;
+        return array[Random.Range(0, array.Length)];
+    }
 
-        _lastPos += p_chunk.lenght / 2;
-        _lastChunk = p_chunk;
-
-        GameObject chunkCreated = Instantiate(p_chunk.prefab, new Vector3(_lastPos, 8*gc.getFloor()), Quaternion.identity, transform);
-        chunksQueue.Enqueue(chunkCreated);
-        if (chunksQueue.Count >= 3)
+    private Chunk GetTransitionChunk()
+    {
+        switch (gc.GetFloor())
         {
-            GameObject.Destroy(chunksQueue.Dequeue());
+            case 1:
+                return GetChunkByArray(store.top);
+            case 0:
+                return GetChunkByArray(store.middle);
+            case -1:
+                return GetChunkByArray(store.bottom);
         }
 
-        _currentChunk = _nextChunk;
+        throw new System.Exception("Floor isn't valid");
     }
 
+    private Chunk GetRewardChunk()
+    {
+        return GetChunkByArray(store.reward);
+    }
+
+    #endregion
+    
+
+    //Update
+    private void Update()
+    {
+        if (!gc.IsGameRunning() || gc.player.isDead)
+            return;
+
+        /*if (gc.player.transform.position.x >= xOffset - 19.2f)
+            NewBackground();*/
+
+        if (gc.player.transform.position.x > nextSpawnPosition)
+            NextChunk();
+
+    }
+
+
+    #region Other
 
     private void NewBackground()
     {
         xOffset += 19.2f;
-        backgroundQueue.Enqueue(Instantiate(background,new Vector3(xOffset,0),Quaternion.identity));
+        backgroundQueue.Enqueue(Instantiate(background, new Vector3(xOffset, 0), Quaternion.identity));
         if (backgroundQueue.Count > 3)
             GameObject.Destroy(backgroundQueue.Dequeue());
     }
+
+    private void NextChunk()
+    {
+        Chunk newChunk = null;
+
+
+        if (challengeCounter > 0)
+        {
+            if (Random.value < transitionChunkProbability)
+            {
+                newChunk = GetTransitionChunk();
+                transitionChunkProbability = 0;
+            }
+            else
+            {
+                newChunk = GetChallengeChunk();
+                challengeCounter--;
+                transitionChunkProbability += increaseAmmountProbability;
+                chunksCounter++;
+                if(lastChunkLenght != 0)
+                 gc.IncreasePlayerSkill();
+            }
+        }
+        else
+        {
+            newChunk = GetRewardChunk();
+
+            gc.IncreaseVelocityMultiplier();
+
+            challengeCounter = Random.Range(3, 6);
+        }
+
+        if (chunksQueue.Count > 1)
+            Destroy(chunksQueue.Dequeue());
+
+        GameObject chunkObject = SpawnChunk(newChunk);
+        lastChunkLenght = newChunk.lenght;
+        nextSpawnPosition = chunkObject.transform.position.x;
+        chunksQueue.Enqueue(chunkObject);
+    }
+
+
+
+    private GameObject SpawnChunk(Chunk c)
+    {
+        return Instantiate(c.prefab, new Vector3(nextSpawnPosition + (lastChunkLenght / 2) + (c.lenght / 2), gc.GetFloor() * 8, 0), Quaternion.identity);
+    }
+
+    #endregion
+
 
 }

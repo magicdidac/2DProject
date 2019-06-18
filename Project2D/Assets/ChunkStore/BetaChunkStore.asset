@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af6b6e0c191a15849ac109fefe5837a8, type: 3}
+  m_Name: BetaChunkStore
+  m_EditorClassIdentifier: 
+  top:
+  - {fileID: 11400000, guid: 0c56e8795fed26f42b20f64e01f6153b, type: 2}
+  middle:
+  - {fileID: 11400000, guid: 6c009f74363241542a135f2c475df063, type: 2}
+  bottom:
+  - {fileID: 11400000, guid: 8250163112069464182a59363e8291c3, type: 2}
+  easy:
+  - {fileID: 11400000, guid: 8d521783b64d44e4c8275b06fc3c10d9, type: 2}
+  - {fileID: 11400000, guid: 35769d358198bda46934b44f6adbcdb3, type: 2}
+  - {fileID: 11400000, guid: b5e9a94c7afb9334882bce8908808e8c, type: 2}
+  - {fileID: 11400000, guid: d1da1392af2ffd34e94114c40d2bf0bb, type: 2}
+  normal:
+  - {fileID: 11400000, guid: f4a50845202e74341b602693c7fd4539, type: 2}
+  - {fileID: 11400000, guid: 2d662d573045db641bf2697b34de8fe1, type: 2}
+  - {fileID: 11400000, guid: 910d8ce8cf9580c4682921ba82bf33c9, type: 2}
+  - {fileID: 11400000, guid: 0013510eeb4dc114e83bface84efdd97, type: 2}
+  - {fileID: 11400000, guid: 622cff7b4633d4643893f9c8d9e980c1, type: 2}
+  hard:
+  - {fileID: 11400000, guid: f3c2d87a0cb1b534d876505920775078, type: 2}
+  - {fileID: 11400000, guid: e86edaa743abc0f4c8793bdd65aa94be, type: 2}
+  reward:
+  - {fileID: 11400000, guid: 2b4aa3fb374a72943947f8eea9006327, type: 2}
+  - {fileID: 11400000, guid: a44550b51e6e4af41b2da5eeac7bd047, type: 2}

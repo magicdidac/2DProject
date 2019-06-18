@@ -4,30 +4,35 @@ using UnityEngine;
 
 public class PSStun : AState
 {
+
+    [HideInInspector] private PlayerController pc;
     float duration = 0f;
 
-    public PSStun(AMoveController pc)
+    public PSStun(PlayerController _pc) : base()
     {
-        pc.rb.gravityScale = 2.7f;
-        pc.anim.SetTrigger("T-Impact");
-        pc.anim.SetBool("B-Slide", false);
+        pc = _pc;
+        pc.rigidbody2d.gravityScale = 2.7f;
+        pc.animator.SetTrigger("T-Impact");
+        pc.animator.SetBool("B-Slide", false);
     }
 
-    public override void CheckTransition(AMoveController pc)
+    public override void CheckTransition()
     {
         if (duration >= pc.model.stunTime)
         {
             pc.isStuned = false;
             pc.ChangeState(new PSGrounded(pc));
-        } 
+        }
+        pc.canStunt = false;
+        pc.EnableStun();
     }
 
-    public override void FixedUpdate(AMoveController pc)
+    public override void FixedUpdate()
     {
-        pc.rb.velocity = new Vector2(pc.model.stunSpeed, pc.rb.velocity.y);
+        pc.rigidbody2d.velocity = new Vector2(gc.GetVelocity(pc.model.stunSpeed), pc.rigidbody2d.velocity.y);
     }
 
-    public override void Update(AMoveController pc)
+    public override void Update()
     {
         duration += Time.deltaTime;
     }

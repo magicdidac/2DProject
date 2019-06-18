@@ -26,6 +26,10 @@ TagManager:
   - Options
   - Light
   - Shoot
+  - KillTwo
+  - InstaKill
+  - EnemyShoot
+  - EnemyGranade
   layers:
   - Default
   - TransparentFX
@@ -37,8 +41,8 @@ TagManager:
   - 
   - Platform
   - Trampoline
-  - 
-  - 
+  - Obstacle
+  - WallKill
   - 
   - 
   - 

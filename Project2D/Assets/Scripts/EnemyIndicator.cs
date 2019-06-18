@@ -1,41 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(SpriteRenderer))]
+
 [RequireComponent(typeof(Animator))]
+
+//Esto deberia hacerlo el enemy; crear child en el prefab del enemy
+
 public class EnemyIndicator : MonoBehaviour
 {
 
-    private GameController gc;
-    private SpriteRenderer spr;
+    [HideInInspector] private GameController gc;
+    [HideInInspector] private Image spr;
     [HideInInspector] public Animator anim;
+
+    [Header("Sprites")]
+    [SerializeField] private Sprite spriteTop = null;
+    [SerializeField] private Sprite spriteMiddle = null;
+    [SerializeField] private Sprite spriteBottom = null;
 
     private void Start()
     {
         gc = GameController.instance;
-        spr = GetComponent<SpriteRenderer>();
+        spr = GetComponent<Image>();
         anim = GetComponent<Animator>();
-    }
-
-
-    private void FixedUpdate()
-    {
-        transform.position = Vector3.Lerp(transform.position, new Vector3(gc.enemy.transform.position.x, transform.position.y, transform.position.z), .25f);
     }
 
     private void Update()
     {
-        if (transform.parent.position.y < gc.enemy.transform.position.y)
+
+        switch (gc.GetFloor())
         {
-            spr.flipY = true;
-            transform.position = new Vector3(transform.position.x, transform.parent.position.y + 2, transform.position.z);
+            case 1:
+                spr.sprite = spriteTop;
+                break;
+            case 0:
+                spr.sprite = spriteMiddle;
+                break;
+            case -1:
+                spr.sprite = spriteBottom;
+                break;
         }
-        else
-        {
-            transform.position = new Vector3(transform.position.x, transform.parent.position.y - 3, transform.position.z);
-            spr.flipY = false;
-        }
+
     }
 
     public void LoadShoot()

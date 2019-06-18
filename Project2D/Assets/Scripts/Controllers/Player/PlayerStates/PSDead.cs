@@ -4,23 +4,26 @@ using UnityEngine;
 
 public class PSDead : AState
 {
-    public PSDead(AMoveController pc)
+    public PSDead(PlayerController pc) : base()
     {
-        pc.rb.velocity = Vector2.zero;
-        pc.isDead = true;
+        
+        pc.rigidbody2d.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+
+        /*pc.rb.sharedMaterial.bounciness = 3f;
+        pc.rb.sharedMaterial.friction = .2f;*/
     }
 
-    public override void CheckTransition(AMoveController pc)
+    public override void CheckTransition()
     {
         
     }
 
-    public override void FixedUpdate(AMoveController pc)
+    public override void FixedUpdate()
     {
         
     }
 
-    public override void Update(AMoveController pc)
+    public override void Update()
     {
         
     }

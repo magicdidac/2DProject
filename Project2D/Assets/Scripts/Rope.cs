@@ -5,34 +5,48 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Rope : MonoBehaviour
 {
-    private Rigidbody2D rb2d;
-    private Vector3 initialPosition;
-    private bool move = false;
+    //Self Components
+    [Header("Self Components")]
+    [SerializeField] private Rigidbody2D rb2d = null;
+    [HideInInspector] private AudioSource audioSource;
 
-    [SerializeField]
-    private float speed = 1.5f;
+    //External Components
+    [HideInInspector] public Transform playerTransform;
 
-    [SerializeField]
-    private int offset = 8;
+    //Enable Rope Movement
+    [HideInInspector] private Vector3 initialPosition;
+    [HideInInspector] private bool allowMovement = false;
 
-    private void Start()
+    //Properties
+    [Header("Properties")]
+    [SerializeField] private float speed = 1.5f;
+    [SerializeField] private int offset = 8;
+
+    private void Awake()
     {
         initialPosition = transform.position;
-        rb2d = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
     {
-        if (move && transform.position.y < initialPosition.y + offset)
+        if (!allowMovement)
+            return;
+
+        if (transform.position.y < initialPosition.y + offset)
             rb2d.velocity = Vector2.up * speed;
         else if(transform.position.y > initialPosition.y + offset) {
-            move = false;
-            if(transform.childCount != 0)
-                transform.GetChild(0).transform.parent = null;
+            allowMovement = false;
+            playerTransform.parent = null;
             rb2d.velocity = Vector2.zero;
         }
     }
 
-    public void startMovement() { move = true; }
+    public void StartMovement(Transform playerT)
+    {
+        playerTransform = playerT;
+        allowMovement = true;
+        audioSource.Play();
+    }
 
 }

@@ -4,38 +4,48 @@ using UnityEngine;
 
 public class PSGrounded : AState
 {
-    public PSGrounded(AMoveController pc)
+    [HideInInspector] private PlayerController pc;
+
+    public PSGrounded(PlayerController _pc) : base()
     {
-        if(pc.rb != null)
-            pc.rb.gravityScale = 2.7f;
+        pc = _pc;
+
+        if(pc.rigidbody2d != null)
+            pc.rigidbody2d.gravityScale = 2.7f;
 
         pc.model.speed = pc.model.normalSpeed;
+        pc.isSliding = false;
     }
 
-    public override void CheckTransition(AMoveController pc)
+    public override void CheckTransition()
     {
+
         if (!pc.isGrounded) pc.ChangeState(new PSOnAir(pc));
+
         if (pc.isStuned) pc.ChangeState(new PSStun(pc));
-        if (pc.isTrampoline) pc.ChangeState(new PSTrampoline());
-        if (Input.GetKey(KeyCode.S) && pc.combustible > 0) pc.ChangeState(new PSSliding(pc));
+
+        if (pc.isTrampoline) pc.ChangeState(new PSTrampoline(pc));
+
+        if (Input.GetKey(KeyCode.S) && pc.HaveFuel())
+            pc.ChangeState(new PSSliding(pc));
     }
 
-    public override void FixedUpdate(AMoveController pc)
+    public override void FixedUpdate()
     {
-        pc.rb.velocity = new Vector2(pc.model.speed, pc.rb.velocity.y);
+        pc.rigidbody2d.velocity = new Vector2(gc.GetVelocity(pc.model.speed), pc.rigidbody2d.velocity.y);
     }
 
-    public override void Update(AMoveController pc)
+    public override void Update()
     {
-        Jump(pc);
+        Jump();
     }
 
-    private void Jump(AMoveController pc)
+    private void Jump()
     {
-        if (pc.isGrounded && Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
-            pc.anim.SetTrigger("T-Jump");
-            pc.rb.velocity = Vector2.up * pc.model.jumpForce;
+            pc.animator.SetTrigger("T-Jump");
+            pc.rigidbody2d.velocity = Vector2.up * pc.model.jumpForce;
         }
     }
 }
