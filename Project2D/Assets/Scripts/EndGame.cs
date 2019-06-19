@@ -30,9 +30,10 @@ public class EndGame : MonoBehaviour
         coinsText.text = "" + gc.scoreController.GetCoinsScore();
         scoreText.text = "" + gc.scoreController.GetScore();
 
-        gc.audioController.StopAllMusic(); //hacer mejor un FadeOut
-        gc.audioController.StopAllSounds();
-        AudioListener.pause = true;  //es para parar el sonido de los instantKill
+        //gc.audioController.StopAllMusic(); //hacer mejor un FadeOut
+        //gc.audioController.StopAllSounds();
+        gc.audioController.FadeOutCaller();
+        AudioListener.pause = true;  //es para parar el sonido de los instantKill, hay que desactivar todo menos el de las coins
         gc.isAutomateStart = false;
 
         Destroy(gc.enemy.gameObject);
