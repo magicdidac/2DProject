@@ -42,6 +42,7 @@ public class AudioController : AController
             m.source.loop = m.loop;
             m.source.playOnAwake = m.playOnAwake;
             m.source.outputAudioMixerGroup = m.mixer;
+            m.source.ignoreListenerPause = m.ignoreListenerPause;
         }
 
         foreach (Sound s in sounds)
@@ -52,6 +53,7 @@ public class AudioController : AController
             s.source.loop = s.loop;
             s.source.playOnAwake = s.playOnAwake;
             s.source.outputAudioMixerGroup = s.mixer;
+            s.source.ignoreListenerPause = s.ignoreListenerPause;
         }
 
         
@@ -231,5 +233,22 @@ public class AudioController : AController
         pausedSounds.Clear();
     }
 
-    #endregion
+    public void FadeOutCaller()
+    {
+        var s = music.Find(sound => sound.name == "gameSong");
+        StartCoroutine(FadeOut(s, 2f));
+    }
+
+    private IEnumerator FadeOut(Sound s, float fadeTime)
+    {
+        float startVolume = s.source.volume;
+        while (s.source.volume > 0)
+        {
+            s.source.volume -= startVolume * Time.deltaTime / fadeTime;
+            yield return null;
+        }
+        s.source.Stop();
+    }
+
 }
+    #endregion

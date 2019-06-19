@@ -13,6 +13,7 @@ public class Sound
     public bool loop;
     public bool playOnAwake;
     public AudioMixerGroup mixer;
+    public bool ignoreListenerPause;
 
     [Range(0f, 1f)]
     public float volume;
