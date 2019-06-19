@@ -52,6 +52,10 @@ public class PlayerController : AMoveController
 
     private void FixedUpdate()
     {
+
+        if (gc.uiController.pauseIsActive)
+            return;
+
         if (isDead)
             return;
 
@@ -60,6 +64,10 @@ public class PlayerController : AMoveController
 
     private void Update()
     {
+
+        if (gc.uiController.pauseIsActive)
+            return;
+
         if (isDead)
             return;
 
@@ -105,6 +113,9 @@ public class PlayerController : AMoveController
 
     private void LateUpdate()
     {
+        if (gc.uiController.pauseIsActive)
+            return;
+
         if (isDead)
             return;
 

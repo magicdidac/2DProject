@@ -47,7 +47,7 @@ public class UIController : AController
     [SerializeField] private VideoClip loseClip = null;
 
     //Controll Vars
-    [HideInInspector] private bool pauseIsActive = false;
+    [HideInInspector] public bool pauseIsActive = false;
     [HideInInspector] private bool isWin = false;
 
     #endregion
