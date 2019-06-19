@@ -29,7 +29,7 @@ public class Granade : MonoBehaviour
     //Update
     protected void Update()
     {
-        if (transform.position.x <= gc.player.transform.position.x+.5f)
+        if (transform.position.x <= gc.player.transform.position.x+.75f)
             Explode();
 
         if(rb2d.velocity.y == 0)

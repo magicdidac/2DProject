@@ -34,7 +34,6 @@ public class BotGranade : Granade
             col.enabled = true;
             if (gc.player.fuel < .5f)
             {
-                Debug.Log("YAS");
                 rb2d.AddForce(Vector2.one * -2, ForceMode2D.Impulse);
             }
             else

@@ -58,15 +58,15 @@ public class UIController : AController
     //Start
     private void Start()
     {
+        if (gc == null)
+            gc = GameController.instance;
+
         highScoreText.text = Format(gc.scoreController.GetHighScore());
     }
 
     //Other functions that helps to initialize
     public void StartGame()
     {
-        /*fuelPanel.SetActive(true);
-        scorePanel.SetActive(true);
-        enemyDistancePanel.SetActive(true);*/
 
         anim.SetTrigger("Change");
         startMessage.SetActive(false);
@@ -81,6 +81,9 @@ public class UIController : AController
     //Update
     private void Update()
     {
+
+        
+
         if (!gc.IsGameRunning() && Input.GetKeyDown(KeyCode.Q))
             controlsMenu.SetActive(!controlsMenu.activeSelf);
 
@@ -204,11 +207,12 @@ public class UIController : AController
         }
         else
         {
+
             if (isWin)
                 endGameMenu.WinSetUp();
             else
                 endGameMenu.LoseSetUp();
-            anim.SetTrigger("Change");
+            anim.SetTrigger("Change2");
             Invoke("killVideo", .5f);
 
         }

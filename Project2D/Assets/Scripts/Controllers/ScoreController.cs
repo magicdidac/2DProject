@@ -26,7 +26,7 @@ public class ScoreController : AController
     #region Initializers
 
     //Start
-    private void Start()
+    private void Awake()
     {
         highScore = PlayerPrefs.GetInt("HighScore", 0);
     }

@@ -47,7 +47,7 @@ public class Radio : MonoBehaviour
 
         }
 
-        if (isLaunched && rb2d.velocity.x > 0)
+        if (isLaunched && rb2d.velocity.x > 0.1f)
             transform.Rotate(new Vector3(0, 0, -5));
     }
 

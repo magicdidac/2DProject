@@ -223,6 +223,7 @@ public class GameController : MonoBehaviour //This class follows the Singleton P
 
     private void Update()
     {
+
         if (!isGameRunning && Input.GetKeyDown(KeyCode.Space))
         {
             //Start Game

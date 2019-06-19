@@ -18,6 +18,7 @@ public class EndGame : MonoBehaviour
     [SerializeField] private Sprite winBase = null;
     [SerializeField] private Sprite loseBase = null;
 
+    [HideInInspector] private bool coinsCounterIsDone = false;
 
     private int maxScore;
     
@@ -42,7 +43,7 @@ public class EndGame : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (coinsCounterIsDone && Input.GetKeyDown(KeyCode.Space))
             RetrySpace();
 
     }
@@ -61,7 +62,6 @@ public class EndGame : MonoBehaviour
 
     private void InvokeIncreaseScore()
     {
-        
 
         StartCoroutine(DicreaseCoins(coinsText, gc.scoreController.GetCoinsScore()));
         StartCoroutine(IncreaseScore(scoreText, gc.scoreController.GetScore()+gc.scoreController.GetCoinsScore()));
@@ -82,6 +82,7 @@ public class EndGame : MonoBehaviour
             yield return new WaitForSeconds(.02f);
         }
         gc.audioController.StopSound("scoreCounting");
+        coinsCounterIsDone = true;
     }
 
     IEnumerator DicreaseCoins(Text t_score, float f_score)

@@ -4,16 +4,9 @@ using UnityEngine;
 
 public class AutomateStart : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
         GameController.instance.restartVariables();
         Destroy(gameObject);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

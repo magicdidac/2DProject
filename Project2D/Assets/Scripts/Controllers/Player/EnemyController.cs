@@ -49,8 +49,10 @@ public class EnemyController : AMoveController
             {
                 if ((!gc.player.isRope && !gc.player.isTrampoline) && (gc.GetFloor() == 0 || (gc.GetFloor() != 0 && gc.GetEnemyDistance() > gc.GetMinimumEnemyDistance() + 1)))
                     rigidbody2d.velocity = new Vector2((gc.player.isSliding) ? gc.GetVelocity(model.slideSpeed) : gc.GetVelocity(model.normalSpeed), rigidbody2d.velocity.y);
-                else if (gc.player.isRope || gc.player.isTrampoline)
-                    rigidbody2d.velocity = new Vector2(1, rigidbody2d.velocity.y);
+                else if (gc.player.isTrampoline)
+                    rigidbody2d.velocity = new Vector2(3, rigidbody2d.velocity.y);
+                else if (gc.player.isRope)
+                    rigidbody2d.velocity = new Vector2(0, rigidbody2d.velocity.y);
                 else if (gc.GetEnemyDistance() <= gc.GetMinimumEnemyDistance() + 1)
                     transform.position = new Vector2(gc.player.transform.position.x + (gc.GetMinimumEnemyDistance() + 1), transform.position.y);
             }
@@ -139,9 +141,9 @@ public class EnemyController : AMoveController
                 break;
             case 0:
 
-                if (gc.GetEnemyDistance() > 3 && Random.Range(0, 2) == 1)
+                /*if (gc.GetEnemyDistance() > 3 && Random.Range(0, 2) == 1)
                     animator.SetTrigger("T-MidLaserShoot");
-                else
+                else*/
                     animator.SetTrigger("T-MidGranadeShoot");
                 break;
             case -1:
